@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/network-component/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/network-component/src/App.vue" afterDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added newer version of network components to experiment 2">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/components/StyledButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/StyledButton.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/components/network-components/EndSystemComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/network-components/EndSystemComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/components/network-components/PackageComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/network-components/PackageComponent.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/exp-1" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/exp-2" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -25,12 +39,15 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-2/src" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/exp-2/src" />
+      <recent name="$PROJECT_DIR$/exp-2/src/components" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -47,7 +64,16 @@
       <workItem from="1675322581432" duration="236000" />
       <workItem from="1675691521409" duration="1805000" />
       <workItem from="1675779291668" duration="11000" />
+      <workItem from="1676051275085" duration="9188000" />
     </task>
+    <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
+      <created>1676051332039</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1676051332039</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -63,5 +89,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/network-component" />
+    </ignored-roots>
+    <MESSAGE value="Added newer version of network components to experiment 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added newer version of network components to experiment 2" />
   </component>
 </project>
