@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added newer version of network components to experiment 2">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added a component called server component for port colors&#10;Added logic to select IP address and ports and do first and second step of three way handshake&#10;Port color scheming to identify status&#10;Added disable to style button and hover disable&#10;Added callback checking for onPackageAnimationEnd&#10;Added visibility CSS instead of v-if to EndSystemComponent.vue package hiding logic">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exp-2" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exp-2/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/src/components/StyledButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/StyledButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/src/components/network-components/EndSystemComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/network-components/EndSystemComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/src/components/network-components/PackageComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/network-components/PackageComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/components/ServerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/ServerComponent.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +60,8 @@
       <workItem from="1675322581432" duration="236000" />
       <workItem from="1675691521409" duration="1805000" />
       <workItem from="1675779291668" duration="11000" />
-      <workItem from="1676051275085" duration="9188000" />
+      <workItem from="1676051275085" duration="9762000" />
+      <workItem from="1676112189843" duration="4395000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -73,7 +70,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676051332039</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added a component called server component for port colors&#10;Added logic to select IP address and ports and do first and second step of three way handshake&#10;Port color scheming to identify status&#10;Added disable to style button and hover disable&#10;Added callback checking for onPackageAnimationEnd&#10;Added visibility CSS instead of v-if to EndSystemComponent.vue package hiding logic">
+      <created>1676060639637</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1676060639637</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,6 +99,7 @@
       <path value="$PROJECT_DIR$/network-component" />
     </ignored-roots>
     <MESSAGE value="Added newer version of network components to experiment 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added newer version of network components to experiment 2" />
+    <MESSAGE value="Added a component called server component for port colors&#10;Added logic to select IP address and ports and do first and second step of three way handshake&#10;Port color scheming to identify status&#10;Added disable to style button and hover disable&#10;Added callback checking for onPackageAnimationEnd&#10;Added visibility CSS instead of v-if to EndSystemComponent.vue package hiding logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a component called server component for port colors&#10;Added logic to select IP address and ports and do first and second step of three way handshake&#10;Port color scheming to identify status&#10;Added disable to style button and hover disable&#10;Added callback checking for onPackageAnimationEnd&#10;Added visibility CSS instead of v-if to EndSystemComponent.vue package hiding logic" />
   </component>
 </project>
