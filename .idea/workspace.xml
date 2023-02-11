@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Made packet text content dynamic with appropriate text messages like SYN and ACK&#10;Color coded server packets&#10;Added restart and verify functions &#10;Reordered value manipulation to make port color change dynamic&#10;Added extra column to client PC to maintain response buttons to complete three way handshake manually, completed using Emitters .">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/src/components/ServerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/ServerComponent.vue" afterDir="false" />
-    </list>
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Changed title" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +56,7 @@
       <workItem from="1675691521409" duration="1805000" />
       <workItem from="1675779291668" duration="11000" />
       <workItem from="1676051275085" duration="9762000" />
-      <workItem from="1676112189843" duration="5789000" />
+      <workItem from="1676112189843" duration="6065000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -84,7 +79,21 @@
       <option name="project" value="LOCAL" />
       <updated>1676116738804</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added code to set background color to corresponding packet color to help user identify respective servers">
+      <created>1676138737570</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1676138737570</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Changed title">
+      <created>1676138880561</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1676138880561</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -108,6 +117,8 @@
     <MESSAGE value="Added newer version of network components to experiment 2" />
     <MESSAGE value="Added a component called server component for port colors&#10;Added logic to select IP address and ports and do first and second step of three way handshake&#10;Port color scheming to identify status&#10;Added disable to style button and hover disable&#10;Added callback checking for onPackageAnimationEnd&#10;Added visibility CSS instead of v-if to EndSystemComponent.vue package hiding logic" />
     <MESSAGE value="Made packet text content dynamic with appropriate text messages like SYN and ACK&#10;Color coded server packets&#10;Added restart and verify functions &#10;Reordered value manipulation to make port color change dynamic&#10;Added extra column to client PC to maintain response buttons to complete three way handshake manually, completed using Emitters ." />
-    <option name="LAST_COMMIT_MESSAGE" value="Made packet text content dynamic with appropriate text messages like SYN and ACK&#10;Color coded server packets&#10;Added restart and verify functions &#10;Reordered value manipulation to make port color change dynamic&#10;Added extra column to client PC to maintain response buttons to complete three way handshake manually, completed using Emitters ." />
+    <MESSAGE value="Added code to set background color to corresponding packet color to help user identify respective servers" />
+    <MESSAGE value="Changed title" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed title" />
   </component>
 </project>
