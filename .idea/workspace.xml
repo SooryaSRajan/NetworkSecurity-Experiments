@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Changed title" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Changed title">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,7 +17,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/exp-2" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -56,7 +58,8 @@
       <workItem from="1675691521409" duration="1805000" />
       <workItem from="1675779291668" duration="11000" />
       <workItem from="1676051275085" duration="9762000" />
-      <workItem from="1676112189843" duration="6065000" />
+      <workItem from="1676112189843" duration="6328000" />
+      <workItem from="1676139203195" duration="62000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -113,6 +116,8 @@
   <component name="VcsManagerConfiguration">
     <ignored-roots>
       <path value="$PROJECT_DIR$/network-component" />
+      <path value="$PROJECT_DIR$/exp-1" />
+      <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
     <MESSAGE value="Added newer version of network components to experiment 2" />
     <MESSAGE value="Added a component called server component for port colors&#10;Added logic to select IP address and ports and do first and second step of three way handshake&#10;Port color scheming to identify status&#10;Added disable to style button and hover disable&#10;Added callback checking for onPackageAnimationEnd&#10;Added visibility CSS instead of v-if to EndSystemComponent.vue package hiding logic" />
