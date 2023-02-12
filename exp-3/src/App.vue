@@ -6,7 +6,8 @@
         <div class="row-1">
           <NetworkInteractionComponent ref="childComponentRef">
             <EndSystemComponent top="10%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
-              <ServerComponent :ip-address="ipAddress[0]"/>
+              <ServerComponent :ip-address="ipAddress[0]" :port1="ports[0]" :port2="ports[1]" :port3="ports[2]"
+                               :port4="ports[3]"/>
             </EndSystemComponent>
 
             <EndSystemComponent top="-1%" left="82%" class="box" id="middle-man">
@@ -14,7 +15,8 @@
             </EndSystemComponent>
 
             <EndSystemComponent top="55%" left="72%" class="box" id="box2" :package-info="serverOnePackages">
-              <ServerComponent :ip-address="ipAddress[1]"/>
+              <ServerComponent :ip-address="ipAddress[1]" :port1="ports[0]" :port2="ports[1]" :port3="ports[2]"
+                               :port4="ports[3]"/>
             </EndSystemComponent>
           </NetworkInteractionComponent>
         </div>
@@ -51,34 +53,35 @@
             <input v-model="password" placeholder="password">
           </div>
           <div class="button-row">
-            <StyledButton :text="step === 1 ? 'Start' : 'Next'" :click-function="buttonClick"></StyledButton>
-            <StyledButton text="Verify"></StyledButton>
-            <StyledButton text="Reset"></StyledButton>
+            <StyledButton :text="step === 1 ? 'Start' : step !== 5? 'Next' : 'Done'" :click-function="buttonClick"
+                          :disable="disableButton"></StyledButton>
+            <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
+            <StyledButton text="Reset" :disable="disableButton"></StyledButton>
           </div>
         </div>
         <div class="row-4">
-          <div class="terminal" v-if="packetOneOpen">
-            hacker@packetOne %
-              hacker@packetOne % ---------------------------------------
-              | |
-              ---------------------------------------
-              hacker@packetOne %
+          <div class="terminal" v-if="channelIndex === 0">
+            <p v-for="(data, index) in unencryptedChannelData" :key="index">{{ data }}</p>
           </div>
-          <div class="terminal" v-else>
-            hacker@packetTwo %
-            hacker@packetOne % ---------------------------------------
-            | |
-            ---------------------------------------
-            hacker@packetOne %
-
+          <div class="terminal" v-if="channelIndex === 1 && channelOneData.length !== 0">
+            <p v-for="(data, index) in channelOneData" :key="index">{{ data }}</p>
+          </div>
+          <div class="terminal" v-else-if="channelIndex === 2 && channelTwoData.length !== 0">
+            <p v-for="(data, index) in channelTwoData" :key="index">{{ data }}</p>
           </div>
           <div class="terminal-choices">
-            <button class="terminal-button" :class="{'active-button' : packetOneOpen}" @click="changeTerminal(0)">Packet
-              1
+            <button class="terminal-button" :class="{'active-button' : channelIndex === 0}" @click="channelIndex = 0">
+              Unencrypted Channel
             </button>
-            <button class="terminal-button" :class="{'active-button' : !packetOneOpen}" @click="changeTerminal(1)">
-              Packet 2
+            <button class="terminal-button" :class="{'active-button' : channelIndex === 1}" @click="channelIndex = 1"
+                    v-if="channelOneData.length !== 0">
+              Channel 1
             </button>
+            <button class="terminal-button" :class="{'active-button' : channelIndex === 2}" @click="channelIndex = 2"
+                    v-if="channelTwoData.length !== 0">
+              Channel 2
+            </button>
+
           </div>
         </div>
       </div>
@@ -107,15 +110,41 @@ export default {
     ip2 = Math.floor(Math.random() * 255) + 1;
     this.ipAddress.push("10.16." + ip1 + "." + ip2);
 
-    this.$refs.childComponentRef.drawTwoLines("box1", "box2", 40, false, "red", "blue", "channel 1", "channel 2");
+    this.$refs.childComponentRef.drawLine("box1", "box2", null, "Unencrypted channel");
+
+    let randomIndex = Math.floor(Math.random() * this.userNameObjectCollection.length);
+
+    randomIndex = Math.floor(Math.random() * this.passwordObjectCollection.length);
+    //TODO: Random username and password objects
+
+    console.log(randomIndex)
 
   },
   data() {
     return {
       step: 1,
+      disableButton: false,
+      userNameObjectCollection: [{}],
+      passwordObjectCollection: [{}],
+      firstStepComplete: false,
+      secondStepComplete: false,
+      thirdStepComplete: false,
+      fourthStepComplete: false,
+      ports: [1, 0, 0, 0],
+      userNameEncrypted: "",
+      passwordEncrypted: "",
+      userNameDecrypted: "",
+      passwordDecrypted: "",
+      keyPayloadOne: "",
+      keyPayloadTwo: "",
+      encryptionAlgorithmOne: "",
+      encryptionAlgorithmTwo: "",
+      unencryptedChannelData: ["hacker@unencryptedChannel > Logging data from unencrypted channel"],
+      channelOneData: [],
+      channelTwoData: [],
       userName: "",
       password: "",
-      packetOneOpen: true,
+      channelIndex: 0,
       ipAddress: [],
       serverZeroPackages: [
         {
@@ -138,22 +167,71 @@ export default {
     }
   },
   methods: {
-    changeTerminal(index) {
-      if (index === 0) {
-        this.packetOneOpen = true;
-      } else {
-        this.packetOneOpen = false;
+    validate() {
+      //check if decrypted username and password and username and password match
+      if (this.userNameDecrypted === this.userName && this.passwordDecrypted === this.password) {
+        alert("Experiment complete!")
       }
     },
     buttonClick() {
       if (this.step === 1) {
         this.serverZeroPackages[0].displayPackage = true;
-        //TODO: Replace name with randomm name from map
-        this.serverZeroPackages[0].data = ["SOME USERNAME"]
-        this.$refs.childComponentRef.animatePackage("box2", "package01", "box1");
-        this.step = 2
+        this.serverZeroPackages[0].data = ["KEY REQUEST"]
+        this.unencryptedChannelData.push("hacker@unencryptedChannel > Sending key request to server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+        this.disableButton = true;
+        this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
+          this.step = 2
+          this.disableButton = false;
+        });
       } else if (this.step === 2) {
-        this.serverOnePackages[0].displayPackage = true;
+        this.serverZeroPackages[0].displayPackage = true;
+        this.serverZeroPackages[0].data = ["KEY RESPONSE"]
+        setTimeout(() => {
+          this.unencryptedChannelData.push("hacker@unencryptedChannel > Received key response from server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+          this.unencryptedChannelData.push(`hacker@unencryptedChannel > Payload: [{Key: ${this.keyPayloadOne}, Channel: CHANNEL 1, ENC: ${this.encryptionAlgorithmOne}}, {Key: ${this.keyPayloadTwo}, Channel: CHANNEL 2, ENC: ${this.encryptionAlgorithmTwo}}]`)
+          this.$refs.childComponentRef.drawLineOffset("box1", "box2", 55, false, "red", "channel 1", false);
+        }, 1000);
+        this.disableButton = true;
+        this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
+          this.step = 3
+          this.disableButton = false;
+        });
+      } else if (this.step === 3) {
+        this.ports[1] = 1;
+        this.serverZeroPackages[0].displayPackage = true;
+        this.serverZeroPackages[0].data = ["PAYLOAD", "CHANNEL 1"]
+        this.channelIndex = 1
+        this.channelOneData.push("hacker@channel1 > Sending encrypted username to server 0, channel: 1, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+        this.channelOneData.push(`hacker@channel1 > Payload: {userName: ${this.userNameEncrypted}}`)
+
+        this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
+          this.serverZeroPackages[0].data = ["RESPONSE", "CHANNEL 1"]
+          this.disableButton = true;
+          this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
+            this.channelOneData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+            this.step = 4
+            this.disableButton = false;
+            this.$refs.childComponentRef.drawLineOffset("box1", "box2", 55, false, "blue", "channel 2", true);
+          });
+        });
+      } else if (this.step === 4) {
+        this.ports[2] = 1;
+        this.serverZeroPackages[0].displayPackage = true;
+        this.serverZeroPackages[0].data = ["PAYLOAD", "CHANNEL 2"]
+        this.channelIndex = 2
+        this.channelTwoData.push("hacker@channel1 > Sending encrypted password to server 0, channel: 2,  accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+        this.channelTwoData.push(`hacker@channel1 > Payload: {password: ${this.passwordEncrypted}}`)
+        this.disableButton = true;
+        this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
+          this.serverZeroPackages[0].data = ["RESPONSE", "CHANNEL 2"]
+          this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
+            this.disableButton = false;
+            this.channelTwoData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+            let randomKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            this.channelTwoData.push("hacker@channel1 > Decrypted response: {success: true, message: 'Login successful', bearerToken: '" + randomKey + "'}")
+            this.step = 5
+          });
+        });
       }
 
     }
@@ -344,10 +422,6 @@ p {
   margin: 0;
   padding: 0;
   text-align: justify;
-}
-
-.bold {
-  font-weight: 600;
 }
 
 /*media screen*/

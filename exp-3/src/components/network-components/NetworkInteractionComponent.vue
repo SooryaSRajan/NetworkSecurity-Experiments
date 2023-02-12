@@ -58,8 +58,7 @@ export default {
       //set line color
       if (color) {
         line.setAttribute("style", "stroke:" + color + ";stroke-width:1");
-      }
-      else{
+      } else {
         line.setAttribute("style", "stroke:rgb(0,0,0);stroke-width:1");
       }
       //add text above the of line and same angle of line
@@ -215,7 +214,7 @@ export default {
       }
 
     },
-    drawLine(id1, id2) {
+    drawLine(id1, id2, lineColor, text) {
       //wrapper method for drawSVG line, calculates the center of the elements and passes it to the drawSVGLine method
       let elementA = document.getElementById(id1);
       let elementB = document.getElementById(id2);
@@ -229,9 +228,17 @@ export default {
       let x2 = elementB.offsetLeft + (elementB.offsetWidth / 2);
       let y2 = elementB.offsetTop + (elementB.offsetHeight / 2);
 
-      this.drawSVGLine(x1, y1, x2, y2);
+      if (!lineColor) {
+        lineColor = 'black'
+      }
+
+      if (text) {
+        this.drawSVGLine(x1, y1, x2, y2, lineColor, text)
+      } else {
+        this.drawSVGLine(x1, y1, x2, y2, lineColor)
+      }
     },
-    drawTwoLines(id1, id2, space, isXTransformation, lineOneColor, lineTwoColor, text1, text2) {
+    drawLineOffset(id1, id2, space, isXTransformation, lineColor, text, isNegativeOffset){
       let elementA = document.getElementById(id1);
       let elementB = document.getElementById(id2);
 
@@ -244,28 +251,31 @@ export default {
       let x2 = elementB.offsetLeft + (elementB.offsetWidth / 2);
       let y2 = elementB.offsetTop + (elementB.offsetHeight / 2);
 
-      if(isXTransformation){
-        let x1T = x1 - space / 2;
-        let x2T = x2 - space / 2;
+      if (isXTransformation) {
 
-        let x1T2 = x1 + space / 2;
-        let x2T2 = x2 + space / 2;
+        if(isNegativeOffset){
+          let x1T = x1 - space / 2;
+          let x2T = x2 - space / 2;
+          this.drawSVGLine(x1T, y1, x2T, y2, lineColor, text);
+        }
+        else{
+          let x1T = x1 + space / 2;
+          let x2T = x2 + space / 2;
+          this.drawSVGLine(x1T, y1, x2T, y2, lineColor, text);
+        }
 
-        this.drawSVGLine(x1T, y1, x2T, y2, lineOneColor, text1);
-        this.drawSVGLine(x1T2, y1, x2T2, y2, lineTwoColor, text2);
+      } else {
+        if (isNegativeOffset) {
+          let y1T = y1 - space / 2;
+          let y2T = y2 - space / 2;
+          this.drawSVGLine(x1, y1T, x2, y2T, lineColor, text);
+        } else {
+          let y1T = y1 + space / 2;
+          let y2T = y2 + space / 2;
+          this.drawSVGLine(x1, y1T, x2, y2T, lineColor, text);
+        }
       }
-      else{
-        let y1T = y1 - space / 2;
-        let y2T = y2 - space / 2;
-
-        let y1T2 = y1 + space / 2;
-        let y2T2 = y2 + space / 2;
-
-        this.drawSVGLine(x1, y1T, x2, y2T, lineOneColor, text1);
-        this.drawSVGLine(x1, y1T2, x2, y2T2, lineTwoColor, text2);
-      }
-
-    }
+    },
   }
 }
 </script>
