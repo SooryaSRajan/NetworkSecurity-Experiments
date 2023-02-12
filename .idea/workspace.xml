@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Removed packet data">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exp-3/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-3/src/components/network-components/EndSystemComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/components/network-components/EndSystemComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-3/src/components/StyledButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/components/StyledButton.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +61,7 @@
       <workItem from="1675779291668" duration="11000" />
       <workItem from="1676051275085" duration="9762000" />
       <workItem from="1676112189843" duration="6328000" />
-      <workItem from="1676139203195" duration="5032000" />
+      <workItem from="1676139203195" duration="7950000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>

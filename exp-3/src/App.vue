@@ -3,31 +3,84 @@
     <TopBar title="Passive attacks - Eavesdropping"></TopBar>
     <div class="rem-space">
       <div class="col-1">
-          <div class="row-1">
-            <NetworkInteractionComponent ref="childComponentRef">
-              <EndSystemComponent top="10%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
-                <ServerComponent :ip-address="ipAddress[0]"/>
-              </EndSystemComponent>
+        <div class="row-1">
+          <NetworkInteractionComponent ref="childComponentRef">
+            <EndSystemComponent top="10%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
+              <ServerComponent :ip-address="ipAddress[0]"/>
+            </EndSystemComponent>
 
-              <EndSystemComponent top="55%" left="72%" class="box" id="box2" :package-info="serverOnePackages">
-                <ServerComponent :ip-address="ipAddress[1]"/>
-              </EndSystemComponent>
-            </NetworkInteractionComponent>
-          </div>
+            <EndSystemComponent top="-1%" left="82%" class="box" id="middle-man">
+              <img src="./assets/incognito.png" width="200" height="200" alt="middle-man">
+            </EndSystemComponent>
+
+            <EndSystemComponent top="55%" left="72%" class="box" id="box2" :package-info="serverOnePackages">
+              <ServerComponent :ip-address="ipAddress[1]"/>
+            </EndSystemComponent>
+          </NetworkInteractionComponent>
+        </div>
         <div class="row-2">
-            ENCRYPTION METHODS HERE
+          <DropDownCard title="INSTRUCTIONS">
+            <p>
+              In this experiment, you will learn how to eavesdrop on a network. You will be able to see the data being
+              sent between two servers.
+            </p>
+            <br>
+            <p>
+              To start, click on the "Start" button. This will start the network. You will see the data being sent
+              between the two servers.
+            </p>
+            <br>
+            <p>
+              To stop the network, click on the "Reset" button. This will stop the network and clear the screen.
+            </p>
+            <br>
+            <p>
+              To verify your answer, click on the "Verify" button. This will show you the correct answer.
+            </p>
+            <br>
+          </DropDownCard>
+          <DropDownCard title="ENCRYPTION METHODS">
+            <!--TODO: Add content-->
+          </DropDownCard>
         </div>
       </div>
       <div class="col-2">
-          <div class="row-3">
-            <div class="row-3-content-space">
-
-            </div>
+        <div class="row-3">
+          <div class="row-3-content-space">
+            <input v-model="userName" placeholder="username">
+            <input v-model="password" placeholder="password">
+          </div>
+          <div class="button-row">
+            <StyledButton :text="step === 1 ? 'Start' : 'Next'" :click-function="buttonClick"></StyledButton>
             <StyledButton text="Verify"></StyledButton>
+            <StyledButton text="Reset"></StyledButton>
           </div>
-          <div class="row-4">
-            terminal
+        </div>
+        <div class="row-4">
+          <div class="terminal" v-if="packetOneOpen">
+            hacker@packetOne %
+              hacker@packetOne % ---------------------------------------
+              | |
+              ---------------------------------------
+              hacker@packetOne %
           </div>
+          <div class="terminal" v-else>
+            hacker@packetTwo %
+            hacker@packetOne % ---------------------------------------
+            | |
+            ---------------------------------------
+            hacker@packetOne %
+
+          </div>
+          <div class="terminal-choices">
+            <button class="terminal-button" :class="{'active-button' : packetOneOpen}" @click="changeTerminal(0)">Packet
+              1
+            </button>
+            <button class="terminal-button" :class="{'active-button' : !packetOneOpen}" @click="changeTerminal(1)">
+              Packet 2
+            </button>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -41,8 +94,7 @@ import NetworkInteractionComponent from "@/components/network-components/Network
 import StyledButton from "@/components/StyledButton";
 import EndSystemComponent from "@/components/network-components/EndSystemComponent";
 import ServerComponent from "@/components/ServerComponent";
-// import EndSystemComponent from "@/components/network-components/EndSystemComponent";
-// import StyledButton from "@/components/StyledButton";
+import DropDownCard from "@/components/DropDownCard";
 
 export default {
   name: 'App',
@@ -57,15 +109,13 @@ export default {
 
     this.$refs.childComponentRef.drawTwoLines("box1", "box2", 40, false, "red", "blue", "channel 1", "channel 2");
 
-    //animate
-    //TODO: use this later
-    // this.$refs.childComponentRef.animatePackage("box1", "package11", "box2");
-    // this.$refs.childComponentRef.animatePackage("box2", "package01", "box1");
-
-
   },
   data() {
     return {
+      step: 1,
+      userName: "",
+      password: "",
+      packetOneOpen: true,
       ipAddress: [],
       serverZeroPackages: [
         {
@@ -87,7 +137,28 @@ export default {
       ],
     }
   },
-  components: {ServerComponent, EndSystemComponent, StyledButton, NetworkInteractionComponent, TopBar},
+  methods: {
+    changeTerminal(index) {
+      if (index === 0) {
+        this.packetOneOpen = true;
+      } else {
+        this.packetOneOpen = false;
+      }
+    },
+    buttonClick() {
+      if (this.step === 1) {
+        this.serverZeroPackages[0].displayPackage = true;
+        //TODO: Replace name with randomm name from map
+        this.serverZeroPackages[0].data = ["SOME USERNAME"]
+        this.$refs.childComponentRef.animatePackage("box2", "package01", "box1");
+        this.step = 2
+      } else if (this.step === 2) {
+        this.serverOnePackages[0].displayPackage = true;
+      }
+
+    }
+  },
+  components: {DropDownCard, ServerComponent, EndSystemComponent, StyledButton, NetworkInteractionComponent, TopBar},
 }
 </script>
 
@@ -97,6 +168,11 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+pre {
+  margin: 0;
+  padding: 0;
 }
 
 .flex-box {
@@ -111,62 +187,112 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  overflow: clip;
 }
 
-.col-1{
-  flex: 2;
+input {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 20px;
+  padding: 15px;
+}
+
+.col-1 {
+  height: 70%;
+  max-height: 70%;
   display: flex;
   flex-direction: row;
 }
 
-.col-2{
-  flex: 1;
+.col-2 {
+  height: 30%;
   display: flex;
   flex-direction: row;
 }
 
-.row-1{
+.row-1 {
   flex: 3;
   display: flex;
 }
 
-.row-2{
+.row-2 {
   flex: 1;
-  background-color: #FBFBFB;
+  border-radius: 15px;
   margin-top: 20px;
   margin-bottom: 20px;
   margin-right: 20px;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  overflow-y: scroll;
 }
 
-.row-3{
+.row-3 {
   flex: 1;
   display: flex;
-  padding-left: 15px;
+  padding-left: 25px;
   padding-bottom: 15px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
-.row-3-content-space{
+* {
+  box-sizing: border-box;
+}
+
+.row-3-content-space {
+  width: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-.row-4{
+.row-4 {
   margin-left: 15px;
   flex: 2;
-  background-color: black;
-  color: #33FF00;
-  padding: 10px 15px;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+}
+
+.terminal {
+  flex: 8;
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  font-family: monospace;
+  padding: 10px 15px;
+  background-color: #252526;
+  color: #33FF00;
+}
+
+.terminal-choices {
+  flex: 1;
+  background-color: #3c3f41;
+}
+
+.terminal-button {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  color: white;
+  font-family: monospace;
+  font-size: 13px;
+  text-align: start;
+}
+
+.terminal-button:hover {
+  background-color: #343333;
+}
+
+.active-button {
+  border-left: 1px solid #33FF00;
 }
 
 .input-field {
@@ -177,6 +303,9 @@ export default {
 }
 
 input {
+  border: none;
+  box-shadow: 2px 3px 10px 2px #D7DFFF;
+  border-radius: 5px;
   margin-top: 10px;
   font-size: 20px;
   padding: 15px;
@@ -189,7 +318,6 @@ input {
 }
 
 .instructions {
-  flex: 1
 }
 
 .button-row {

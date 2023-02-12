@@ -43,6 +43,9 @@ export default {
 
 <style scoped>
 button{
+  flex: 1;
+  margin-left: 5px;
+  margin-right: 5px;
   border: none;
   border-radius: 5px;
   padding: 15px;
