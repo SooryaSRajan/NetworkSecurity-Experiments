@@ -50,10 +50,6 @@ export default {
   box-sizing: border-box;
 }
 
-div{
-  transition: all 0.3s ease-in-out;
-}
-
 .card-box {
   margin-top: 15px;
   width: 100%;
@@ -87,7 +83,6 @@ div{
   font-weight: 400;
   text-align: start;
   height: 0;
-  transition: height, padding 0.3s ease-in-out;
   overflow-y: scroll;
 }
 
