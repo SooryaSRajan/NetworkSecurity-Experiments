@@ -5,7 +5,7 @@
       <slot></slot>
     </div>
     <div v-for="(packageData, index) in packageInfo" :key="index">
-      <div v-if="packageData.packageId" style="position: absolute; right: -80px;"
+      <div v-if="packageData.packageId" style="position: absolute; right: -88px;"
            :style="{transition: 'ease-in-out ' + (packageData.animationSeconds ?? 1) + 's', visibility: packageData.displayPackage ? 'visible' : 'hidden'}"
            :id="packageData.packageId" class="package">
         <PackageComponent :data="packageData.data"

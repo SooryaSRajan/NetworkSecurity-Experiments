@@ -57,6 +57,10 @@ export default {
 
     this.$refs.childComponentRef.drawTwoLines("box1", "box2", 40, false, "red", "blue", "channel 1", "channel 2");
 
+    //animate
+    //TODO: use this later
+    // this.$refs.childComponentRef.animatePackage("box1", "package11", "box2");
+    // this.$refs.childComponentRef.animatePackage("box2", "package01", "box1");
 
 
   },
@@ -67,27 +71,6 @@ export default {
         {
           packageId: 'package01',
           data: [],
-          displayPackage: true,
-          packageBackgroundColor: '#9efd85',
-          animationSeconds: 1
-        },
-        {
-          packageId: 'package02',
-          data: [],
-          displayPackage: false,
-          packageBackgroundColor: '#9efd85',
-          animationSeconds: 1
-        },
-        {
-          packageId: 'package03',
-          data: [],
-          displayPackage: false,
-          packageBackgroundColor: '#9efd85',
-          animationSeconds: 1
-        },
-        {
-          packageId: 'package04',
-          data: [],
           displayPackage: false,
           packageBackgroundColor: '#9efd85',
           animationSeconds: 1
@@ -96,27 +79,6 @@ export default {
       serverOnePackages: [
         {
           packageId: 'package11',
-          data: [],
-          displayPackage: true,
-          packageBackgroundColor: '#85fdef',
-          animationSeconds: 1
-        },
-        {
-          packageId: 'package12',
-          data: [],
-          displayPackage: false,
-          packageBackgroundColor: '#85fdef',
-          animationSeconds: 1
-        },
-        {
-          packageId: 'package13',
-          data: [],
-          displayPackage: false,
-          packageBackgroundColor: '#85fdef',
-          animationSeconds: 1
-        },
-        {
-          packageId: 'package14',
           data: [],
           displayPackage: false,
           packageBackgroundColor: '#85fdef',

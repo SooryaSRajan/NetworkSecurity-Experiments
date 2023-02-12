@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Hid scroll bar">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Removed packet data">
       <change beforePath="$PROJECT_DIR$/exp-3/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-3/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-3/src/components/network-components/EndSystemComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/components/network-components/EndSystemComponent.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +60,7 @@
       <workItem from="1675779291668" duration="11000" />
       <workItem from="1676051275085" duration="9762000" />
       <workItem from="1676112189843" duration="6328000" />
-      <workItem from="1676139203195" duration="4753000" />
+      <workItem from="1676139203195" duration="5032000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -105,7 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676190356390</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Removed packet data">
+      <created>1676195469899</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1676195469899</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +140,7 @@
     <MESSAGE value="Added code to set background color to corresponding packet color to help user identify respective servers" />
     <MESSAGE value="Changed title" />
     <MESSAGE value="Hid scroll bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Hid scroll bar" />
+    <MESSAGE value="Removed packet data" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed packet data" />
   </component>
 </project>
