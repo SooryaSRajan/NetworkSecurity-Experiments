@@ -473,7 +473,7 @@ pre {
 }
 
 .active-button {
-  border-left: 1px solid #33FF00;
+  border-left: 2px solid #33FF00;
 }
 
 input {
