@@ -5,11 +5,11 @@
       <div class="col-1">
           <div class="row-1">
             <NetworkInteractionComponent ref="childComponentRef">
-              <EndSystemComponent top="10%" left="5%" class="box" id="box1">
+              <EndSystemComponent top="10%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
                 <ServerComponent :ip-address="ipAddress[0]"/>
               </EndSystemComponent>
 
-              <EndSystemComponent top="65%" left="80%" class="box" id="box2">
+              <EndSystemComponent top="55%" left="72%" class="box" id="box2" :package-info="serverOnePackages">
                 <ServerComponent :ip-address="ipAddress[1]"/>
               </EndSystemComponent>
             </NetworkInteractionComponent>
@@ -55,13 +55,74 @@ export default {
     ip2 = Math.floor(Math.random() * 255) + 1;
     this.ipAddress.push("10.16." + ip1 + "." + ip2);
 
-    this.$refs.childComponentRef.drawLine("box1", "box2");
+    this.$refs.childComponentRef.drawTwoLines("box1", "box2", 40, false, "red", "blue", "channel 1", "channel 2");
+
 
 
   },
   data() {
     return {
       ipAddress: [],
+      serverZeroPackages: [
+        {
+          packageId: 'package01',
+          data: [],
+          displayPackage: true,
+          packageBackgroundColor: '#9efd85',
+          animationSeconds: 1
+        },
+        {
+          packageId: 'package02',
+          data: [],
+          displayPackage: false,
+          packageBackgroundColor: '#9efd85',
+          animationSeconds: 1
+        },
+        {
+          packageId: 'package03',
+          data: [],
+          displayPackage: false,
+          packageBackgroundColor: '#9efd85',
+          animationSeconds: 1
+        },
+        {
+          packageId: 'package04',
+          data: [],
+          displayPackage: false,
+          packageBackgroundColor: '#9efd85',
+          animationSeconds: 1
+        },
+      ],
+      serverOnePackages: [
+        {
+          packageId: 'package11',
+          data: [],
+          displayPackage: true,
+          packageBackgroundColor: '#85fdef',
+          animationSeconds: 1
+        },
+        {
+          packageId: 'package12',
+          data: [],
+          displayPackage: false,
+          packageBackgroundColor: '#85fdef',
+          animationSeconds: 1
+        },
+        {
+          packageId: 'package13',
+          data: [],
+          displayPackage: false,
+          packageBackgroundColor: '#85fdef',
+          animationSeconds: 1
+        },
+        {
+          packageId: 'package14',
+          data: [],
+          displayPackage: false,
+          packageBackgroundColor: '#85fdef',
+          animationSeconds: 1
+        },
+      ],
     }
   },
   components: {ServerComponent, EndSystemComponent, StyledButton, NetworkInteractionComponent, TopBar},

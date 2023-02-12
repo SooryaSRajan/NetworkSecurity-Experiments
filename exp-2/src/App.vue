@@ -199,7 +199,7 @@ export default {
       serverOnePackages: [
         {
           packageId: 'package11',
-          data: ['Port 1'],
+          data: [],
           displayPackage: false,
           packageBackgroundColor: '#85fdef',
           animationSeconds: 1
@@ -229,7 +229,7 @@ export default {
       serverTwoPackages: [
         {
           packageId: 'package21',
-          data: ['Port 1'],
+          data: [],
           displayPackage: false,
           packageBackgroundColor: '#8985fd',
           animationSeconds: 1
@@ -259,7 +259,7 @@ export default {
       serverThreePackages: [
         {
           packageId: 'package31',
-          data: ['Port 1'],
+          data: [],
           displayPackage: false,
           packageBackgroundColor: '#fd85a5',
           animationSeconds: 1

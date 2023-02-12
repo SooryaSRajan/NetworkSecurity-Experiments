@@ -52,16 +52,35 @@ export default {
     document.getElementById("overlay").style.height = height
   },
   methods: {
-    drawSVGLine(x1, y1, x2, y2) {
-      //draws an SVG line from (x1, y1) to (x2, y2), internal method
+    drawSVGLine(x1, y1, x2, y2, color, text) {
       let svg = document.getElementById('lineCanvas');
       let line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      //set line color
+      if (color) {
+        line.setAttribute("style", "stroke:" + color + ";stroke-width:1");
+      }
+      else{
+        line.setAttribute("style", "stroke:rgb(0,0,0);stroke-width:1");
+      }
+      //add text above the of line and same angle of line
       line.setAttribute("x1", x1);
       line.setAttribute("y1", y1);
       line.setAttribute("x2", x2);
       line.setAttribute("y2", y2);
-      line.setAttribute("style", "stroke:rgb(0,0,0);stroke-width:1");
       svg.appendChild(line);
+      if (text) {
+        let textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textNode.setAttribute("x", (x1 + x2) / 2);
+        textNode.setAttribute("y", (y1 + y2) / 2 - 6);
+        textNode.setAttribute("text-anchor", "middle");
+        textNode.setAttribute("alignment-baseline", "middle");
+        textNode.setAttribute("font-size", "12px");
+        textNode.setAttribute("font-weight", "500");
+        textNode.setAttribute("fill", "black");
+        textNode.setAttribute("transform", "rotate(" + Math.atan((y2 - y1) / (x2 - x1)) * 180 / Math.PI + " " + (x1 + x2) / 2 + " " + (y1 + y2) / 2 + ")");
+        textNode.innerHTML = text;
+        svg.appendChild(textNode);
+      }
     },
     animatePackage(target, packageID, currentElementID, currentAnimationCallback) {
       //animates package with <packageID> from the current element to the target element
@@ -127,7 +146,7 @@ export default {
               //check if the package is at the target element
               let onTargetReach = () => {
                 if (packageDOM.offsetLeft === x1E && packageDOM.offsetTop === y1E) {
-                  if(this.onPackageAnimationEnd)
+                  if (this.onPackageAnimationEnd)
                     this.onPackageAnimationEnd(packageID)
                   if (currentAnimationCallback) {
                     currentAnimationCallback()
@@ -212,6 +231,41 @@ export default {
 
       this.drawSVGLine(x1, y1, x2, y2);
     },
+    drawTwoLines(id1, id2, space, isXTransformation, lineOneColor, lineTwoColor, text1, text2) {
+      let elementA = document.getElementById(id1);
+      let elementB = document.getElementById(id2);
+
+      if (!elementA || !elementB) {
+        return
+      }
+
+      let x1 = elementA.offsetLeft + (elementA.offsetWidth / 2);
+      let y1 = elementA.offsetTop + (elementA.offsetHeight / 2);
+      let x2 = elementB.offsetLeft + (elementB.offsetWidth / 2);
+      let y2 = elementB.offsetTop + (elementB.offsetHeight / 2);
+
+      if(isXTransformation){
+        let x1T = x1 - space / 2;
+        let x2T = x2 - space / 2;
+
+        let x1T2 = x1 + space / 2;
+        let x2T2 = x2 + space / 2;
+
+        this.drawSVGLine(x1T, y1, x2T, y2, lineOneColor, text1);
+        this.drawSVGLine(x1T2, y1, x2T2, y2, lineTwoColor, text2);
+      }
+      else{
+        let y1T = y1 - space / 2;
+        let y2T = y2 - space / 2;
+
+        let y1T2 = y1 + space / 2;
+        let y2T2 = y2 + space / 2;
+
+        this.drawSVGLine(x1, y1T, x2, y2T, lineOneColor, text1);
+        this.drawSVGLine(x1, y1T2, x2, y2T2, lineTwoColor, text2);
+      }
+
+    }
   }
 }
 </script>
