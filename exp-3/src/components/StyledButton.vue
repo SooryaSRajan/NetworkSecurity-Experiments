@@ -1,5 +1,5 @@
 <template>
-  <button :style="buttonStyle" @click="clickFunction" :disabled="disable">
+  <button :style="buttonStyle" @click="clickFunction" :disabled="disable" class="styled-button">
     {{ text }}
   </button>
 </template>

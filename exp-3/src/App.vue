@@ -9,11 +9,9 @@
               <ServerComponent :ip-address="ipAddress[0]" :port1="ports[0]" :port2="ports[1]" :port3="ports[2]"
                                :port4="ports[3]"/>
             </EndSystemComponent>
-
-            <EndSystemComponent top="-1%" left="82%" class="box" id="middle-man">
-              <img src="./assets/incognito.png" width="200" height="200" alt="middle-man">
-            </EndSystemComponent>
-
+            <!--            <EndSystemComponent top="-1%" left="82%" class="box" id="middle-man">-->
+            <!--              <img src="./assets/incognito.png" width="200" height="200" alt="middle-man">-->
+            <!--            </EndSystemComponent>-->
             <EndSystemComponent top="55%" left="72%" class="box" id="box2">
               <ServerComponent :ip-address="ipAddress[1]" :port1="ports[0]" :port2="ports[1]" :port3="ports[2]"
                                :port4="ports[3]"/>
@@ -61,13 +59,13 @@
         </div>
         <div class="row-4">
           <div class="terminal" v-if="channelIndex === 0">
-            <p v-for="(data, index) in unencryptedChannelData" :key="index">{{ data }}</p>
+            <span v-for="(data, index) in unencryptedChannelData" :key="index">{{ data }}</span>
           </div>
           <div class="terminal" v-if="channelIndex === 1 && channelOneData.length !== 0">
-            <p v-for="(data, index) in channelOneData" :key="index">{{ data }}</p>
+            <span v-for="(data, index) in channelOneData" :key="index">{{ data }}</span>
           </div>
           <div class="terminal" v-else-if="channelIndex === 2 && channelTwoData.length !== 0">
-            <p v-for="(data, index) in channelTwoData" :key="index">{{ data }}</p>
+            <span v-for="(data, index) in channelTwoData" :key="index">{{ data }}</span>
           </div>
           <div class="terminal-choices">
             <button class="terminal-button" :class="{'active-button' : channelIndex === 0}" @click="channelIndex = 0">
@@ -113,9 +111,21 @@ export default {
     this.$refs.childComponentRef.drawLine("box1", "box2", null, "Unencrypted channel");
 
     let randomIndex = Math.floor(Math.random() * this.userNameObjectCollection.length);
+    let randomUserData = this.userNameObjectCollection[randomIndex]
+
+    this.userNameEncrypted = randomUserData.encryptedUserName
+    this.userNameDecrypted = randomUserData.userName
+    this.keyPayloadOne = randomUserData.decryptionKey
+    this.encryptionAlgorithmOne = randomUserData.algorithm
 
     randomIndex = Math.floor(Math.random() * this.passwordObjectCollection.length);
-    //TODO: Random username and password objects
+    let randomPasswordData = this.passwordObjectCollection[randomIndex]
+
+    this.passwordEncrypted = randomPasswordData.encryptedPassword
+    this.passwordDecrypted = randomPasswordData.password
+    this.keyPayloadTwo = randomPasswordData.decryptionKey
+    this.encryptionAlgorithmTwo = randomPasswordData.algorithm
+
 
     console.log(randomIndex)
 
@@ -124,8 +134,104 @@ export default {
     return {
       step: 1,
       disableButton: false,
-      userNameObjectCollection: [{}],
-      passwordObjectCollection: [{}],
+      userNameObjectCollection: [
+        {
+          userName: "soorya_venkataraman@qrscomma",
+          encryptedUserName: "n9p4M3tOLGPgY8/t4KdmEVVWQNTpAfxSci1qajbZ9Dc=",
+          decryptionKey: "6yjQlrlYZfV1hjGF",
+          algorithm: "AES"
+        },
+
+        {
+          userName: "soorya_venkataraman@qrscomma",
+          encryptedUserName: "wAsO69gA6k93qhEv8aP9MBixf/G5yZ75dgnZ/pRD4Hs=",
+          decryptionKey: "4XPPa5EFnW8CWBsmg6axWz1bEWY7HtvLyB6Eui4eDldXDmlyUKvoRWwWGlsEblfxP8E9cExDL0DvQUPd4PEDk0Lhy5vCkR1luDzxwILUoS8slHmOIrcyYQGwyzHByLe7",
+          algorithm: "DES"
+        },
+        {
+          userName: "aniket_ramamurthy@bfgperiod",
+          encryptedUserName: "L3bXfVhbUiejErJSDT9Yh62U7j63NEadTcs+ovSbaac=",
+          decryptionKey: "p2Yvtdh5N1H4yxfK",
+          algorithm: "AES"
+        },
+        {
+          userName: "manoj_prakash@wxycolon",
+          encryptedUserName: "OJb1W4+mU1tAUBlFpVIcojPrgbnrw5lY",
+          decryptionKey: "zcKiHG4UZSezNZL93aihMKFQ3TJCzJkJYZw9PQ3R3LJLV3pq9nT1VivziINddPzWS71jgSj4AUkReLMvEPgTJkwlR1DmEcH3RjUJuefIbjAmio2rtIiofHxRQjEeyKZD",
+          algorithm: "DES"
+        }, {
+          userName: "ranjeet_radhakrishnan@mnosemicolon",
+          encryptedUserName: "aHTjLUbTN+UPpoc1OaC41qwFumvH4PQAxX0nYPG49ib36nywmzoaBKgk56Fkevds",
+          decryptionKey: "2BkOUigXhPL3w0pi",
+          algorithm: "AES"
+        },
+        {
+          userName: "ranjeet_radhakrishnan@mnosemicolon",
+          encryptedUserName: "Y+oaYMWfwzkKv+kv/Hf3DwZ0sSgL+ZnLJYWPTuW7cfH7BO8ZpRapHw==",
+          decryptionKey: "r6yMmNDhN7mjo7yqBQuTKriCO0aRWJgrIbJlFjGOlyf0cMM7rPLDdheEK00Lr5PB57QsN5gyvQhkaud8AUgzcrMY1LlDu3b4ziH4Up0lIlXmQ079DuATT7GaKjiHQYy0",
+          algorithm: "DES"
+        },
+        {
+          userName: "manoj_prakash@wxycolon",
+          encryptedUserName: "yLfR+OGGuW9M72b1VDjGG1igzOHDylqtJTg6TdNJ3M4=",
+          decryptionKey: "7YjPQuhi9ztsQcZi",
+          algorithm: "AES"
+        },
+        {
+          userName: "aniket_ramamurthy@bfgperiod",
+          encryptedUserName: "jkyNKqaEYcuOdAwUmCgghe+VAx+15NBdgdXJsJaYAOg=",
+          decryptionKey: "XLGisVKFCp9DWmG9kLR5T1X6vIrZAItEnq9quFs9eyd17YyK0ElmpG1j24XqfWAyrf1DxAZ9rdLoNXjzQxaRAjoZXAziYJ2cdiL9LYP51Nl0GYK0KRjHF1AWU8jmbyWW",
+          algorithm: "DES"
+        }],
+      passwordObjectCollection: [
+        {
+          password: "2/tfdLh}.G#^3bH.",
+          encryptedPassword: "opUtI1IO83ukUKNQ79qlUAOQgyciq5A1",
+          decryptionKey: "r6yMmNDhN7mjo7yqBQuTKriCO0aRWJgrIbJlFjGOlyf0cMM7rPLDdheEK00Lr5PB57QsN5gyvQhkaud8AUgzcrMY1LlDu3b4ziH4Up0lIlXmQ079DuATT7GaKjiHQYy0",
+          algorithm: "DES"
+        },
+        {
+          password: "X479*\"Gf4hTt\"@/K",
+          encryptedPassword: "Ijf+b9W4zRV74TDT2Ik0mRMpjNlaUQf72onFt8xpeCI=",
+          decryptionKey: "p2Yvtdh5N1H4yxfK",
+          algorithm: "AES"
+        },
+        {
+          password: ";K]d4U-)Kq/LS#u&",
+          encryptedPassword: "MzJkBX7AU+jA74RwF7sc/q9/ojrqgDKg",
+          decryptionKey: "4XPPa5EFnW8CWBsmg6axWz1bEWY7HtvLyB6Eui4eDldXDmlyUKvoRWwWGlsEblfxP8E9cExDL0DvQUPd4PEDk0Lhy5vCkR1luDzxwILUoS8slHmOIrcyYQGwyzHByLe7",
+          algorithm: "DES"
+        },
+        {
+          password: ";K]d4U-)Kq/LS#u&",
+          encryptedPassword: "e+iwNJ/X2KAaYfgPXtJm74cnsA1fBzf1Lgo3ZPcLgAk=",
+          decryptionKey: "6yjQlrlYZfV1hjGF",
+          algorithm: "AES"
+        },
+        {
+          password: "X479*\"Gf4hTt\"@/K",
+          encryptedPassword: "VTQyYw8Gb+cOXpMrp34s1fS4YJlMIsM9",
+          decryptionKey: "XLGisVKFCp9DWmG9kLR5T1X6vIrZAItEnq9quFs9eyd17YyK0ElmpG1j24XqfWAyrf1DxAZ9rdLoNXjzQxaRAjoZXAziYJ2cdiL9LYP51Nl0GYK0KRjHF1AWU8jmbyWW",
+          algorithm: "DES"
+        },
+        {
+          password: "v'db&)_\\F2L~VjbM",
+          encryptedPassword: "8bnDaaoUdiGi/t7kB31dZ/TvHRqquVx58HUGLTAlk+k=",
+          decryptionKey: "7YjPQuhi9ztsQcZi",
+          algorithm: "AES"
+        },
+        {
+          password: "v'db&)_\\F2L~VjbM",
+          encryptedPassword: "GcOIrL6AR79w4nD9FaPe1vErN6SLwmn1",
+          decryptionKey: "zcKiHG4UZSezNZL93aihMKFQ3TJCzJkJYZw9PQ3R3LJLV3pq9nT1VivziINddPzWS71jgSj4AUkReLMvEPgTJkwlR1DmEcH3RjUJuefIbjAmio2rtIiofHxRQjEeyKZD",
+          algorithm: "DES"
+        },
+        {
+          password: "2/tfdLh}.G#^3bH.",
+          encryptedPassword: "6ua6wPnnsR/YG0LRYQfjr+ffacE6nIdc7m8c4xOjO5M=",
+          decryptionKey: "2BkOUigXhPL3w0pi",
+          algorithm: "AES"
+        }],
       ports: [1, 0, 0, 0],
       userNameEncrypted: "",
       passwordEncrypted: "",
@@ -228,8 +334,7 @@ export default {
             this.step = 4
           });
         });
-      }
-      else if(this.step === 4){
+      } else if (this.step === 4) {
         //TODO: Move to next experiment
       }
     }
@@ -266,13 +371,6 @@ pre {
   overflow: clip;
 }
 
-input {
-  width: 100%;
-  margin-top: 10px;
-  font-size: 20px;
-  padding: 15px;
-}
-
 .col-1 {
   height: 70%;
   max-height: 70%;
@@ -306,13 +404,15 @@ input {
 }
 
 .row-3 {
-  flex: 1;
+  padding-right: 15px;
+  width: 30%;
   display: flex;
   padding-left: 25px;
-  padding-bottom: 15px;
+  padding-bottom: 20px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  overflow-y: scroll;
 }
 
 * {
@@ -320,6 +420,7 @@ input {
 }
 
 .row-3-content-space {
+  margin-bottom: 10px;
   width: 100%;
   flex: 1;
   display: flex;
@@ -328,14 +429,14 @@ input {
 }
 
 .row-4 {
-  margin-left: 15px;
-  flex: 2;
+  width: 70%;
   display: flex;
   flex-direction: row;
+  text-overflow: fade;
 }
 
 .terminal {
-  flex: 8;
+  width: 90%;
   font-size: 16px;
   display: flex;
   flex-direction: column;
@@ -345,10 +446,13 @@ input {
   padding: 10px 15px;
   background-color: #252526;
   color: #33FF00;
+  overflow-y: scroll;
 }
 
 .terminal-choices {
+  width: 10%;
   flex: 1;
+  min-width: 100px;
   background-color: #3c3f41;
 }
 
@@ -372,29 +476,15 @@ input {
   border-left: 1px solid #33FF00;
 }
 
-.input-field {
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
-
 input {
   border: none;
   box-shadow: 2px 3px 10px 2px #D7DFFF;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 20px;
   padding: 15px;
-}
-
-.step-title {
-  padding-bottom: 25px;
-  font-weight: 500;
-  font-size: 25px;
-}
-
-.instructions {
+  box-sizing: border-box;
+  width: 99%;
 }
 
 .button-row {
@@ -403,7 +493,6 @@ input {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 }
 
 body {
@@ -423,10 +512,54 @@ p {
   text-align: justify;
 }
 
-/*media screen*/
-@media screen and (max-width: 950px) {
+span {
+  display: block;
+  padding: 0;
+  margin: 0;
+  text-align: start;
+  overflow-wrap: break-word;
+}
 
+/*media screen*/
+@media screen and (max-width: 1000px) {
+
+  .button-row {
+    flex-direction: column;
+    justify-self: start;
+    flex: 2;
+  }
+
+  .col-1 {
+    flex-direction: column;
+  }
+
+  .row-2 {
+    padding: 2px;
+    margin: 0 20px 5px;
+    flex-direction: row;
+  }
+
+
+  .flex-box{
+    height: 180vh;
+  }
 
 }
 
+</style>
+<style>
+@media screen and (max-width: 1200px) {
+  .styled-button {
+    margin-top: 10px;
+  }
+
+  .content {
+    font-size: 10px;
+  }
+
+  .card-box {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+}
 </style>
