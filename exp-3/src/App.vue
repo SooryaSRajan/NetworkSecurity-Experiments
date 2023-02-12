@@ -14,7 +14,7 @@
               <img src="./assets/incognito.png" width="200" height="200" alt="middle-man">
             </EndSystemComponent>
 
-            <EndSystemComponent top="55%" left="72%" class="box" id="box2" :package-info="serverOnePackages">
+            <EndSystemComponent top="55%" left="72%" class="box" id="box2">
               <ServerComponent :ip-address="ipAddress[1]" :port1="ports[0]" :port2="ports[1]" :port3="ports[2]"
                                :port4="ports[3]"/>
             </EndSystemComponent>
@@ -53,10 +53,10 @@
             <input v-model="password" placeholder="password">
           </div>
           <div class="button-row">
-            <StyledButton :text="step === 1 ? 'Start' : step !== 5? 'Next' : 'Done'" :click-function="buttonClick"
+            <StyledButton :text="step === 1 ? 'Start' : step !== 4? 'Next' : 'Done'" :click-function="buttonClick"
                           :disable="disableButton"></StyledButton>
             <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
-            <StyledButton text="Reset" :disable="disableButton"></StyledButton>
+            <StyledButton text="Reset" :click-function="reset" :disable="disableButton"></StyledButton>
           </div>
         </div>
         <div class="row-4">
@@ -126,10 +126,6 @@ export default {
       disableButton: false,
       userNameObjectCollection: [{}],
       passwordObjectCollection: [{}],
-      firstStepComplete: false,
-      secondStepComplete: false,
-      thirdStepComplete: false,
-      fourthStepComplete: false,
       ports: [1, 0, 0, 0],
       userNameEncrypted: "",
       passwordEncrypted: "",
@@ -155,15 +151,6 @@ export default {
           animationSeconds: 1
         },
       ],
-      serverOnePackages: [
-        {
-          packageId: 'package11',
-          data: [],
-          displayPackage: false,
-          packageBackgroundColor: '#85fdef',
-          animationSeconds: 1
-        },
-      ],
     }
   },
   methods: {
@@ -173,55 +160,64 @@ export default {
         alert("Experiment complete!")
       }
     },
+    reset() {
+      this.disableButton = false;
+      this.unencryptedChannelData = ["hacker@unencryptedChannel > Logging data from unencrypted channel"]
+      this.channelOneData = [];
+      this.channelTwoData = [];
+      this.userName = "";
+      this.password = "";
+      this.channelIndex = 0;
+      this.step = 1;
+      this.serverZeroPackages[0].displayPackage = false;
+      this.serverZeroPackages[0].data = [];
+    },
     buttonClick() {
       if (this.step === 1) {
         this.serverZeroPackages[0].displayPackage = true;
         this.serverZeroPackages[0].data = ["KEY REQUEST"]
         this.unencryptedChannelData.push("hacker@unencryptedChannel > Sending key request to server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
         this.disableButton = true;
+
         this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
-          this.step = 2
-          this.disableButton = false;
+          this.serverZeroPackages[0].data = ["KEY RESPONSE"]
+          this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
+            this.unencryptedChannelData.push("hacker@unencryptedChannel > Received key response from server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+            this.unencryptedChannelData.push(`hacker@unencryptedChannel > Payload: [{Key: ${this.keyPayloadOne}, Channel: CHANNEL 1, ENC: ${this.encryptionAlgorithmOne}}, {Key: ${this.keyPayloadTwo}, Channel: CHANNEL 2, ENC: ${this.encryptionAlgorithmTwo}}]`)
+            this.$refs.childComponentRef.drawLineOffset("box1", "box2", 55, false, "red", "channel 1", false);
+            this.step = 2
+            this.disableButton = false;
+          });
         });
       } else if (this.step === 2) {
-        this.serverZeroPackages[0].displayPackage = true;
-        this.serverZeroPackages[0].data = ["KEY RESPONSE"]
-        setTimeout(() => {
-          this.unencryptedChannelData.push("hacker@unencryptedChannel > Received key response from server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
-          this.unencryptedChannelData.push(`hacker@unencryptedChannel > Payload: [{Key: ${this.keyPayloadOne}, Channel: CHANNEL 1, ENC: ${this.encryptionAlgorithmOne}}, {Key: ${this.keyPayloadTwo}, Channel: CHANNEL 2, ENC: ${this.encryptionAlgorithmTwo}}]`)
-          this.$refs.childComponentRef.drawLineOffset("box1", "box2", 55, false, "red", "channel 1", false);
-        }, 1000);
-        this.disableButton = true;
-        this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
-          this.step = 3
-          this.disableButton = false;
-        });
-      } else if (this.step === 3) {
         this.ports[1] = 1;
         this.serverZeroPackages[0].displayPackage = true;
         this.serverZeroPackages[0].data = ["PAYLOAD", "CHANNEL 1"]
         this.channelIndex = 1
+        this.channelOneData.push("hacker@channel1 > Logging data from channel 1")
         this.channelOneData.push("hacker@channel1 > Sending encrypted username to server 0, channel: 1, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
         this.channelOneData.push(`hacker@channel1 > Payload: {userName: ${this.userNameEncrypted}}`)
+        this.disableButton = true;
 
         this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
           this.serverZeroPackages[0].data = ["RESPONSE", "CHANNEL 1"]
-          this.disableButton = true;
           this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
             this.channelOneData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
-            this.step = 4
+            this.step = 3
             this.disableButton = false;
             this.$refs.childComponentRef.drawLineOffset("box1", "box2", 55, false, "blue", "channel 2", true);
           });
         });
-      } else if (this.step === 4) {
+      } else if (this.step === 3) {
         this.ports[2] = 1;
         this.serverZeroPackages[0].displayPackage = true;
         this.serverZeroPackages[0].data = ["PAYLOAD", "CHANNEL 2"]
         this.channelIndex = 2
+        this.channelOneData.push("hacker@channel2 > Logging data from channel 2")
         this.channelTwoData.push("hacker@channel1 > Sending encrypted password to server 0, channel: 2,  accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
         this.channelTwoData.push(`hacker@channel1 > Payload: {password: ${this.passwordEncrypted}}`)
         this.disableButton = true;
+
         this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
           this.serverZeroPackages[0].data = ["RESPONSE", "CHANNEL 2"]
           this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
@@ -229,11 +225,13 @@ export default {
             this.channelTwoData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
             let randomKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             this.channelTwoData.push("hacker@channel1 > Decrypted response: {success: true, message: 'Login successful', bearerToken: '" + randomKey + "'}")
-            this.step = 5
+            this.step = 4
           });
         });
       }
-
+      else if(this.step === 4){
+        //TODO: Move to next experiment
+      }
     }
   },
   components: {DropDownCard, ServerComponent, EndSystemComponent, StyledButton, NetworkInteractionComponent, TopBar},
@@ -367,6 +365,7 @@ input {
 
 .terminal-button:hover {
   background-color: #343333;
+  cursor: pointer;
 }
 
 .active-button {
