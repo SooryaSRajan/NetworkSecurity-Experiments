@@ -276,6 +276,10 @@ export default {
         }
       }
     },
+    clearLines() {
+      let svg = document.getElementById('lineCanvas');
+      svg.parentNode.replaceChild(svg.cloneNode(false), svg);
+    },
   }
 }
 </script>

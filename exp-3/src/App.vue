@@ -374,6 +374,9 @@ export default {
       this.step = 1;
       this.serverZeroPackages[0].displayPackage = false;
       this.serverZeroPackages[0].data = [];
+      this.ports = [1, 0, 0, 0];
+      this.$refs.childComponentRef.clearLines()
+      this.$refs.childComponentRef.drawLine("box1", "box2", null, "Unencrypted channel");
     },
     buttonClick() {
       if (this.step === 1) {
