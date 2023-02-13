@@ -225,13 +225,13 @@ export default {
           encryptedUserName: "NA3cO1teOrto0QN6SlEuynaX9iM4o+aD",
           decryptionKey: "l9I9ZQVeoVPnOK3XUdoSw3tkUmE8sYnU",
           algorithm: "IDEA"
-        },{
+        }, {
           userName: "manoj_prakash@wxycolon",
           encryptedUserName: "0zCNE0CUP9MLNVvKppAMDr+ckomB76lv",
           decryptionKey: "YesLgKfRedihNvIFzYKLpI8Lh6Sad490",
           algorithm: "Blowfish"
         },
-],
+      ],
       passwordObjectCollection: [
         {
           password: "2/tfdLh}.G#^3bH.",
@@ -250,7 +250,7 @@ export default {
           encryptedPassword: "S29vD8GECNt8l4C2SWKgO63M6m4J4C0A",
           decryptionKey: "5zlmDJH1vZzVras3NLhgw96xj3gEGjbP",
           algorithm: "IDEA"
-        },        {
+        }, {
           password: "2/tfdLh}.G#^3bH.",
           encryptedPassword: "OasLpp8sIOQ4n66wZJCoqNrZQsbip3ec",
           decryptionKey: "X1mKdRcy8fFintb7qEkj5wiDFBEiM8vK",
@@ -328,7 +328,7 @@ export default {
           decryptionKey: "YesLgKfRedihNvIFzYKLpI8Lh6Sad490",
           algorithm: "BLowfish"
         },
-        ],
+      ],
       ports: [1, 0, 0, 0],
       userNameEncrypted: "",
       passwordEncrypted: "",
@@ -379,13 +379,13 @@ export default {
       if (this.step === 1) {
         this.serverZeroPackages[0].displayPackage = true;
         this.serverZeroPackages[0].data = ["KEY REQUEST"]
-        this.unencryptedChannelData.push("hacker@unencryptedChannel > Sending key request to server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+        this.unencryptedChannelData.push("hacker@unencryptedChannel > Sending key request to server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: " + this.ipAddress[0])
         this.disableButton = true;
 
         this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
           this.serverZeroPackages[0].data = ["KEY RESPONSE"]
           this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
-            this.unencryptedChannelData.push("hacker@unencryptedChannel > Received key response from server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+            this.unencryptedChannelData.push("hacker@unencryptedChannel > Received key response from server 0, connection: keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: " + this.ipAddress[0])
             this.unencryptedChannelData.push(`hacker@unencryptedChannel > Payload: [{Key: ${this.keyPayloadOne}, Channel: CHANNEL 1, ENC: ${this.encryptionAlgorithmOne}}, {Key: ${this.keyPayloadTwo}, Channel: CHANNEL 2, ENC: ${this.encryptionAlgorithmTwo}}]`)
             this.$refs.childComponentRef.drawLineOffset("box1", "box2", 55, false, "red", "channel 1", false);
             this.step = 2
@@ -398,14 +398,14 @@ export default {
         this.serverZeroPackages[0].data = ["PAYLOAD", "CHANNEL 1"]
         this.channelIndex = 1
         this.channelOneData.push("hacker@channel1 > Logging data from channel 1")
-        this.channelOneData.push("hacker@channel1 > Sending encrypted username to server 0, channel: 1, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+        this.channelOneData.push("hacker@channel1 > Sending encrypted username to server 0, channel: 1, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: " + this.ipAddress[0])
         this.channelOneData.push(`hacker@channel1 > Payload: {userName: ${this.userNameEncrypted}}`)
         this.disableButton = true;
 
         this.$refs.childComponentRef.animatePackage("box2", "package01", "box1", () => {
           this.serverZeroPackages[0].data = ["RESPONSE", "CHANNEL 1"]
           this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
-            this.channelOneData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+            this.channelOneData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: " + this.ipAddress[0])
             this.step = 3
             this.disableButton = false;
             this.$refs.childComponentRef.drawLineOffset("box1", "box2", 55, false, "blue", "channel 2", true);
@@ -419,7 +419,7 @@ export default {
         this.serverZeroPackages[0].data = ["PAYLOAD", "CHANNEL 2"]
         this.channelIndex = 2
         this.channelOneData.push("hacker@channel2 > Logging data from channel 2")
-        this.channelTwoData.push("hacker@channel1 > Sending encrypted password to server 0, channel: 2,  accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+        this.channelTwoData.push("hacker@channel1 > Sending encrypted password to server 0, channel: 2,  accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: " + this.ipAddress[0])
         this.channelTwoData.push(`hacker@channel1 > Payload: {password: ${this.passwordEncrypted}}`)
         this.disableButton = true;
 
@@ -427,7 +427,7 @@ export default {
           this.serverZeroPackages[0].data = ["RESPONSE", "CHANNEL 2"]
           this.$refs.childComponentRef.animatePackage("box1", "package01", "box2", () => {
             this.disableButton = false;
-            this.channelTwoData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
+            this.channelTwoData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: " + this.ipAddress[0])
             let randomKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             this.channelTwoData.push("hacker@channel1 > Decrypted response: {success: true, message: 'Login successful', bearerToken: '" + randomKey + "'}")
           });
@@ -636,7 +636,7 @@ span {
   }
 
 
-  .flex-box{
+  .flex-box {
     height: 180vh;
   }
 
