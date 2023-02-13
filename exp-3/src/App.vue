@@ -240,10 +240,45 @@ export default {
           algorithm: "DES"
         },
         {
+          password: "2/tfdLh}.G#^3bH.",
+          encryptedPassword: "6ua6wPnnsR/YG0LRYQfjr+ffacE6nIdc7m8c4xOjO5M=",
+          decryptionKey: "2BkOUigXhPL3w0pi",
+          algorithm: "AES"
+        },
+        {
+          password: "2/tfdLh}.G#^3bH.",
+          encryptedPassword: "S29vD8GECNt8l4C2SWKgO63M6m4J4C0A",
+          decryptionKey: "5zlmDJH1vZzVras3NLhgw96xj3gEGjbP",
+          algorithm: "IDEA"
+        },        {
+          password: "2/tfdLh}.G#^3bH.",
+          encryptedPassword: "OasLpp8sIOQ4n66wZJCoqNrZQsbip3ec",
+          decryptionKey: "X1mKdRcy8fFintb7qEkj5wiDFBEiM8vK",
+          algorithm: "Blowfish"
+        },
+        {
           password: "X479*\"Gf4hTt\"@/K",
           encryptedPassword: "Ijf+b9W4zRV74TDT2Ik0mRMpjNlaUQf72onFt8xpeCI=",
           decryptionKey: "p2Yvtdh5N1H4yxfK",
           algorithm: "AES"
+        },
+        {
+          password: "X479*\"Gf4hTt\"@/K",
+          encryptedPassword: "VTQyYw8Gb+cOXpMrp34s1fS4YJlMIsM9",
+          decryptionKey: "XLGisVKFCp9DWmG9kLR5T1X6vIrZAItEnq9quFs9eyd17YyK0ElmpG1j24XqfWAyrf1DxAZ9rdLoNXjzQxaRAjoZXAziYJ2cdiL9LYP51Nl0GYK0KRjHF1AWU8jmbyWW",
+          algorithm: "DES"
+        },
+        {
+          password: "X479*\"Gf4hTt\"@/K",
+          encryptedPassword: "n1FAaYn5vkIf14cAHIsNeeY07QvZxiJ6",
+          decryptionKey: "bYiAXThE5Yv3PLWYUx0Y4c8x1oq7WFCE",
+          algorithm: "IDEA"
+        },
+        {
+          password: "X479*\"Gf4hTt\"@/K",
+          encryptedPassword: "Twa8lIIcg4kCIo8QdkyXK/27Dgwxrjkj",
+          decryptionKey: "qXIofvgiBMsz6PshySyMei9qtKthjPYo",
+          algorithm: "Blowfish"
         },
         {
           password: ";K]d4U-)Kq/LS#u&",
@@ -258,10 +293,16 @@ export default {
           algorithm: "AES"
         },
         {
-          password: "X479*\"Gf4hTt\"@/K",
-          encryptedPassword: "VTQyYw8Gb+cOXpMrp34s1fS4YJlMIsM9",
-          decryptionKey: "XLGisVKFCp9DWmG9kLR5T1X6vIrZAItEnq9quFs9eyd17YyK0ElmpG1j24XqfWAyrf1DxAZ9rdLoNXjzQxaRAjoZXAziYJ2cdiL9LYP51Nl0GYK0KRjHF1AWU8jmbyWW",
-          algorithm: "DES"
+          password: ";K]d4U-)Kq/LS#u&",
+          encryptedPassword: "FL+E+4L8fN2QARFNG/zhcqI0EHI/9UHO",
+          decryptionKey: "IeY5XlC5CsC2fI9rEss5ZOgCoDH23xUC",
+          algorithm: "IDEA"
+        },
+        {
+          password: ";K]d4U-)Kq/LS#u&",
+          encryptedPassword: "ZaP0nQpbjp20xN9t3xF083hAfn/P9LJd",
+          decryptionKey: "SQboRKNFGxeKCleZyyr3RfljurIZP0OL",
+          algorithm: "Blowfish"
         },
         {
           password: "v'db&)_\\F2L~VjbM",
@@ -276,11 +317,18 @@ export default {
           algorithm: "DES"
         },
         {
-          password: "2/tfdLh}.G#^3bH.",
-          encryptedPassword: "6ua6wPnnsR/YG0LRYQfjr+ffacE6nIdc7m8c4xOjO5M=",
-          decryptionKey: "2BkOUigXhPL3w0pi",
-          algorithm: "AES"
-        }],
+          password: "v'db&)_\\F2L~VjbM",
+          encryptedPassword: "0t1DP9RQNkWRoQmHGa/pYo8IoDCzZNko",
+          decryptionKey: "l9I9ZQVeoVPnOK3XUdoSw3tkUmE8sYnU",
+          algorithm: "IDEA"
+        },
+        {
+          password: "v'db&)_\\F2L~VjbM",
+          encryptedPassword: "51KwwZ7y1bDGy1B4gnojj9VZgqY6trzx",
+          decryptionKey: "YesLgKfRedihNvIFzYKLpI8Lh6Sad490",
+          algorithm: "BLowfish"
+        },
+        ],
       ports: [1, 0, 0, 0],
       userNameEncrypted: "",
       passwordEncrypted: "",
