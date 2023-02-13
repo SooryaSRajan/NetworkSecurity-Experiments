@@ -52,7 +52,7 @@
           </div>
           <div class="button-row">
             <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 4" :click-function="buttonClick"
-                          :disable="disableButton"></StyledButton>
+                          :disable="disableButton && step !== 4"></StyledButton>
             <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
             <StyledButton text="Reset" :click-function="reset" :disable="disableButton"></StyledButton>
           </div>
@@ -412,6 +412,8 @@ export default {
           });
         });
       } else if (this.step === 3) {
+        this.step = 4
+
         this.ports[2] = 1;
         this.serverZeroPackages[0].displayPackage = true;
         this.serverZeroPackages[0].data = ["PAYLOAD", "CHANNEL 2"]
@@ -428,11 +430,8 @@ export default {
             this.channelTwoData.push("hacker@channel1 > Received encrypted response from server 0, keep-alive, accept-language: en-US,en;q=0.9, host: " + this.ipAddress[1] + ", origin: null")
             let randomKey = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             this.channelTwoData.push("hacker@channel1 > Decrypted response: {success: true, message: 'Login successful', bearerToken: '" + randomKey + "'}")
-            this.step = 4
           });
         });
-      } else if (this.step === 4) {
-        //TODO: Move to next experiment
       }
     }
   },
