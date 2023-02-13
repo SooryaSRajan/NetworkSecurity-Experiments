@@ -28,13 +28,18 @@ export default {
     disable: {
       type: Boolean,
       default: false
+    },
+    invisible: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
     buttonStyle() {
       return {
         backgroundColor: this.backgroundColor,
-        color: this.textColor
+        color: this.textColor,
+        visibility: this.invisible ? "hidden" : "visible"
       }
     }
   }

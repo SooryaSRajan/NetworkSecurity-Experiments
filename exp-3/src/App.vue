@@ -51,7 +51,7 @@
             <input v-model="password" placeholder="password">
           </div>
           <div class="button-row">
-            <StyledButton :text="step === 1 ? 'Start' : step !== 4? 'Next' : 'Done'" :click-function="buttonClick"
+            <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 4" :click-function="buttonClick"
                           :disable="disableButton"></StyledButton>
             <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
             <StyledButton text="Reset" :click-function="reset" :disable="disableButton"></StyledButton>
