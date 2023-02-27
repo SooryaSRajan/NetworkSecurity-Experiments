@@ -1,5 +1,6 @@
 <template>
   <div class="flex-box">
+    <div id="snackbar">Some text some message..</div>
     <TopBar title="Simulation of the TCP Protocol"></TopBar>
     <div class="rem-space">
       <div class="row-1">
@@ -65,10 +66,10 @@
         <NetworkInteractionComponent ref="childComponentRef">
           <EndSystemComponent class="box" id="computer1" package-id="package1" top="55%" left="10%" ref="computer1"
                               :data="packageDataProcessed" :display-package="displayPackage">
-            <img src="./assets/desktop.png" width="150" height="150" alt="computer">
+            <img src="./assets/desktop.png" width="250" height="250" alt="computer">
           </EndSystemComponent>
           <EndSystemComponent class="box" id="computer2" top="10%" left="70%">
-            <img src="./assets/desktop.png" width="150" height="150" alt="computer">
+            <img src="./assets/server.jpg" width="250" height="250" alt="computer">
           </EndSystemComponent>
         </NetworkInteractionComponent>
       </div>
@@ -128,11 +129,26 @@ export default {
       this.ackNumber = 0
       this.clientData = ""
     },
+    correct1(message) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = message;
+            x.style.backgroundColor = "green";
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+        },
+        incorrect(msg) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = msg;
+            x.style.backgroundColor = "red";
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+        },
     stepOne() {
       this.beginStepOne(this.ackNumber)
     },
     stepTwo() {
       this.beginStepTwo(this.synNumber)
+      
     },
     stepThree() {
       this.beginStepThree(this.clientData)
@@ -153,6 +169,7 @@ export default {
         }, 1000)
 
       } else {
+        this.incorrect("Make sure your SYN number is of 4 digits")
         this.isExecuting = false
         this.displayPackage = false
         //TODO: Display error
@@ -172,9 +189,11 @@ export default {
             this.currentStep = 2
           }, 7000)
         }, 1000)
+        this.correct1("Note that the ACK value is SYN+1")
 
       } else {
         this.isExecuting = false
+        this.incorrect("Make sure your SYN number is of 4 digits")
       }
     },
     beginStepThree(data) {
@@ -267,6 +286,77 @@ input {
   justify-content: space-between;
 
 }
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
 
 body {
   margin: 0;
