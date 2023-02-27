@@ -1,0 +1,171 @@
+Index: exp-4/src/App.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><template>\n  <div class=\"flex-box\">\n    <TopBar title=\"Combining active and passive attacks\"></TopBar>\n    <div class=\"rem-space\">\n      <div class=\"col-1\">\n        <div class=\"row-3\">\n          <div class=\"row-3-content-space\">\n            <div class=\"step-1\" v-if=\"step===1\">\n            <p>In this experiment, we will be combining active and passive attacks to retrieve the username and password of a\n              user. You are the machine titled 'Hacker' in the network. Begin by intercepting a packet from a channel of your choice.</p>\n            <select>\n              <option value=\"1\">Channel 1</option>\n              <option value=\"2\">Channel 2</option>\n              <option value=\"3\">Channel 3</option>\n            </select>\n          </div>\n          <div class=\"step-2\" v-if=\"step===2\">\n            <h4>Packet intercepted successfully</h4>\n            <p>Now that you have intercepted a packet, you can use this to communicate with the server on behalf of the user. The packet you intercepted is shown below.</p>\n            <p>Source: </p>\n            <p>Channel: </p>\n            <p>To send the packet to the server on behalf of the user, click on 'Next'</p>\n        </div>\n        <div class=\"step-3\" v-if=\"step===3\">\n            <h4>Received reply from server</h4>\n            <p>Intercepted packet was sent successfully to the server and the reply has been retrieved. Analyze the packet to identify username and password, and input them in the respective text fields here, to verify.</p>\n            <input v-model=\"userName\" placeholder=\"username\">\n            <input v-model=\"password\" placeholder=\"password\">\n        </div>\n        </div>\n          <div class=\"button-row\">\n            <StyledButton :text=\"step === 1 ? 'Start' : 'Next'\" :invisible=\"step === 4\" :click-function=\"buttonClick\"\n                          :disable=\"disableButton && step !== 4\"></StyledButton>\n            <StyledButton text=\"Verify\" :click-function=\"validate\" :disable=\"disableButton\"></StyledButton>\n            <StyledButton text=\"Reset\" :click-function=\"reset\" :disable=\"disableButton\"></StyledButton>\n          </div>\n        </div>\n      </div>\n      <div class=\"col-2\">\n        \n        <div class=\"row-4\">\n          <div class=\"terminal\" v-if=\"channelIndex === 0\">\n            <span v-for=\"(data, index) in channelOneData\" :key=\"index\">{{ data }}</span>\n          </div>\n          <div class=\"terminal\" v-if=\"channelIndex === 1\">\n            <span v-for=\"(data, index) in channelTwoData\" :key=\"index\">{{ data }}</span>\n          </div>\n          <div class=\"terminal\" v-if=\"channelIndex === 2\">\n            <span v-for=\"(data, index) in channelThreeData\" :key=\"index\">{{ data }}</span>\n          </div>\n          <div class=\"terminal\" v-if=\"channelIndex === 3\">\n            <span v-for=\"(data, index) in channelHackerData\" :key=\"index\">{{ data }}</span>\n          </div>\n          <div class=\"terminal-choices\">\n            <button class=\"terminal-button\" :class=\"{'active-button' : channelIndex === 0}\" @click=\"channelIndex = 0\">\n              Channel 1\n            </button>\n            <button class=\"terminal-button\" :class=\"{'active-button' : channelIndex === 1}\" @click=\"channelIndex = 1\">\n                    <!-- v-if=\"channelOneData.length !== 0\"> -->\n              Channel 2\n            </button>\n            <button class=\"terminal-button\" :class=\"{'active-button' : channelIndex === 2}\" @click=\"channelIndex = 2\">\n                    <!-- v-if=\"channelTwoData.length !== 0\"> -->\n              Channel 3\n            </button>\n            <button class=\"terminal-button\" :class=\"{'active-button' : channelIndex === 2}\" @click=\"channelIndex = 2\">\n                    <!-- v-if=\"channelTwoData.length !== 0\"> -->\n              Hacker\n            </button>\n\n          </div>\n        </div>\n        \n      </div>\n\n    </div>\n  </div>\n</template>\n\n<script>\n\nimport TopBar from \"@/components/TopBar\";\n\nimport StyledButton from \"@/components/StyledButton\";\nexport default {\n  name: 'App',\n  mounted() {\n    \n  },\n  data() {\n    return {\n      step: 1,\n      disableButton: false,\n      userName: \"\",\n      password: \"\",\n      channelIndex: 0,\n      channelOneData: ['this is some test data'],\n      channelTwoData: [],\n      channelThreeData: [],\n      channelHackerData: [],\n\n    }\n  },\n  methods: {\n    \n  },\n  components: {TopBar, StyledButton},\n}\n</script>\n\n<style>\n#app {\n  font-family: Avenir, Helvetica, Arial, sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  text-align: center;\n}\n\npre {\n  margin: 0;\n  padding: 0;\n}\n\n.flex-box {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100%;\n}\n\n.rem-space {\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-evenly;\n  overflow: clip;\n}\n\n.col-1 {\n  height: 70%;\n  max-height: 70%;\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  background-color: aquamarine;\n}\n\n.col-2 {\n  height: 30%;\n  display: flex;\n  flex-direction: row;\n  background-color: bisque\n}\n\n.row-1 {\n  flex: 3;\n  display: flex;\n  background-color: #33FF00;\n}\n\n.row-2 {\n  flex: 1;\n  border-radius: 15px;\n  margin-top: 20px;\n  margin-bottom: 20px;\n  margin-right: 20px;\n  padding: 10px;\n  display: flex;\n  flex-direction: column;\n  justify-content: start;\n  align-items: start;\n  overflow-y: scroll;\n  background-color: #4f4faf;\n}\n\n.row-3 {\n  padding-right: 15px;\n  width: 25%;\n  height: 100%;\n  display: flex;\n  padding-left: 25px;\n  padding-bottom: 20px;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  overflow-y: scroll;\n  background-color: coral;\n}\n\n* {\n  box-sizing: border-box;\n}\n\n.row-3-content-space {\n  margin-bottom: 10px;\n  width: 100%;\n  flex: 1;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.row-4 {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  text-overflow: fade;\n  background-color: crimson;\n}\n\n.terminal {\n  width: 90%;\n  font-size: 16px;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  font-family: monospace;\n  padding: 10px 15px;\n  background-color: #252526;\n  color: #33FF00;\n  overflow-y: scroll;\n}\n\n.terminal-choices {\n  width: 10%;\n  flex: 1;\n  min-width: 100px;\n  background-color: #3c3f41;\n}\n\n.terminal-button {\n  width: 100%;\n  background-color: transparent;\n  border: none;\n  padding: 10px;\n  color: white;\n  font-family: monospace;\n  font-size: 13px;\n  text-align: start;\n}\n\n.terminal-button:hover {\n  background-color: #343333;\n  cursor: pointer;\n}\n\n.active-button {\n  border-left: 2px solid #33FF00;\n}\n\ninput {\n  border: none;\n  box-shadow: 2px 3px 10px 2px #D7DFFF;\n  border-radius: 5px;\n  margin-bottom: 10px;\n  font-size: 20px;\n  padding: 15px;\n  box-sizing: border-box;\n  width: 99%;\n}\n\nselect {\n  border: none;\n  box-shadow: 2px 3px 10px 2px #D7DFFF;\n  border-radius: 5px;\n  margin-bottom: 10px;\n  font-size: 20px;\n  padding: 15px;\n  box-sizing: border-box;\n  width: 99%;\n}\n\n.button-row {\n  height: 70px;\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n}\n\nbody {\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n}\n\nmain {\n  height: 100vh;\n  width: 100vw;\n}\n\np {\n  margin: 0;\n  padding: 0;\n  text-align: justify;\n}\n\nspan {\n  display: block;\n  padding: 0;\n  margin: 0;\n  text-align: start;\n  overflow-wrap: break-word;\n}\n\n/*media screen*/\n@media screen and (max-width: 1000px) {\n\n  .button-row {\n    flex-direction: column;\n    justify-self: start;\n    flex: 2;\n  }\n\n  .col-1 {\n    flex-direction: column;\n  }\n\n  .row-2 {\n    padding: 2px;\n    margin: 0 20px 5px;\n    flex-direction: row;\n  }\n\n\n  .flex-box {\n    height: 180vh;\n  }\n\n}\n\n</style>\n<style>\n@media screen and (max-width: 1200px) {\n  .styled-button {\n    margin-top: 10px;\n  }\n\n  .content {\n    font-size: 10px;\n  }\n\n  .card-box {\n    margin-left: 2px;\n    margin-right: 2px;\n  }\n}\n</style>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/exp-4/src/App.vue b/exp-4/src/App.vue
+--- a/exp-4/src/App.vue	
++++ b/exp-4/src/App.vue	
+@@ -6,38 +6,66 @@
+         <div class="row-3">
+           <div class="row-3-content-space">
+             <div class="step-1" v-if="step===1">
+-            <p>In this experiment, we will be combining active and passive attacks to retrieve the username and password of a
+-              user. You are the machine titled 'Hacker' in the network. Begin by intercepting a packet from a channel of your choice.</p>
+-            <select>
+-              <option value="1">Channel 1</option>
+-              <option value="2">Channel 2</option>
+-              <option value="3">Channel 3</option>
+-            </select>
+-          </div>
+-          <div class="step-2" v-if="step===2">
+-            <h4>Packet intercepted successfully</h4>
+-            <p>Now that you have intercepted a packet, you can use this to communicate with the server on behalf of the user. The packet you intercepted is shown below.</p>
+-            <p>Source: </p>
+-            <p>Channel: </p>
+-            <p>To send the packet to the server on behalf of the user, click on 'Next'</p>
+-        </div>
+-        <div class="step-3" v-if="step===3">
+-            <h4>Received reply from server</h4>
+-            <p>Intercepted packet was sent successfully to the server and the reply has been retrieved. Analyze the packet to identify username and password, and input them in the respective text fields here, to verify.</p>
+-            <input v-model="userName" placeholder="username">
+-            <input v-model="password" placeholder="password">
+-        </div>
+-        </div>
++              <p>In this experiment, we will be combining active and passive attacks to retrieve the username and
++                password of a
++                user. You are the machine titled 'Hacker' in the network. Begin by intercepting a packet from a channel
++                of your choice.</p>
++              <select>
++                <option value="1">Channel 1</option>
++                <option value="2">Channel 2</option>
++                <option value="3">Channel 3</option>
++              </select>
++            </div>
++            <div class="step-2" v-if="step===2">
++              <h4>Packet intercepted successfully</h4>
++              <p>Now that you have intercepted a packet, you can use this to communicate with the server on behalf of
++                the user. The packet you intercepted is shown below.</p>
++              <p>Source: </p>
++              <p>Channel: </p>
++              <p>To send the packet to the server on behalf of the user, click on 'Next'</p>
++            </div>
++            <div class="step-3" v-if="step===3">
++              <h4>Received reply from server</h4>
++              <p>Intercepted packet was sent successfully to the server and the reply has been retrieved. Analyze the
++                packet to identify username and password, and input them in the respective text fields here, to
++                verify.</p>
++              <input v-model="userName" placeholder="username">
++              <input v-model="password" placeholder="password">
++            </div>
++          </div>
+           <div class="button-row">
+             <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 4" :click-function="buttonClick"
+                           :disable="disableButton && step !== 4"></StyledButton>
+             <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
+             <StyledButton text="Reset" :click-function="reset" :disable="disableButton"></StyledButton>
+           </div>
++        </div>
++        <div class="row-network">
++          <NetworkInteractionComponent ref="childComponentRef">
++            <EndSystemComponent top="10%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
++              <ServerComponent/>
++            </EndSystemComponent>
++
++            <EndSystemComponent top="40%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
++              <ServerComponent/>
++            </EndSystemComponent>
++
++            <EndSystemComponent top="70%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
++              <ServerComponent/>
++            </EndSystemComponent>
++
++            <EndSystemComponent top="40%" left="40%" class="box" id="box1" :package-info="serverZeroPackages">
++              <ServerComponent/>
++            </EndSystemComponent>
++
++            <EndSystemComponent top="40%" left="80%" class="box" id="box1" :package-info="serverZeroPackages">
++              <ServerComponent/>
++            </EndSystemComponent>
++          </NetworkInteractionComponent>
+         </div>
+       </div>
+       <div class="col-2">
+-        
++
+         <div class="row-4">
+           <div class="terminal" v-if="channelIndex === 0">
+             <span v-for="(data, index) in channelOneData" :key="index">{{ data }}</span>
+@@ -56,21 +84,21 @@
+               Channel 1
+             </button>
+             <button class="terminal-button" :class="{'active-button' : channelIndex === 1}" @click="channelIndex = 1">
+-                    <!-- v-if="channelOneData.length !== 0"> -->
++              <!-- v-if="channelOneData.length !== 0"> -->
+               Channel 2
+             </button>
+             <button class="terminal-button" :class="{'active-button' : channelIndex === 2}" @click="channelIndex = 2">
+-                    <!-- v-if="channelTwoData.length !== 0"> -->
++              <!-- v-if="channelTwoData.length !== 0"> -->
+               Channel 3
+             </button>
+             <button class="terminal-button" :class="{'active-button' : channelIndex === 2}" @click="channelIndex = 2">
+-                    <!-- v-if="channelTwoData.length !== 0"> -->
++              <!-- v-if="channelTwoData.length !== 0"> -->
+               Hacker
+             </button>
+ 
+           </div>
+         </div>
+-        
++
+       </div>
+ 
+     </div>
+@@ -82,10 +110,14 @@
+ import TopBar from "@/components/TopBar";
+ 
+ import StyledButton from "@/components/StyledButton";
++import NetworkInteractionComponent from "@/components/network-components/NetworkInteractionComponent";
++import EndSystemComponent from "@/components/network-components/EndSystemComponent";
++import ServerComponent from "@/components/ServerComponent";
++
+ export default {
+   name: 'App',
+   mounted() {
+-    
++
+   },
+   data() {
+     return {
+@@ -101,10 +133,8 @@
+ 
+     }
+   },
+-  methods: {
+-    
+-  },
+-  components: {TopBar, StyledButton},
++  methods: {},
++  components: {ServerComponent, EndSystemComponent, NetworkInteractionComponent, TopBar, StyledButton},
+ }
+ </script>
+ 
+@@ -142,7 +172,14 @@
+   width: 100%;
+   display: flex;
+   flex-direction: row;
+-  background-color: aquamarine;
++}
++
++.row-network {
++  flex: 1;
++  display: flex;
++  flex-direction: row;
++  justify-content: center;
++  align-items: center;
+ }
+ 
+ .col-2 {

@@ -14,7 +14,7 @@
     <div class="extra-options" v-if="displayExtraOptions"
          :style="{visibility: responseData.length !== 0 ? 'visible' : 'hidden'}">
       <div class="title">
-        Respond to Server
+        Respond
       </div>
       <div class="respond-buttons">
         <button v-for="(data, index) in responseData" :key="index" :style="{backgroundColor: data.backgroundColour}" @click="this.$emit('respond', data)">
