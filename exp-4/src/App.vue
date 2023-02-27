@@ -5,7 +5,7 @@
       <div class="col-1">
         <div class="row-3">
           <div class="row-3-content-space">
-            <div class="step-1" v-if="step===1">
+            <div class="step-1" v-if="step===3">
             <p>In this experiment, we will be combining active and passive attacks to retrieve the username and password of a
               user. You are the machine titled 'Hacker' in the network. Begin by intercepting a packet from a channel of your choice.</p>
             <select>
@@ -21,7 +21,7 @@
             <p>Channel: </p>
             <p>To send the packet to the server on behalf of the user, click on 'Next'</p>
         </div>
-        <div class="step-3" v-if="step===3">
+        <div class="step-3" v-if="step===1">
             <h4>Received reply from server</h4>
             <p>Intercepted packet was sent successfully to the server and the reply has been retrieved. Analyze the packet to identify username and password, and input them in the respective text fields here, to verify.</p>
             <input v-model="userName" placeholder="username">
@@ -63,7 +63,7 @@
                     <!-- v-if="channelTwoData.length !== 0"> -->
               Channel 3
             </button>
-            <button class="terminal-button" :class="{'active-button' : channelIndex === 2}" @click="channelIndex = 2">
+            <button class="terminal-button" :class="{'active-button' : channelIndex === 3}" @click="channelIndex = 3">
                     <!-- v-if="channelTwoData.length !== 0"> -->
               Hacker
             </button>
