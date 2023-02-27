@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Removed packet data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-4/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-4/src/components/ServerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/src/components/ServerComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-3/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-3/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-3/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/App.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +66,7 @@
       <workItem from="1676139203195" duration="8997000" />
       <workItem from="1676530669241" duration="3644000" />
       <workItem from="1677511911987" duration="7158000" />
-      <workItem from="1677521188374" duration="1245000" />
+      <workItem from="1677521188374" duration="2852000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>

@@ -40,7 +40,19 @@
             <br>
           </DropDownCard>
           <DropDownCard title="ENCRYPTION METHODS">
-            <!--TODO: Add content-->
+            <select v-model="encryptionAlgorithm">
+              <option value="IDEA">IDEA</option>
+              <option value="AES">AES</option>
+              <option value="DES">DES</option>
+              <option value="BLOWFISH">BLOWFISH</option>
+            </select>
+            <input v-model="inputForDecryptionUserName" style="margin-top: 20px" placeholder="username">
+            <input v-model="inputForDecryptionPassword" placeholder="password">
+            <span style="margin-top: 20px">
+              <StyledButton :click-function="decrypt" text="Decrypt"></StyledButton>
+            </span>
+            <p v-if="userDecryptedUserName !== ''">Decrypted username: {{ userDecryptedUserName }}</p>
+            <p v-if="userDecryptedPassword !== ''">Decrypted password: {{ userDecryptedPassword }}</p>
           </DropDownCard>
         </div>
       </div>
@@ -96,6 +108,8 @@ import StyledButton from "@/components/StyledButton";
 import EndSystemComponent from "@/components/network-components/EndSystemComponent";
 import ServerComponent from "@/components/ServerComponent";
 import DropDownCard from "@/components/DropDownCard";
+import IDEA from "idea-cipher";
+import CryptoJS from "crypto-js";
 
 export default {
   name: 'App',
@@ -134,6 +148,9 @@ export default {
     return {
       step: 1,
       disableButton: false,
+      encryptionAlgorithm: "IDEA",
+      inputForDecryptionUserName: "",
+      inputForDecryptionPassword: "",
       userNameObjectCollection: [
         {
           userName: "soorya_venkataraman@qrscomma",
@@ -141,7 +158,6 @@ export default {
           decryptionKey: "6yjQlrlYZfV1hjGF",
           algorithm: "AES"
         },
-
         {
           userName: "soorya_venkataraman@qrscomma",
           encryptedUserName: "wAsO69gA6k93qhEv8aP9MBixf/G5yZ75dgnZ/pRD4Hs=",
@@ -326,7 +342,7 @@ export default {
           password: "v'db&)_\\F2L~VjbM",
           encryptedPassword: "51KwwZ7y1bDGy1B4gnojj9VZgqY6trzx",
           decryptionKey: "YesLgKfRedihNvIFzYKLpI8Lh6Sad490",
-          algorithm: "BLowfish"
+          algorithm: "Blowfish"
         },
       ],
       ports: [1, 0, 0, 0],
@@ -334,6 +350,8 @@ export default {
       passwordEncrypted: "",
       userNameDecrypted: "",
       passwordDecrypted: "",
+      userDecryptedUserName: "",
+      userDecryptedPassword: "",
       keyPayloadOne: "",
       keyPayloadTwo: "",
       encryptionAlgorithmOne: "",
@@ -357,6 +375,39 @@ export default {
     }
   },
   methods: {
+
+    decrypt() {
+      if (this.encryptionAlgorithmOne === "AES") {
+        this.decryptAES(this.userNameEncrypted, this.passwordEncrypted, this.keyPayloadOne)
+      } else if (this.encryptionAlgorithmOne === "DES") {
+        this.decryptDES(this.userNameEncrypted, this.passwordEncrypted, this.keyPayloadOne)
+      } else if (this.encryptionAlgorithmOne === "IDEA") {
+        this.decryptIDEA(this.userNameEncrypted, this.passwordEncrypted, this.keyPayloadOne)
+      } else if (this.encryptionAlgorithmOne === "Blowfish") {
+        // this.decryptBlowfish(this.userNameEncrypted, this.passwordEncrypted, this.keyPayloadOne)
+      } else {
+        this.userDecryptedUserName = this.userNameEncrypted
+        this.userDecryptedPassword = this.passwordEncrypted
+      }
+    },
+
+    decryptAES(username, password, decryptionKey) {
+      //decrypt username and password
+      this.userDecryptedUserName = CryptoJS.AES.decrypt(username, decryptionKey).toString(CryptoJS.enc.Utf8);
+      this.userDecryptedPassword = CryptoJS.AES.decrypt(password, decryptionKey).toString(CryptoJS.enc.Utf8);
+    },
+
+    decryptDES(username, password, decryptionKey) {
+      this.userDecryptedUserName = CryptoJS.DES.decrypt(username, decryptionKey).toString(CryptoJS.enc.Utf8);
+      this.userDecryptedPassword = CryptoJS.DES.decrypt(password, decryptionKey).toString(CryptoJS.enc.Utf8);
+    },
+
+    decryptIDEA(username, password, decryptionKey) {
+      let cipher = new IDEA(decryptionKey)
+      this.userDecryptedUserName = cipher.decrypt(username);
+      this.userDecryptedPassword = cipher.decrypt(password);
+    },
+
     validate() {
       //check if decrypted username and password and username and password match
       if (this.userNameDecrypted === this.userName && this.passwordDecrypted === this.password) {
@@ -438,7 +489,9 @@ export default {
       }
     }
   },
-  components: {DropDownCard, ServerComponent, EndSystemComponent, StyledButton, NetworkInteractionComponent, TopBar},
+  components: {
+    DropDownCard, ServerComponent, EndSystemComponent, StyledButton, NetworkInteractionComponent, TopBar
+  },
 }
 </script>
 
@@ -564,6 +617,20 @@ pre {
   font-family: monospace;
   font-size: 13px;
   text-align: start;
+}
+
+select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  box-shadow: 2px 3px 10px 2px #D7DFFF;
 }
 
 .terminal-button:hover {
