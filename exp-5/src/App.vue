@@ -5,27 +5,120 @@
       <div class="col-1">
         <div class="row-3">
           <div class="row-3-content-space">
-            <div class="step-1" v-if="step===3">
-            <p>In this experiment, we will be combining active and passive attacks to retrieve the username and password of a
-              user. You are the machine titled 'Hacker' in the network. Begin by intercepting a packet from a channel of your choice.</p>
-            <select>
-              <option value="1">Channel 1</option>
-              <option value="2">Channel 2</option>
-              <option value="3">Channel 3</option>
-            </select>
+            <div class="content" v-if="step===1">
+            <h3>Step 1</h3>
+            <p>
+              To begin the authentication process, the client asks for a Ticket 
+              Granting Ticket from the Authentication Server housed inside the 
+              Key Distribution Center. 
+            </p>
+
+            <p>
+              Choose a Client ID and click on 'Start' to begin the process.
+            </p>
+
+            <input v-model="clientID" placeholder="Client ID">
+
           </div>
-          <div class="step-2" v-if="step===2">
-            <h4>Packet intercepted successfully</h4>
-            <p>Now that you have intercepted a packet, you can use this to communicate with the server on behalf of the user. The packet you intercepted is shown below.</p>
-            <p>Source: </p>
-            <p>Channel: </p>
-            <p>To send the packet to the server on behalf of the user, click on 'Next'</p>
+          <div class="content" v-if="step===2">
+            <h3>Step 2</h3>
+            <p>
+              The Key Distribution Center (KDC) receives the request and verifies the client's credentials by cross referencing the client data with the database. It then checks for the availability of the Ticket Granting Service (TGS).
+              
+            </p>
+            <p>
+              If the Authentication Server finds that the client is valid and that the TGS is available, it generates a client/user secret key, which is a hash of the user's password. 
+            </p>
         </div>
-        <div class="step-3" v-if="step===1">
-            <h4>Received reply from server</h4>
-            <p>Intercepted packet was sent successfully to the server and the reply has been retrieved. Analyze the packet to identify username and password, and input them in the respective text fields here, to verify.</p>
-            <input v-model="userName" placeholder="username">
-            <input v-model="password" placeholder="password">
+        <div class="content" v-if="step===3">
+            <h3>Step 3</h3>
+            <p>
+              The Authentication Server then computes the TGS secret key and creates a Session Key (SK1) encrypted by the client secret key.
+            </p>
+            <p>
+              The Authentication Server then generates a Ticket Granting Ticket (TGT) containing the client ID, client network address, timestamp, 
+              lifetime and the generated SK1.
+            </p>
+            <p>
+              The TGT is then encrypted by the TGS secret key and sent to the client.
+            </p>
+        </div>
+        <div class="content" v-if="step===4">
+            <h3>Step 4</h3>
+            <p>
+              The client decrypts the message using the client secret key and extacts SK1 and the TGT.
+              This TGT will be used in communication to tell other servers that the client is authenticated.
+            </p>
+        </div>
+        <div class="content" v-if="step===5">
+            <h3>Step 5</h3>
+            <p>
+              The client requests a ticket from the server offering the service by sending the extracted TGT and the created authenticator to the TGS.
+            </p>
+        </div>
+        <div class="content" v-if="step===6">
+            <h3>Step 6</h3>
+            <p>
+              The KDC creates a ticket for the file server. The TGS then uses the TGS secret key to decrypt the TGT received from the client and extracts SK1.
+            </p>
+            <p>
+              The TGS decrypts the authenticator and checks to see if the clientID and lcient network address match the TGT.
+            </p>
+            <p>
+              The TGS also uses the extracted timestamp and lifetime to check if the authenticator is still valid.
+            </p>
+            <p>
+              On success, the TGS creates a session key (SK2) and encrypts it using SK1. This will be shared with the client.
+            </p>
+        </div>
+        <div class="content" v-if="step===7">
+            <h3>Step 7</h3>
+            <p>
+              The KDC creates a service ticket with the client ID, client network address, time stamp and SK2, which is then encrypted with the server's secret key.
+            </p>
+            <p>
+              To continue, enter a secret key for the server and click on 'Next'.
+            </p>
+            <input v-model="serverSecretKey" placeholder="Server Secret Key">
+        </div>
+        <div class="content" v-if="step===8">
+            <h3>Step 7 (Cont)</h3>
+            <p>
+              A message containing teh service ticket and SK2, encrypted with SK1, is sent to the client.
+            </p>
+        </div>
+        <div class="content" v-if="step===9">
+            <h3>Step 8</h3>
+            <p>
+              The client decrypts the message using SK1 and extracts SK2.
+            </p>
+            <p>
+              This process generates a new authenticator containing the client network address, client ID and timestamp, encrypted with SK2.
+            </p>
+            <p>
+              This authenticator is then sent to the server along with the service ticket.
+            </p>
+        </div>
+        <div class="content" v-if="step===10">
+            <h3>Step 9</h3>
+            <p>
+              The server receives the communication from the server and uses the server's secret key to decrypt the service ticket and extract SK2.
+            </p>
+            <p>
+              The server then uses SK2 to decrypt the authenticator, checking that the clientID and client network address from the authenticator and service ticket match.
+            </p>
+            <p>
+              The server checks the timestamp and lifetime of the authenticator to see if it is still valid.
+            </p>
+        </div>
+        <div class="content" v-if="step===11">
+            <h3>Step 10</h3>
+            <p>
+              Once the checks are met, the server sends the client a message verifying the authentication.
+            </p>
+            <p>
+              The user can now engage in a secure session.
+            </p>
         </div>
         </div>
           <div class="button-row">
@@ -89,10 +182,10 @@ export default {
   },
   data() {
     return {
-      step: 1,
+      step: 11,
       disableButton: false,
-      userName: "",
-      password: "",
+      clientID: "",
+      serverSecretKey: "",
       channelIndex: 0,
       channelOneData: ['this is some test data'],
       channelTwoData: [],
