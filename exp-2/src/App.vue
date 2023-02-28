@@ -1,6 +1,7 @@
 <template>
   <div class="flex-box">
     <TopBar title="TCP SYN Attacks"></TopBar>
+    <div id="snackbar">Some text some message..</div>
     <div class="rem-space">
       <div class="row-1">
         <div class="step-title">
@@ -18,7 +19,7 @@
           </p>
           <br>
           <p>
-            Open a minimum of 3 such connections with a server to complete the lab.
+            To complete the experiment, overwhelm atleast one server by occupying all its available ports, hence making it unavailable for other users.
           </p>
         </div>
         <div class="input-field">
@@ -335,6 +336,21 @@ export default {
       }
       this.receivedPackages = [];
     },
+    correct1(message) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = message;
+            x.style.backgroundColor = "green";
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+        },
+        incorrect(msg) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = msg;
+            x.style.backgroundColor = "red";
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+        },
+    
     send() {
       //inputIpAddress check if address is not null and exists
       let targetBox = "";
@@ -350,39 +366,39 @@ export default {
       }
 
       if (targetBoxIndex === -1) {
-        alert("Invalid IP address");
+        this.incorrect("Invalid IP address");
       } else {
 
         if (!port) {
-          alert("Invalid port");
+          this.incorrect("Invalid port");
         } else {
           //check if inputPort is occupied or not, if value if 1 then it is available, do this for the right server ip address
           if (targetBoxIndex === 0) {
             if (this.serverOnePorts[port] === 1) {
               this.serverOnePorts[port] = 2;
             } else {
-              alert("Port is occupied");
+              this.incorrect("Port is occupied");
               return;
             }
           } else if (targetBoxIndex === 1) {
             if (this.serverTwoPorts[port] === 1) {
               this.serverTwoPorts[port] = 2;
             } else {
-              alert("Port is occupied");
+              this.incorrect("Port is occupied");
               return;
             }
           } else if (targetBoxIndex === 2) {
             if (this.serverThreePorts[port] === 1) {
               this.serverThreePorts[port] = 2;
             } else {
-              alert("Port is occupied");
+              this.incorrect("Port is occupied");
               return;
             }
           } else if (targetBoxIndex === 3) {
             if (this.serverFourPorts[port] === 1) {
               this.serverFourPorts[port] = 2;
             } else {
-              alert("Port is occupied");
+              this.incorrect("Port is occupied");
               return;
             }
           }
@@ -396,7 +412,7 @@ export default {
           }
         }
         if (clientPortIndex === -1) {
-          alert("No available ports on client");
+          this.incorrect("No available ports on client. To continue, free up atleast a port on the client by responding to a server. Click on the corresponding button under the 'Respond to server' option.");
         } else {
           this.clientPorts[clientPortIndex] = 2;
           let packageId = ""
@@ -543,7 +559,7 @@ export default {
               }
             }
             if (!allPortsOccupied) {
-              alert("Please establish connection in such a way that three-way handshake is incomplete for at least one server with all ports occupied")
+              this.incorrect("Please establish connection in such a way that three-way handshake is incomplete for at least one server with all ports occupied")
             } else {
               this.experimentCompleted()
             }
@@ -559,7 +575,7 @@ export default {
     },
     experimentCompleted() {
       //TODO: show experiment completed message
-      alert("Experiment Completed")
+      this.correct1("Experiment completed successfully")
     },
   }
 }
@@ -585,6 +601,77 @@ div::-webkit-scrollbar       {display: none}
 * {
   box-sizing: border-box;
 }
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
 
 .rem-space {
   flex: 1;
@@ -695,6 +782,8 @@ h4 {
   .side-space:nth-child(1) {
     display: none;
   }
+
+  
 
 }
 
