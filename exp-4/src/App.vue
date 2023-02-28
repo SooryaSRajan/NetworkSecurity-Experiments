@@ -66,7 +66,8 @@
             <EndSystemComponent top="10%" left="5%" class="box" id="box1">
               <ServerComponent :ip-address="ipAddress[0]" :port1="portsClientA[0]" :port2="portsClientA[1]"
                                :port3="portsClientA[2]"
-                               :port4="portsClientA[3]"/>
+                               :port4="portsClientA[3]"
+                                :port-labels="[8080, 8081, 8082, 8083]"/>
             </EndSystemComponent>
 
             <EndSystemComponent top="40%" left="5%" class="box" id="box2">
