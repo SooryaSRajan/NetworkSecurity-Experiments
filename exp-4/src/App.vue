@@ -1,6 +1,7 @@
 <template>
   <div class="flex-box">
     <TopBar title="Combining active and passive attacks"></TopBar>
+    <div id="snackbar">Some text some message..</div>
     <div class="rem-space">
       <div class="col-1">
         <div class="row-3">
@@ -190,6 +191,24 @@ export default {
     }
   },
   methods: {
+    correct1(message) {
+      var x = document.getElementById("snackbar");
+      x.innerHTML = message;
+      x.style.backgroundColor = "green";
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000)
+    },
+    incorrect(msg) {
+      var x = document.getElementById("snackbar");
+      x.innerHTML = msg;
+      x.style.backgroundColor = "red";
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000)
+    },
     respond(data) {
       if (data.step === 3) {
         this.step = 4;
@@ -248,16 +267,17 @@ export default {
           })
           this.step = 3;
           this.disableButton = false;
+          this.countDown = 10;
           let timeoutFunc = () => {
             this.countDown--
-            if ((this.step === 3 || this.step < 4) && this.countDown === 0) {
-              alert("Experiment failed")
-              //quit
+            if (this.step === 3 && this.countDown === 0) {
+              this.incorrect("Experiment failed, please try again")
               this.reset()
+            } else if (this.step === 3 && this.countDown > 0) {
+              setTimeout(timeoutFunc, 1000)
             }
-            setTimeout(timeoutFunc, 1000)
           }
-          setTimeout(timeoutFunc, 1000)
+          timeoutFunc()
         });
       } else if (this.step === 4) {
         this.disableButton = true;
@@ -281,9 +301,9 @@ export default {
     },
     verifyCredentials() {
       if (this.userName === this.generatedUserName && this.password === this.generatedPassword && this.isPacketSentBack) {
-        alert("Experiment successful")
+        this.correct1("Experiment successful!")
       } else {
-        alert("Experiment failed")
+        this.incorrect("Experiment failed, please try again.")
       }
     },
     reset() {
@@ -331,6 +351,77 @@ pre {
   height: 100vh;
   width: 100%;
 }
+
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  bottom: 30px;
+  font-size: 17px;
+}
+
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    bottom: 30px;
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
 
 .rem-space {
   flex: 1;
