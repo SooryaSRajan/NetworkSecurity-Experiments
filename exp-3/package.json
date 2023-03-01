@@ -12,7 +12,8 @@
     "crypto-js": "^4.1.1",
     "idea-cipher": "^1.0.1",
     "javascript-blowfish": "^1.0.4",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
