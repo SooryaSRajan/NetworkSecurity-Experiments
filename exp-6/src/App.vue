@@ -10,24 +10,30 @@
         </div>
         <div class="row-2">
           <div class="terminal-col">
-            <div class="terminal" :style="{display: terminalIndex === 1 ? 'none' : 'block' }" @click="terminalFocus(0)">
-              <span class="terminal-op" v-for="(data, index) in terminalOne" :key="index">{{ data }}</span>
-              <div class="terminal-input">
+            <div class="terminal-wrapper" :style="{display: terminalIndex === 1 ? 'none' : 'block' }">
+              <div class="terminal"
+                   @click="terminalFocus(0)">
+                <span class="terminal-op" v-for="(data, index) in terminalOne" :key="index">{{ data }}</span>
+                <div class="terminal-input">
                 <span>
                   user@terminal:~$
                 </span>
-                <textarea class="terminal-input-field" id="terminal-ip-1" v-model="terminalInputOne"
-                          v-on:keydown="onKeyDownTextArea"></textarea>
+                  <textarea class="terminal-input-field" id="terminal-ip-1" v-model="terminalInputOne"
+                            v-on:keydown="onKeyDownTextArea"></textarea>
+                </div>
               </div>
             </div>
-            <div class="terminal" :style="{display: terminalIndex === 0 ? 'none' : 'block' }" @click="terminalFocus(1)">
-              <span class="terminal-op" v-for="(data, index) in terminalTwo" :key="index">{{ data }}</span>
-              <div class="terminal-input">
+            <div class="terminal-wrapper" :style="{display: terminalIndex === 0 ? 'none' : 'block' }">
+              <div class="terminal"
+                   @click="terminalFocus(1)">
+                <span class="terminal-op" v-for="(data, index) in terminalTwo" :key="index">{{ data }}</span>
+                <div class="terminal-input">
                 <span>
                   server@terminal:~$
                 </span>
-                <textarea class="terminal-input-field" id="terminal-ip-2" v-model="terminalInputTwo"
-                          v-on:keydown="onKeyDownTextArea"></textarea>
+                  <textarea class="terminal-input-field" id="terminal-ip-2" v-model="terminalInputTwo"
+                            v-on:keydown="onKeyDownTextArea"></textarea>
+                </div>
               </div>
             </div>
             <div class="terminal-choices">
@@ -181,27 +187,6 @@ pre {
   }
 }
 
-.terminal-col {
-  display: flex;
-  width: 100%;
-  max-width: 100%;
-  flex-direction: row;
-  text-overflow: fade;
-  flex: 1;
-}
-
-.terminal-input-field {
-  background-color: #252526;
-  color: #33FF00;
-  border: none;
-  outline: none;
-  font-family: monospace;
-  font-size: 16px;
-  flex: 1;
-  padding: 0 0 0 10px;
-  resize: none;
-}
-
 @-webkit-keyframes fadeout {
   from {
     bottom: 30px;
@@ -232,7 +217,7 @@ pre {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  overflow: clip;
+  overflow: hidden;
 }
 
 .row-1 {
@@ -242,7 +227,6 @@ pre {
 
 .row-2 {
   width: 75%;
-  background-color: blue;
   display: flex;
   flex-direction: column;
 }
@@ -255,7 +239,6 @@ pre {
 main {
   -ms-overflow-style: none;
   scrollbar-width: none;
-  overflow-y: scroll;
 }
 
 main::-webkit-scrollbar {
@@ -264,7 +247,9 @@ main::-webkit-scrollbar {
 
 
 .terminal {
-  width: 90%;
+  width: 100%;
+  min-height: 100%;
+  height: fit-content;
   font-size: 16px;
   display: flex;
   flex-direction: column;
@@ -272,16 +257,46 @@ main::-webkit-scrollbar {
   align-items: flex-start;
   font-family: monospace;
   padding: 10px 15px;
-  background-color: #252526;
   color: #33FF00;
-  overflow-y: scroll;
+}
+
+div{
+  overflow-y: auto;
 }
 
 .terminal-choices {
   width: 10%;
-  flex: 1;
   min-width: 100px;
   background-color: #3c3f41;
+}
+
+.terminal-col {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  flex-direction: row;
+  text-overflow: fade;
+  background-color: #252526;
+  flex: 1;
+}
+
+.terminal-wrapper {
+  flex: 1;
+  max-width: 100%;
+  height: 100%;
+  text-overflow: fade;
+}
+
+.terminal-input-field {
+  background-color: #252526;
+  color: #33FF00;
+  border: none;
+  outline: none;
+  font-family: monospace;
+  font-size: 16px;
+  flex: 1;
+  padding: 0 0 0 10px;
+  resize: none;
 }
 
 .terminal-op {
