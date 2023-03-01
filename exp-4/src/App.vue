@@ -1,4 +1,5 @@
 <template>
+  <main>
   <div class="flex-box">
     <TopBar title="Combining active and passive attacks"></TopBar>
     <div id="snackbar">Some text some message..</div>
@@ -32,7 +33,7 @@
               <p>To send the packet to the server on behalf of the user, click on 'Next'</p>
               <br>
               <p>The packet has to be sent in the next {{ countDown }} seconds or the experiment will fail as the server
-                will close the connection after timing out waiting for a response.</p>
+                will close the connection after timing out waiting for a response. To send the packet, click on the corresponding Port no. under the 'Respond' section on your computer.</p>
             </div>
             <div v-if="step===4">
               <h4>Send response back</h4>
@@ -120,6 +121,7 @@
 
     </div>
   </div>
+</main>
 </template>
 
 <script>
@@ -500,6 +502,17 @@ pre {
   text-overflow: fade;
   background-color: crimson;
 }
+
+main{
+  -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    overflow-y: scroll; 
+}
+
+main::-webkit-scrollbar {
+  display: none;
+}
+
 
 .terminal {
   width: 90%;

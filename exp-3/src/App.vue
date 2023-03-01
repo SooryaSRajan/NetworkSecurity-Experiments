@@ -1,6 +1,8 @@
 <template>
+  <main>
   <div class="flex-box">
     <TopBar title="Passive attacks - Eavesdropping"></TopBar>
+    <div id="snackbar">Some text some message..</div>
     <div class="rem-space">
       <div class="col-1">
         <div class="row-1">
@@ -98,6 +100,7 @@
 
     </div>
   </div>
+</main>
 </template>
 
 <script>
@@ -391,6 +394,21 @@ export default {
       }
     },
 
+    correct1(message) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = message;
+            x.style.backgroundColor = "green";
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+        },
+        incorrect(msg) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = msg;
+            x.style.backgroundColor = "red";
+            x.className = "show";
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+        },
+
     decryptAES(username, password, decryptionKey) {
       //decrypt username and password
       this.userDecryptedUserName = CryptoJS.AES.decrypt(username, decryptionKey).toString(CryptoJS.enc.Utf8);
@@ -411,7 +429,7 @@ export default {
     validate() {
       //check if decrypted username and password and username and password match
       if (this.userNameDecrypted === this.userName && this.passwordDecrypted === this.password) {
-        alert("Experiment complete!")
+        this.correct1("Experiment complete!")
       }
     },
     reset() {
@@ -501,6 +519,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  
+}
+
+main{
+  -ms-overflow-style: none; 
+    scrollbar-width: none; 
+    overflow-y: scroll; 
+}
+
+main::-webkit-scrollbar {
+  display: none;
 }
 
 pre {
@@ -569,6 +598,76 @@ pre {
 
 * {
   box-sizing: border-box;
+}
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
 }
 
 .row-3-content-space {

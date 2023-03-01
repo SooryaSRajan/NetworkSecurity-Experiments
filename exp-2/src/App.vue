@@ -348,7 +348,7 @@ export default {
             x.innerHTML = msg;
             x.style.backgroundColor = "red";
             x.className = "show";
-            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000)
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 7000)
         },
     
     send() {
