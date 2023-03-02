@@ -6,7 +6,140 @@
       <div class="rem-space">
 
         <div class="row-1">
-          1
+          <div class="content">
+            <h4>Understanding SSL</h4>
+            <p>
+              SSL, or Secure Sockets Layer, is an encryption-based Internet 
+              security protocol. It was first developed by Netscape in 1995
+              for the purpose of ensuring privacy, authentication, and data 
+              integrity in Internet communications. SSL is the predecessor 
+              to the modern TLS encryption used today.
+            </p>
+            <br>
+            <p>
+              A website that implements SSL/TLS has "HTTPS" in its URL 
+              instead of "HTTP."
+            </p>
+
+            <br>
+            <span><h4>IP Address: </h4></span>
+            <span><h4>Port: </h4></span>
+
+            
+          </div>
+          <div v-if="step === 1" class="content">
+              <h4>Step 1: Starting a session</h4>
+              <p>
+                Begin a session by typing the following command on 
+                terminal 1 with the server's IP address and port.
+              </p>
+              <br>
+              <div class="code">
+              <code>openssl s_client -connect host:port</code>
+              </div>
+            </div>
+
+            <div v-if="step === 2" class="content">
+              <h4>Step 2: Key transfer</h4>
+              <p>
+                On a successful connection, the server will send
+                a copy of its assymmetric public key to the client.
+              </p>
+              <br>
+              
+            </div>
+
+            <div v-if="step === 3" class="content">
+              <h4>Step 3: Key generation</h4>
+              <p>
+                The client then creates a static session
+                key by executing the following command.
+              </p>
+
+              <div class="code">
+              <code>openssl rand -hex 16 > sessionkey.txt</code>
+              </div>
+              <br>
+            </div>
+
+            <div v-if="step === 4" class="content">
+              <h4>Step 4: Key encryption</h4>
+              <p>
+                The client then encrypts the session key using the
+                server's public key.
+              </p>
+
+              <div class="code">
+              <code>openssl rsautl -encrypt -in sessionkey.txt -out sessionkey.enc -pubin -inkey server_pubkey.pem</code>
+              </div>
+              <br>
+            </div>
+
+            <div v-if="step === 5" class="content">
+              <h4>Step 5: Key transfer</h4>
+              <p>
+                The client then sends the encrypted session key to the server.
+              </p>
+
+              <div class="code">
+              <code>cat sessionkey.enc | nc host port</code>
+              </div>
+              <br>
+            </div>
+
+            <div v-if="step === 6" class="content">
+              <h4>Step 6: Key decryption</h4>
+              <p>
+                The server then decrypts the session key using its private key.
+              </p>
+
+              <div class="code">
+              <code>openssl rsautl -decrypt -in sessionkey.enc -out sessionkey.txt -inkey server_privkey.pem</code>
+              </div>
+              <br>
+            </div>
+
+            <div v-if="step === 7" class="content">
+              <h4>Step 7: Identify the host IP</h4>
+              <p>
+                To identify the host IP, the client will send a 
+                ping request to the server by executing the 
+                following command:
+              </p>
+
+              <div class="code">
+              <code>ping -c 3 IP_ADDRESS</code>
+              </div>
+              <br>
+            </div>
+
+            <div v-if="step === 8" class="content">
+              <h4>Step 8: Display certificate information</h4>
+              <p>
+                To display the certificate info of the server, 
+                the client will execute the following command:
+              </p>
+
+              <div class="code">
+              <code>openssl x509 -in server.crt -text -noout</code>
+              </div>
+              <br>
+              </div>
+
+              //command to quit the session
+              <div v-if="step === 9" class="content">
+              <h4>Step 9: Quit the session</h4>
+              <p>
+                To quit the session, the client will execute the following command:
+              </p>
+              
+              <div class="code">
+              <code>quit</code>
+              </div>
+              <br>
+              </div>
+
+
         </div>
         <div class="row-2">
           <div class="terminal-col">
@@ -85,7 +218,8 @@ export default {
       terminalInputOne: '',
       terminalInputTwo: '',
       terminalOne: [],
-      terminalTwo: []
+      terminalTwo: [],
+      step: 1
     }
   },
   methods: {
@@ -141,6 +275,21 @@ pre {
   width: 100%;
 }
 
+.code{
+  height: fit-content;
+    min-height: 10vh;
+    width: fit-content;
+    min-width: 50%;
+    margin: 25px;
+    padding: 25px;
+    border-radius: 5px;
+    background-color: #202020;
+    color: white;
+    font-size: large;
+    font-family: monospace;
+    font-weight: bold;
+}
+
 #snackbar {
   visibility: hidden;
   min-width: 250px;
@@ -155,6 +304,16 @@ pre {
   left: 50%;
   bottom: 30px;
   font-size: 17px;
+}
+
+.content{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:flex-start;
+  padding: 30px;
+  line-height: 110%;
 }
 
 #snackbar.show {
