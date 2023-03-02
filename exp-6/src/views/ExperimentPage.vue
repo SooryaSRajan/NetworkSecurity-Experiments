@@ -158,7 +158,7 @@
             </p>
 
             <div class="code">
-              <code @click="copyToClipboard('')">quit</code>
+              <code @click="copyToClipboard('quit')">quit</code>
             </div>
             <br>
           </div>
@@ -171,7 +171,7 @@
               <div class="terminal"
                    @click="terminalFocus(0)">
                 <span class="terminal-op" v-for="(data, index) in terminalOne" :key="index">{{ data }}</span>
-                <div class="terminal-input">
+                <div class="terminal-input" v-if="!quitTerminal">
                   <span>
                     user@terminal:~$
                   </span>
@@ -184,7 +184,7 @@
               <div class="terminal"
                    @click="terminalFocus(1)">
                 <span class="terminal-op" v-for="(data, index) in terminalTwo" :key="index">{{ data }}</span>
-                <div class="terminal-input">
+                <div class="terminal-input" v-if="!quitTerminal">
                   <span>
                     server@terminal:~$
                   </span>
@@ -245,6 +245,7 @@ export default {
   },
   data() {
     return {
+      quitTerminal: false,
       terminalIndex: 0,
       terminalInputOne: '',
       terminalInputTwo: '',
@@ -342,8 +343,6 @@ export default {
       for (let i = 0; i < count; i++) {
         let time = Math.floor(Math.random() * 1000) + 1;
         terminal.push("64 bytes from " + host + ": icmp_seq=" + i + " ttl=64 time=" + time + " ms");
-
-
       }
     },
     handleCommands(text, terminal, files) {
@@ -362,6 +361,17 @@ export default {
           } else {
             return "handle-command";
           }
+        } else if (text === "exit" || text === "quit") {
+          let output = "Saving session...\n" +
+              "...copying shared history...\n" +
+              "...saving history...truncating history files...\n" +
+              "...completed.\n" +
+              "Deleting expired sessions...       2 completed.\n" +
+              "\n" +
+              "[Process completed]\n";
+          this.terminalOne.push(output);
+          this.terminalTwo.push(output);
+          this.quitTerminal = true;
         } else if (text.includes("|")) {
           return "handle-command";
         } else if (text.match(/cd\s.+/)) {
