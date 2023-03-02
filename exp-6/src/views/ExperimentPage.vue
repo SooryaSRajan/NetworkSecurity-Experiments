@@ -372,6 +372,13 @@ export default {
           this.terminalOne.push(output);
           this.terminalTwo.push(output);
           this.quitTerminal = true;
+
+          if (this.step === 10) {
+            this.correct1("Congratulations! You have completed the challenge!");
+          } else {
+            this.incorrect("You have not completed the challenge yet. Please reload page.");
+          }
+
         } else if (text.includes("|")) {
           return "handle-command";
         } else if (text.match(/cd\s.+/)) {

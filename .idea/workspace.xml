@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added network graphs&#10;&#10;Completed experiment 6 App.vue, it includes multiple command support more linux like commands and freedom to let users choose their own file names">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" afterDir="false" />
-    </list>
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Completed quit command in experiment 6" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,7 +74,7 @@
       <workItem from="1677524931971" duration="1404000" />
       <workItem from="1677608155544" duration="924000" />
       <workItem from="1677663252227" duration="14204000" />
-      <workItem from="1677752462657" duration="17150000" />
+      <workItem from="1677752462657" duration="17477000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -170,7 +167,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677768307942</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Completed quit command in experiment 6">
+      <created>1677776560239</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1677776560239</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,6 +210,7 @@
     <MESSAGE value="Built terminal layout for experiment 6" />
     <MESSAGE value="Fixed scroll issue in terminal exp-6" />
     <MESSAGE value="Added network graphs&#10;&#10;Completed experiment 6 App.vue, it includes multiple command support more linux like commands and freedom to let users choose their own file names" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added network graphs&#10;&#10;Completed experiment 6 App.vue, it includes multiple command support more linux like commands and freedom to let users choose their own file names" />
+    <MESSAGE value="Completed quit command in experiment 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed quit command in experiment 6" />
   </component>
 </project>
