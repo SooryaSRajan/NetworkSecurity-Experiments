@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Network Graph</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        .links line {
+            stroke-width: 3px;
+        }
+
+        .nodes circle {
+            stroke: #fff;
+            stroke-width: 3px;
+        }
+
+        .nodes text {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div id="chart"></div>
+
+<script>
+    let nodes = [
+        {id: "client1", type: "client"},
+        {id: "gateway", type: "gateway"},
+        {id: "server1", type: "server"},
+        {id: "server2", type: "server"},
+        {id: "client2", type: "client"},
+    ];
+
+    let links = [
+        {source: "client1", target: "gateway", color: "#8a8ac2"},
+        {source: "server1", target: "gateway", color: "#8a8ac2"},
+        {source: "client2", target: "gateway", color: "#9ae5da"},
+        {source: "server2", target: "gateway", color: "#9ae5da"}
+    ];
+
+    let width = 600;
+    let height = 400;
+
+    let svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    let linkDistance = 100; // set the desired link distance
+    let linkForce = d3.forceLink(links)
+        .id(function (d) {
+            return d.id;
+        })
+        .distance(linkDistance); // set the link distance value
+
+    let simulation = d3.forceSimulation(nodes)
+        .force("link", linkForce)
+        .force("charge", d3.forceManyBody().strength(-1000))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("y", d3.forceY().y(function (d) {
+            if (d.type === "server") {
+                return height / 7;
+            } else if (d.type === "client") {
+                return height * 0.75;
+            } else {
+                return height / 2;
+            }
+        }))
+
+
+    let link = svg.append("g")
+        .attr("class", "links")
+        .selectAll("line")
+        .data(links)
+        .enter()
+        .append("line")
+        .style("stroke", function (d) {
+            return d.color;
+        })
+        .style("stroke-width", "3px");
+
+    let node = svg.append("g")
+        .attr("class", "nodes")
+        .selectAll("circle")
+        .data(nodes)
+        .enter()
+        .append("circle")
+        .attr("r", function (d) {
+            if (d.type === "server") {
+                return 10;
+            } else if (d.type === "client") {
+                return 10;
+            } else {
+                return 20;
+            }
+        })
+        .style("fill", function (d) {
+            if (d.type === "server") {
+                return "#00FF00";
+            } else if (d.type === "client") {
+                return "#0000FF";
+            } else {
+                return "#FF0000";
+            }
+        })
+        .call(drag(simulation));
+
+    let text = svg.append("g")
+        .attr("class", "texts")
+        .selectAll("text")
+        .data(nodes)
+        .enter()
+        .append("text")
+        .text(function (d) {
+            return d.id;
+        })
+        .style("font-size", "12px")
+        .attr("dx", 15)
+        .attr("dy", 4);
+
+    simulation.on("tick", function () {
+        link
+            .attr("x1", function (d) {
+                return d.source.x;
+            })
+            .attr("y1", function (d) {
+                return d.source.y;
+            })
+            .attr("x2", function (d) {
+                return d.target.x;
+            })
+            .attr("y2", function (d) {
+                return d.target.y;
+            });
+
+        node
+            .attr("cx", function (d) {
+                return d.x;
+            })
+            .attr("cy", function (d) {
+                return d.y;
+            });
+
+        text
+            .attr("x", function (d) {
+                return d.x;
+            })
+            .attr("y", function (d) {
+                return d.y;
+            });
+    });
+
+    function drag(simulation) {
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        return d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+    }
+
+    //create a plusing animation of a moving packet from client to gateway then gateway to server
+    let packet = svg.append("circle")
+        .attr("r", 5)
+        .attr("fill", "yellow")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("opacity", 0);
+
+
+
+
+
+</script>
+</body>
+</html>
+

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Built terminal layout for experiment 6">
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Fixed scroll issue in terminal exp-6">
+      <change beforePath="$PROJECT_DIR$/.idea/VirtualLab-NetworkSecurity.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/VirtualLab-NetworkSecurity.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/views/ExperimentPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exp-6/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-6/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +23,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -68,7 +79,8 @@
       <workItem from="1677521188374" duration="3141000" />
       <workItem from="1677524931971" duration="1404000" />
       <workItem from="1677608155544" duration="924000" />
-      <workItem from="1677663252227" duration="7865000" />
+      <workItem from="1677663252227" duration="14204000" />
+      <workItem from="1677752462657" duration="15633000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -147,7 +159,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677671605927</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fixed scroll issue in terminal exp-6">
+      <created>1677673488324</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1677673488324</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -181,6 +200,7 @@
     <MESSAGE value="Added fix for timer going to negative values and timer continuing after experiment reset" />
     <MESSAGE value="Added port hover CSS to ServerComponent.vue to display port number when hovered on and also added option to add manual label to ports" />
     <MESSAGE value="Built terminal layout for experiment 6" />
-    <option name="LAST_COMMIT_MESSAGE" value="Built terminal layout for experiment 6" />
+    <MESSAGE value="Fixed scroll issue in terminal exp-6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed scroll issue in terminal exp-6" />
   </component>
 </project>
