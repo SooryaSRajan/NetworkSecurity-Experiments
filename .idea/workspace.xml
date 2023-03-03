@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added success/failure messages after quit command">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-7/src/components/HelloWorld.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,13 +43,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-6/src/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-7/src/components" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/exp-7/src/components" />
       <recent name="$PROJECT_DIR$/exp-6/src/components" />
       <recent name="$PROJECT_DIR$/exp-2/src" />
       <recent name="$PROJECT_DIR$/exp-2/src/components" />
@@ -79,7 +81,7 @@
       <workItem from="1677663252227" duration="14204000" />
       <workItem from="1677752462657" duration="18114000" />
       <workItem from="1677839448596" duration="700000" />
-      <workItem from="1677862848347" duration="566000" />
+      <workItem from="1677862848347" duration="1607000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
