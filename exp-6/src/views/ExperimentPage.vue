@@ -719,11 +719,9 @@ pre {
 }
 
 .code {
+  margin-top: 20px;
   height: fit-content;
-  min-height: 10vh;
-  width: fit-content;
-  min-width: 50%;
-  margin: 25px;
+  width: 100%;
   padding: 25px;
   border-radius: 5px;
   background-color: #202020;
