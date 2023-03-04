@@ -298,7 +298,7 @@ export default {
 
 #root {
   border-radius: 10px;
-  background-color: #F9FAFE;
+  background-color: #ffffff;
   box-shadow: 2px 3px 10px 2px #D7DFFF;
   text-align: center;
   position: relative;

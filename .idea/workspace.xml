@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Completed basic flex layout for ExperimentPage.vue and added necessary components.">
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-7/src/assets/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-7/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,8 +53,8 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/exp-7/src/assets" />
-      <recent name="$PROJECT_DIR$/exp-6/src/assets" />
       <recent name="$PROJECT_DIR$/exp-7/src/components" />
+      <recent name="$PROJECT_DIR$/exp-6/src/assets" />
       <recent name="$PROJECT_DIR$/exp-6/src/components" />
       <recent name="$PROJECT_DIR$/exp-2/src" />
     </key>
@@ -80,7 +83,11 @@
       <workItem from="1677663252227" duration="14204000" />
       <workItem from="1677752462657" duration="18114000" />
       <workItem from="1677839448596" duration="700000" />
-      <workItem from="1677862848347" duration="6846000" />
+      <workItem from="1677862848347" duration="7020000" />
+      <workItem from="1677921266039" duration="1151000" />
+      <workItem from="1677922940441" duration="1211000" />
+      <workItem from="1677924246636" duration="12011000" />
+      <workItem from="1677936291380" duration="1369000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -194,7 +201,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677864570989</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors">
+      <created>1677873649013</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1677873649013</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +247,7 @@
     <MESSAGE value="Completed quit command in experiment 6" />
     <MESSAGE value="Added success/failure messages after quit command" />
     <MESSAGE value="Completed basic flex layout for ExperimentPage.vue and added necessary components." />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed basic flex layout for ExperimentPage.vue and added necessary components." />
+    <MESSAGE value="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors" />
   </component>
 </project>

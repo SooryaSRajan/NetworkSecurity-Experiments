@@ -284,9 +284,8 @@ export default {
   },
   methods: {
     copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(function () {
-        this.correct1("Copied code to clipboard");
-      })
+      navigator.clipboard.writeText(text)
+      this.correct1("Copied code to clipboard");
     },
     correct1(message) {
       const x = document.getElementById("snackbar");
