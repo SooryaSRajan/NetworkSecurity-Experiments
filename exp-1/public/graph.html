@@ -13,49 +13,206 @@
             stroke-width: 3px;
         }
 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #F9FAFE;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         .nodes text {
             font-size: 12px;
         }
+
+        #chart {
+            flex: 6;
+            background-color: white;
+            height: 80%;
+            overflow: scroll;
+        }
+
+        .flex-box {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 80%;
+            background-color: #f5f5f5;
+        }
+
+        .control-panel {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: start;
+            width: 100%;
+            height: 80vh;
+            background-color: #f5f5f5;
+        }
+
+        input[type=number] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #BDBDBD;
+            color: #424242;
+            cursor: not-allowed;
+            transform: scale(1, 1);
+        }
+
+        h4 {
+            padding: 0;
+            margin: 0 0 10px;
+            color: #919191;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        #logs {
+            height: 100%;
+            flex: 1;
+            align-self: start;
+            font-family: "Lucida Console", Monaco, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: start;
+            padding: 20px;
+        }
+
+        h3 {
+            padding: 0;
+            margin: 0 0 10px;
+            color: #919191;
+            font-weight: 400;
+            border-bottom: 1px solid #919191;
+        }
+
+        #log-list {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            max-height: 80vh;
+            overflow-y: scroll;
+        }
+
+        li {
+            margin-top: 10px;
+        }
+
     </style>
 </head>
-<body>
-<div id="chart"></div>
-<button id="add-client-server" onclick="addClientServer()">Add Client/Server</button>
-<button onclick="init()">Generate Graph</button>
+<body onload="addClientServer()">
+<div class="flex-box">
+    <div class="control-panel">
+        <h2>
+            Network Graph simulating a client/server connection and Three-way handshake
+        </h2>
+        <div>
+            <h4>
+                Choose the number of client/server pairs to generate and click on "Generate Graph" to generate the graph. Click on the client node to initiate the handshake. Click on the client node again after completion of handshake to send packets to the server.
+            </h4>
+            <input type="number" id="count" name="count" min="1" max="50" value="1">
+            <button onclick="init()" id="button">Generate Graph</button>
+        </div>
+    </div>
+    <div id="chart"></div>
+    <div id="logs">
+        <h3>
+            Logs
+        </h3>
+        <ul id="log-list">
+
+        </ul>
+    </div>
+</div>
+
 
 <script>
-    let nodes = [
-        {id: "client1", type: "client", icon: "workstation.svg", handshake: false, isClicked: false},
-        {id: "gateway", type: "gateway", icon: "wlan.svg"},
-        {id: "server1", type: "server", icon: "server.svg"},
-        {id: "server2", type: "server", icon: "server.svg"},
-        {id: "client2", type: "client", icon: "workstation.svg", handshake: false, isClicked: false},
-    ];
+    let nodes = [];
 
-    let links = [
-        {source: "client1", target: "gateway", color: "#8a8ac2", destination: "server1"},
-        {source: "server1", target: "gateway", color: "#8a8ac2"},
-        {source: "client2", target: "gateway", color: "#9ae5da", destination: "server2"},
-        {source: "server2", target: "gateway", color: "#9ae5da"}
-    ];
+    let links = [];
 
-    let count = 3
+    let count = 0
+
+    let isSimulationInitialized = false
+
+    function addClientServerWrapper(count) {
+        nodes = []
+        links = []
+        for (let i = 0; i < count; i++) {
+            addClientServer()
+            console.log("added client server pair")
+        }
+    }
 
     function addClientServer() {
         nodes.push({id: "client" + count, type: "client", icon: "workstation.svg", handshake: false, isClicked: false})
         nodes.push({id: "server" + count, type: "server", icon: "server.svg"})
         links.push({source: "client" + count, target: "gateway", color: "#8a8ac2", destination: "server" + count})
         links.push({source: "server" + count, target: "gateway", color: "#8a8ac2"})
-
-        console.log(nodes, links)
-
         count++
-
     }
 
     function init() {
+
+        if (isSimulationInitialized) {
+            return
+        }
+
+        let size = document.getElementById("count").value
+        size = parseInt(size)
+
+        if(isNaN(size)){
+            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            return
+        }
+
+        if(size < 1 || size > 50){
+            document.getElementById("log-list").innerHTML += "<li>Please enter a number greater than 0 and less than 50</li>"
+            return
+        }
+
+        addClientServerWrapper(parseInt(size))
+
+        isSimulationInitialized = true
+        //append log that graph has been generated
+        document.getElementById("log-list").innerHTML += "<li>Graph has been generated</li>"
+
+        document.getElementById("button").disabled = true;
+
         let width = 1000;
         let height = 800;
+
+        nodes.push({id: "gateway", type: "gateway", icon: "router.svg"})
 
         let svg = d3.select("#chart")
             .append("svg")
@@ -93,7 +250,7 @@
             .style("stroke", function (d) {
                 return d.color;
             })
-            .style("stroke-width", "3px");
+            .style("stroke-width", "2px");
 
         let node = svg.append("g")
             .attr("class", "nodes")
@@ -101,15 +258,41 @@
             .data(nodes)
             .enter()
             .append("g")
+            .call(drag(simulation));
 
         node.append("image")
             .attr("xlink:href", function (d) {
-                return d.icon;
+                if (d.type !== "gateway")
+                    return d.icon;
             })
             .attr("x", -20)
             .attr("y", -20)
             .attr("width", 40)
             .attr("height", 40);
+
+        //append circle to node of raduis 20 only for gateway
+        node.append("circle")
+            .attr("r", function (d) {
+                if (d.type === "gateway") {
+                    return 10
+                } else {
+                    return 0
+                }
+            })
+            .attr("fill", function (d) {
+                if (d.type === "gateway") {
+                    return "#80c7b1";
+                } else {
+                    return "none";
+                }
+            })
+            .attr("stroke", function (d) {
+                if (d.type === "gateway") {
+                    return "#8a8ac2";
+                } else {
+                    return "none";
+                }
+            })
 
 
         let text = svg.append("g")
@@ -119,7 +302,10 @@
             .enter()
             .append("text")
             .text(function (d) {
-                return d.id;
+                //if not gateway
+                if (d.type !== "gateway") {
+                    return d.id;
+                }
             })
             .style("font-size", "12px")
             .attr("dx", 15)
@@ -157,7 +343,6 @@
 
         node.on("click", function (d) {
             let data = d.srcElement.__data__
-            console.log(data)
             if (data.type === "client") {
                 let id = data.id;
                 let destination;
@@ -180,7 +365,7 @@
                         }))
                         .enter()
                         .append("circle")
-                        .attr("r", 20)
+                        .attr("r", 5)
                         .style("fill", "#0000FF")
                         .attr("cx", function (d) {
                             if (d.source.type === "client") {
@@ -203,6 +388,8 @@
                             return d.target.y;
                         })
 
+                    document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has initiated three-way handshake</li> with <span style="color: #8a8ac2">' + destination + '</span>'
+                    document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has sent SYN to <span style="color: #8a8ac2">' + destination + '</span></li>'
                     //after packet is on gateway, remove packet
                     setTimeout(function () {
                         //remove packet if d.source.id is client1
@@ -219,7 +406,7 @@
                             }))
                             .enter()
                             .append("circle")
-                            .attr("r", 20)
+                            .attr("r", 5)
                             .style("fill", "#0000FF")
                             .attr("cx", function (d) {
                                 if (d.source.type === "server") {
@@ -243,6 +430,8 @@
                             })
 
                         setTimeout(function () {
+                            document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + destination + '</span> has sent SYN-ACK to <span style="color: #8a8ac2">' + id + '</span></li>'
+
                             packet
                                 .transition()
                                 .duration(800)
@@ -268,7 +457,7 @@
                                     }))
                                     .enter()
                                     .append("circle")
-                                    .attr("r", 20)
+                                    .attr("r", 5)
                                     .style("fill", "#0000FF")
                                     .attr("cx", function (d) {
                                         if (d.source.type === "client") {
@@ -306,7 +495,7 @@
                                         }))
                                         .enter()
                                         .append("circle")
-                                        .attr("r", 20)
+                                        .attr("r", 5)
                                         .style("fill", "#0000FF")
                                         .attr("cx", function (d) {
                                             if (d.source.type === "client") {
@@ -344,7 +533,7 @@
                                             }))
                                             .enter()
                                             .append("circle")
-                                            .attr("r", 20)
+                                            .attr("r", 5)
                                             .style("fill", "#0000FF")
                                             .attr("cx", function (d) {
                                                 if (d.source.type === "server") {
@@ -356,6 +545,8 @@
                                                     return d.target.y;
                                                 }
                                             })
+
+                                        document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has sent ACK to <span style="color: #8a8ac2">' + destination + '</span></li>'
 
                                         packet
                                             .transition()
@@ -374,7 +565,7 @@
                                                     return d.source.id === destination;
                                                 })
                                                 .remove();
-                                            alert("Three way handshake completed, now packets can be sent and received")
+                                            document.getElementById("log-list").innerHTML += '<li>Handshake initiated by <span style="color: #8a8ac2">' + id + '</span> has been completed.</li>';
                                             clientData[0].handshake = true;
                                             clientData[0].isClicked = false;
 
@@ -391,6 +582,7 @@
 
                     }, 800);
                 } else if (clientData[0].handshake === true) {
+                    document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> sent a packet.</li>';
                     let packet = svg.append("g")
                         .attr("class", "packet")
                         .selectAll("circle")
@@ -399,7 +591,7 @@
                         }))
                         .enter()
                         .append("circle")
-                        .attr("r", 20)
+                        .attr("r", 5)
                         .style("fill", "#ff7300")
                         .attr("cx", function (d) {
                             if (d.source.type === "client") {
@@ -436,7 +628,7 @@
                             }))
                             .enter()
                             .append("circle")
-                            .attr("r", 20)
+                            .attr("r", 5)
                             .style("fill", "#ff7300")
                             .attr("cx", function (d) {
                                 if (d.source.type === "server") {
@@ -486,7 +678,7 @@
                                     }))
                                     .enter()
                                     .append("circle")
-                                    .attr("r", 20)
+                                    .attr("r", 5)
                                     .style("fill", "#ff7300")
                                     .attr("cx", function (d) {
                                         if (d.source.type === "client") {
@@ -509,6 +701,9 @@
                                         return d.source.y;
                                     })
 
+                                document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> got a response.</li>';
+
+
                                 setTimeout(function () {
                                     packet
                                         .filter(function (d) {
@@ -522,6 +717,9 @@
                     }, 800)
                 }
             }
+            else {
+                document.getElementById("log-list").innerHTML += '<li>Cannot send a handshake request from a <span style="color: #8a8ac2">  server.</span></li>';
+            }
         })
 
         //animate the packet from client to gateway
@@ -529,17 +727,20 @@
         function drag(simulation) {
             function dragStarted(event, d) {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
+                if(d.type === "gateway") return
                 d.fx = d.x;
                 d.fy = d.y;
             }
 
             function dragged(event, d) {
+                if(d.type === "gateway") return
                 d.fx = event.x;
                 d.fy = event.y;
             }
 
             function dragEnded(event, d) {
                 if (!event.active) simulation.alphaTarget(0);
+                if(d.type === "gateway") return
                 d.fx = null;
                 d.fy = null;
             }

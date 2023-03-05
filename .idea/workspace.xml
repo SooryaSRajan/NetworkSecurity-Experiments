@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors">
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Completed adding commands and features to experiment-7&#10;Added vectors and NetworkComponent animations for verification&#10;Added disable option to disable button while verification&#10;Fixed copy bug in experiment 6&#10;Added commands to enable terminal and exit terminal, view groups and modify them">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-6/src/views/ExperimentPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-7/src/assets/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-7/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graph/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/graph/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,18 +49,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-7/src/assets" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-1/public" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/exp-1/public" />
+      <recent name="$PROJECT_DIR$/exp-1/src/views" />
+      <recent name="$PROJECT_DIR$/exp-1/src/assets" />
+      <recent name="$PROJECT_DIR$/graph" />
       <recent name="$PROJECT_DIR$/exp-7/src/assets" />
-      <recent name="$PROJECT_DIR$/exp-7/src/components" />
-      <recent name="$PROJECT_DIR$/exp-6/src/assets" />
-      <recent name="$PROJECT_DIR$/exp-6/src/components" />
-      <recent name="$PROJECT_DIR$/exp-2/src" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -87,7 +91,8 @@
       <workItem from="1677921266039" duration="1151000" />
       <workItem from="1677922940441" duration="1211000" />
       <workItem from="1677924246636" duration="12011000" />
-      <workItem from="1677936291380" duration="1369000" />
+      <workItem from="1677936291380" duration="1530000" />
+      <workItem from="1678017727334" duration="14146000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -208,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677873649013</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Completed adding commands and features to experiment-7&#10;Added vectors and NetworkComponent animations for verification&#10;Added disable option to disable button while verification&#10;Fixed copy bug in experiment 6&#10;Added commands to enable terminal and exit terminal, view groups and modify them">
+      <created>1677937723869</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1677937723869</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,6 +260,7 @@
     <MESSAGE value="Added success/failure messages after quit command" />
     <MESSAGE value="Completed basic flex layout for ExperimentPage.vue and added necessary components." />
     <MESSAGE value="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors" />
+    <MESSAGE value="Completed adding commands and features to experiment-7&#10;Added vectors and NetworkComponent animations for verification&#10;Added disable option to disable button while verification&#10;Fixed copy bug in experiment 6&#10;Added commands to enable terminal and exit terminal, view groups and modify them" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed adding commands and features to experiment-7&#10;Added vectors and NetworkComponent animations for verification&#10;Added disable option to disable button while verification&#10;Fixed copy bug in experiment 6&#10;Added commands to enable terminal and exit terminal, view groups and modify them" />
   </component>
 </project>
