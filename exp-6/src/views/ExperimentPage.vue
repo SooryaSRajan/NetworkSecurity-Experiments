@@ -265,6 +265,7 @@ export default {
         "openssl x509",
         "cat",
         "quit",
+        "exit",
         "cd",
         "mkdir",
         "pwd",
