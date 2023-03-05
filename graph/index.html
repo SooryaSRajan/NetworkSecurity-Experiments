@@ -23,11 +23,11 @@
 
 <script>
     let nodes = [
-        {id: "client1", type: "client"},
-        {id: "gateway", type: "gateway"},
-        {id: "server1", type: "server"},
-        {id: "server2", type: "server"},
-        {id: "client2", type: "client"},
+        {id: "client1", type: "client", icon: "workstation.svg"},
+        {id: "gateway", type: "gateway", icon: "wlan.svg"},
+        {id: "server1", type: "server", icon: "server.svg"},
+        {id: "server2", type: "server", icon: "server.svg"},
+        {id: "client2", type: "client", icon: "workstation.svg"},
     ];
 
     let links = [
@@ -37,15 +37,20 @@
         {source: "server2", target: "gateway", color: "#9ae5da"}
     ];
 
-    let width = 600;
-    let height = 400;
+    let packets = [
+        {source: "client1", target: "gateway", color: "#8a8ac2"},
+        {source: "client2", target: "gateway", color: "#9ae5da"},
+    ];
+
+    let width = 1000;
+    let height = 800;
 
     let svg = d3.select("#chart")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
 
-    let linkDistance = 100; // set the desired link distance
+    let linkDistance = 200; // set the desired link distance
     let linkForce = d3.forceLink(links)
         .id(function (d) {
             return d.id;
@@ -80,29 +85,21 @@
 
     let node = svg.append("g")
         .attr("class", "nodes")
-        .selectAll("circle")
+        .selectAll("g")
         .data(nodes)
         .enter()
-        .append("circle")
-        .attr("r", function (d) {
-            if (d.type === "server") {
-                return 10;
-            } else if (d.type === "client") {
-                return 10;
-            } else {
-                return 20;
-            }
+        .append("g")
+        .call(drag(simulation))
+
+    node.append("image")
+        .attr("xlink:href", function (d) {
+            return d.icon;
         })
-        .style("fill", function (d) {
-            if (d.type === "server") {
-                return "#00FF00";
-            } else if (d.type === "client") {
-                return "#0000FF";
-            } else {
-                return "#FF0000";
-            }
-        })
-        .call(drag(simulation));
+        .attr("x", -20)
+        .attr("y", -20)
+        .attr("width", 40)
+        .attr("height", 40);
+
 
     let text = svg.append("g")
         .attr("class", "texts")
@@ -116,6 +113,31 @@
         .style("font-size", "12px")
         .attr("dx", 15)
         .attr("dy", 4);
+
+    //packet on all links which goes from client to gateway
+    let packet = svg.append("g")
+        .attr("class", "packet")
+        .selectAll("circle")
+        .data(links.filter(function (d) {
+            return d.source.type === "client" && d.target.type === "gateway";
+        }))
+        .enter()
+        .append("circle")
+        .attr("r", 20)
+        .style("fill", "#0000FF")
+        .attr("cx", function (d) {
+            if(d.source.type === "client") {
+                return d.source.x;
+            }
+        })
+        .attr("cy", function (d) {
+            if(d.source.type === "client") {
+                return d.source.y;
+            }
+        })
+
+
+
 
     simulation.on("tick", function () {
         link
@@ -133,11 +155,8 @@
             });
 
         node
-            .attr("cx", function (d) {
-                return d.x;
-            })
-            .attr("cy", function (d) {
-                return d.y;
+            .attr("transform", function (d) {
+                return "translate(" + d.x + "," + d.y + ")";
             });
 
         text
@@ -147,10 +166,24 @@
             .attr("y", function (d) {
                 return d.y;
             });
+
+        packet
+            .attr("cx", function (d) {
+                return d.source.x + (d.target.x - d.source.x) / 5;
+            })
+            .attr("cy", function (d) {
+                return d.source.y + (d.target.y - d.source.y) / 5;
+            });
+
+
     });
 
+    //simulation node on click move packet to gateway
+
+    //animate the packet from client to gateway
+
     function drag(simulation) {
-        function dragstarted(event, d) {
+        function dragStarted(event, d) {
             if (!event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x;
             d.fy = d.y;
@@ -161,27 +194,17 @@
             d.fy = event.y;
         }
 
-        function dragended(event, d) {
+        function dragEnded(event, d) {
             if (!event.active) simulation.alphaTarget(0);
             d.fx = null;
             d.fy = null;
         }
 
         return d3.drag()
-            .on("start", dragstarted)
+            .on("start", dragStarted)
             .on("drag", dragged)
-            .on("end", dragended);
+            .on("end", dragEnded);
     }
-
-    //create a plusing animation of a moving packet from client to gateway then gateway to server
-    let packet = svg.append("circle")
-        .attr("r", 5)
-        .attr("fill", "yellow")
-        .attr("cx", 0)
-        .attr("cy", 0)
-        .attr("opacity", 0);
-
-
 
 
 
