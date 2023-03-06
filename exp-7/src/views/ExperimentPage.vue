@@ -31,7 +31,7 @@
           <div v-if="step === 2" class="content">
             <h4>Step 2: Viewing server network information</h4>
             <p>
-              Get the interface information of the server which is in interface "GigabitEthernet0/0". Try to find the IP
+              Get the interface information of the server which is in interface <span @click="copyToClipboard('GigabitEthernet0/0')" id="gigabit">"GigabitEthernet0/0"</span>. Try to find the IP
               address of the server using the following command:
             </p>
             <br>
@@ -466,6 +466,9 @@ export default {
             this.terminal.push(this.terminalStarterText + "Invalid input detected.");
           }
         }
+        else{
+          this.terminal.push(this.terminalStarterText + "Invalid input detected.");
+        }
       }
     },
     getPacketWrapperColor(packetStatus) {
@@ -589,6 +592,15 @@ main {
 
 div {
   box-sizing: border-box;
+}
+
+#gigabit{
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+}
+#gigabit:hover {
+  cursor: copy;
 }
 
 .row-1 {

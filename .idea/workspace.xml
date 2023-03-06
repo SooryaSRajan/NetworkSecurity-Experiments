@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added SVGs for nodes&#10;Graph generation with animation in experiment one graph simulation&#10;Added iframe load and public code to load the webpage" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Changed experiment name for exp 6">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,6 +86,7 @@
       <workItem from="1677924246636" duration="12011000" />
       <workItem from="1677936291380" duration="1530000" />
       <workItem from="1678017727334" duration="14347000" />
+      <workItem from="1678099582642" duration="724000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -217,7 +221,21 @@
       <option name="project" value="LOCAL" />
       <updated>1678040706213</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Added height to experiment 4">
+      <created>1678099855230</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1678099855230</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Changed experiment name for exp 6">
+      <created>1678099950008</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1678099950008</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -259,6 +277,8 @@
     <MESSAGE value="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors" />
     <MESSAGE value="Completed adding commands and features to experiment-7&#10;Added vectors and NetworkComponent animations for verification&#10;Added disable option to disable button while verification&#10;Fixed copy bug in experiment 6&#10;Added commands to enable terminal and exit terminal, view groups and modify them" />
     <MESSAGE value="Added SVGs for nodes&#10;Graph generation with animation in experiment one graph simulation&#10;Added iframe load and public code to load the webpage" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added SVGs for nodes&#10;Graph generation with animation in experiment one graph simulation&#10;Added iframe load and public code to load the webpage" />
+    <MESSAGE value="Added height to experiment 4" />
+    <MESSAGE value="Changed experiment name for exp 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed experiment name for exp 6" />
   </component>
 </project>
