@@ -87,12 +87,43 @@
             transform: scale(1, 1);
         }
 
+        .row{
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            width: fit-content;
+        }
+
+        .flex{
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            height: fit-content;
+        }
+
         h4 {
             padding: 0;
             margin: 0 0 10px;
             color: #919191;
             font-weight: 400;
             text-align: justify;
+        }
+
+        .circle{
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .orange{
+            background-color: #ff9800;
+        }
+
+        .blue{
+            background-color: #0000FF;
         }
 
         #logs {
@@ -142,6 +173,11 @@
             </h4>
             <input type="number" id="count" name="count" min="1" max="50" value="1">
             <button onclick="init()" id="button">Generate Graph</button>
+            
+            <div class="flex">
+                <span class="row">SYN/ACK packet: <span class="circle blue" /></span> <br>
+                <span class="row">Data packet: <span class="circle orange" /></span>
+            </div>
         </div>
     </div>
     <div id="chart"></div>
