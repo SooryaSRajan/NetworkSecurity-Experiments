@@ -311,7 +311,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    font-family: monospace;
+    font-family: Hack monospace;
     padding: 10px 15px;
     background-color: #252526;
     color: #33FF00;
@@ -331,7 +331,7 @@
     border: none;
     padding: 10px;
     color: white;
-    font-family: monospace;
+    font-family: Hack monospace;
     font-size: 13px;
     text-align: start;
   }
@@ -342,7 +342,7 @@
   }
   
   .active-button {
-    border-left: 2px solid #33FF00;
+    border-left: 2px solid #e5b350;
   }
   
   input {

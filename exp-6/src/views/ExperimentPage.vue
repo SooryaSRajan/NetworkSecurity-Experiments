@@ -699,6 +699,8 @@ export default {
 </script>
 
 <style>
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -832,7 +834,7 @@ pre {
 
 .row-1 {
   width: 25%;
-  background-color: orange;
+  background-color: white;
 }
 
 .row-2 {
@@ -860,6 +862,10 @@ code:hover {
 }
 
 
+div {
+  overflow-y: auto;
+}
+
 .terminal {
   width: 100%;
   min-height: 100%;
@@ -869,19 +875,16 @@ code:hover {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  font-family: monospace;
+  font-family: Hack monospace;
   padding: 10px 15px;
   color: #33FF00;
 }
 
-div {
-  overflow-y: auto;
-}
 
 .terminal-choices {
   width: 10%;
   min-width: 100px;
-  background-color: #3c3f41;
+  background-color: #0f131b;
 }
 
 .terminal-col {
@@ -890,7 +893,7 @@ div {
   max-width: 100%;
   flex-direction: row;
   text-overflow: fade;
-  background-color: #252526;
+  background-color: #0b0e14;
   flex: 1;
 }
 
@@ -902,11 +905,11 @@ div {
 }
 
 .terminal-input-field {
-  background-color: #252526;
+  background-color: #0b0e14;
   color: #33FF00;
   border: none;
   outline: none;
-  font-family: monospace;
+  font-family: Hack monospace;
   font-size: 16px;
   flex: 1;
   padding: 0 0 0 10px;
@@ -920,13 +923,15 @@ div {
 
 .terminal-button {
   width: 100%;
-  background-color: transparent;
+  background-color: #161b24;
   border: none;
   padding: 10px;
-  color: white;
   font-family: monospace;
   font-size: 13px;
+  color: #666c7c;
+  font-weight: bolder;
   text-align: start;
+  overflow: hidden;
 }
 
 .terminal-button:hover {
@@ -941,7 +946,7 @@ div {
 }
 
 .active-button {
-  border-left: 2px solid #33FF00;
+  border-left: 2px solid #e5b350;
 }
 
 input {

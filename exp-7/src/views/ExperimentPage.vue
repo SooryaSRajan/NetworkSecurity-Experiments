@@ -657,7 +657,7 @@ div {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  font-family: monospace;
+  font-family: Hack monospace;
   padding: 10px 15px;
   background-color: #252526;
   color: #33FF00;
@@ -695,7 +695,7 @@ div {
   color: #33FF00;
   border: none;
   outline: none;
-  font-family: monospace;
+  font-family: Hack monospace;
   font-size: 16px;
   flex: 1;
   padding: 0 0 0 10px;
@@ -723,7 +723,7 @@ div {
   background-color: #202020;
   color: white;
   font-size: large;
-  font-family: monospace;
+  font-family: Hack monospace;
   font-weight: bold;
 }
 

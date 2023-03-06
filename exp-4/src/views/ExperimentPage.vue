@@ -522,44 +522,47 @@
   
   
   .terminal {
-    width: 90%;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    font-family: monospace;
-    padding: 10px 15px;
-    background-color: #252526;
-    color: #33FF00;
-    overflow-y: scroll;
-  }
-  
-  .terminal-choices {
-    width: 10%;
-    flex: 1;
-    min-width: 100px;
-    background-color: #3c3f41;
-  }
-  
-  .terminal-button {
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    padding: 10px;
-    color: white;
-    font-family: monospace;
-    font-size: 13px;
-    text-align: start;
-  }
-  
-  .terminal-button:hover {
-    background-color: #343333;
-    cursor: pointer;
-  }
-  
+  width: 90%;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-family: Hack, monospace;
+  padding: 10px 15px;
+  background-color: #0b0e14;
+  color: #95e6cb;
+  overflow-y: scroll;
+}
+
+.terminal-choices {
+  width: 10%;
+  flex: 1;
+  min-width: 100px;
+  background-color: #0b0e14;
+  overflow: hidden;
+}
+
+.terminal-button {
+  width: 100%;
+  background-color: #161b24;
+  border: none;
+  padding: 10px;
+  font-family: Hack monospace;
+  font-size: 13px;
+  color: #666c7c;
+  font-weight: bolder;
+  text-align: start;
+  overflow: hidden;
+}
+
+.terminal-button:hover {
+  background-color: #343333;
+  cursor: pointer;
+}
+
   .active-button {
-    border-left: 2px solid #33FF00;
+    border-left: 2px solid #e5b350;
   }
   
   input {
