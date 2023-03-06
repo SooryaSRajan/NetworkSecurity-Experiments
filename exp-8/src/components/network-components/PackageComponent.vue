@@ -8,10 +8,26 @@
             4. Wrapper functions in the NetworkInteractionComponent are used to modify the package content
             5. Packets cannot be directly interacted with, they can only be changed through NetworkInteractionComponent
         -->
-    <div id="packageBox" :style="{backgroundColor: backgroundColor}">
-      <div v-for="(item, index) in data" :key="item.id">
+    <div id="packageBox" :style="{backgroundColor: backgroundColor}" @click="isViewing = !isViewing">
+      <div v-for="(item, index) in data" :key="index">
         <div class="packageText">{{ item }}</div>
         <div v-if="addDash(index)" class="dash"></div>
+      </div>
+    </div>
+    <div v-if="dataOnClick && isViewing" class="packageTextHidden" @click="isViewing = !isViewing">
+      <div class="card">
+        <h3>
+          Package Content:
+        </h3>
+        <h5 @click="copyToClipboard(data[0])">
+          IP Address: {{ data[0] }}
+        </h5>
+        <span>
+          Click to copy IP Address
+        </span>
+        <div v-for="(item, index) in dataOnClick" :key="index">
+          <div class="packageText">{{ item }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -24,15 +40,26 @@ export default {
     addDash(index) {
       return this.data.length !== index + 1;
     },
+    copyToClipboard(text) {
+      navigator.clipboard.writeText(text)
+    },
   },
   props: {
     data: {
-      type: Array
+      type: Array,
+    },
+    dataOnClick: {
+      type: Array,
     },
     backgroundColor: {
       type: String,
       default: "#ABFF8E"
     }
+  },
+  data() {
+    return {
+      isViewing: false
+    };
   },
 }
 </script>
@@ -40,12 +67,12 @@ export default {
 <style scoped>
 #packageBox {
   width: 80px;
-  min-height: 60px;
-  overflow-y: scroll;
-  padding: 3px;
+  height: 60px;
+  padding: 5px;
+  overflow-y: hidden;
   border: 1px solid black;
   display: flex;
-  font-size: 12px;
+  font-size: 10px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -55,8 +82,41 @@ export default {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
+.packageTextHidden{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+.card{
+  max-width: 50%;
+  background-color: white;
+  padding: 10px;
+  overflow-y: scroll;
+  border-radius: 5px;
+}
+
 .packageText {
   padding: 2px;
+}
+h5{
+  margin-bottom: 0;
+}
+span{
+  font-size: 10px;
+  color: grey;
+  margin-bottom: 10px;
 }
 
 /*style for dash*/
