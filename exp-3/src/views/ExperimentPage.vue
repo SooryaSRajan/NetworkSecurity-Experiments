@@ -112,8 +112,6 @@ import StyledButton from "@/components/StyledButton";
 import EndSystemComponent from "@/components/network-components/EndSystemComponent";
 import ServerComponent from "@/components/ServerComponent";
 import DropDownCard from "@/components/DropDownCard";
-import IDEA from "idea-cipher";
-import CryptoJS from "crypto-js";
 
 export default {
   name: 'App',
