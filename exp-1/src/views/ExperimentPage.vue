@@ -66,10 +66,10 @@
         <NetworkInteractionComponent ref="childComponentRef">
           <EndSystemComponent class="box" id="computer1" package-id="package1" top="55%" left="10%" ref="computer1"
                               :data="packageDataProcessed" :display-package="displayPackage">
-            <img src="./../assets/desktop.png" width="250" height="250" alt="computer">
+            <img src="./../assets/workstation.svg" width="180" height="180" alt="computer">
           </EndSystemComponent>
           <EndSystemComponent class="box" id="computer2" top="10%" left="70%">
-            <img src="./../assets/server.jpg" width="250" height="250" alt="computer">
+            <img src="./../assets/server.svg" width="180" height="180" alt="computer">
           </EndSystemComponent>
         </NetworkInteractionComponent>
       </div>

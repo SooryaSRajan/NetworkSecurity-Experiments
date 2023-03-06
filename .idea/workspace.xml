@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Changed experiment name for exp 6">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" afterDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added copy to clipboard for GigabiEthernet0/0 &#10;Added CSS for copy&#10;Added else condition for terminal input">
+      <change beforePath="$PROJECT_DIR$/exp-1/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/views/ExperimentPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +41,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-1/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-1/src/assets" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -86,7 +85,7 @@
       <workItem from="1677924246636" duration="12011000" />
       <workItem from="1677936291380" duration="1530000" />
       <workItem from="1678017727334" duration="14347000" />
-      <workItem from="1678099582642" duration="724000" />
+      <workItem from="1678099582642" duration="1025000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -235,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678099950008</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Added copy to clipboard for GigabiEthernet0/0 &#10;Added CSS for copy&#10;Added else condition for terminal input">
+      <created>1678100379224</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1678100379224</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,6 +285,7 @@
     <MESSAGE value="Added SVGs for nodes&#10;Graph generation with animation in experiment one graph simulation&#10;Added iframe load and public code to load the webpage" />
     <MESSAGE value="Added height to experiment 4" />
     <MESSAGE value="Changed experiment name for exp 6" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed experiment name for exp 6" />
+    <MESSAGE value="Added copy to clipboard for GigabiEthernet0/0 &#10;Added CSS for copy&#10;Added else condition for terminal input" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added copy to clipboard for GigabiEthernet0/0 &#10;Added CSS for copy&#10;Added else condition for terminal input" />
   </component>
 </project>
