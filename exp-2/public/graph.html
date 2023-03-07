@@ -146,9 +146,14 @@
             margin-top: 10px;
         }
 
+        .attack-info {
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
     </style>
 </head>
-<body onload="addClientServer()">
+<body>
 <div class="flex-box">
     <div class="control-panel">
         <h2>
@@ -156,11 +161,20 @@
         </h2>
         <div>
             <h4>
-                Choose the number of server pairs to generate and click on "Generate Graph" to generate the graph. Click
-                on the server node to initiate the attack.
+                Choose the number of clients and servers required and click on "Generate Graph" to generate the graph. Click on a client and a server to establish an attack from the client to the server.
             </h4>
-            <input type="number" id="count" name="count" min="1" max="50" value="1">
+            <label>Number of Servers</label>
+            <input type="number" id="countServer" name="count" min="1" max="50" value="1">
+            <label>Number of Clients</label>
+            <input type="number" id="countClient" name="count" min="1" max="50" value="1">
+
             <button onclick="init()" id="button">Generate Graph</button>
+
+            <span class="attack-info">Attacking client: </span>
+            <span id="client-id"></span>
+            <br>
+            <span class="attack-info">Target server: </span>
+            <span id="server-id"></span>
 
             <div class="flex">
                 <span>Attack packet: </span> <span class="circle blue"></span>
@@ -184,24 +198,48 @@
 
     let links = [];
 
-    let count = 0
+    let serverCountCreated = 0
+
+    let clientCountCreated = 0
 
     let isSimulationInitialized = false
 
-    function addClientServerWrapper(count) {
-        nodes = [{id: "client", type: "client", icon: "workstation.svg"}]
-        links = []
+    function addClientWrapper(count) {
         for (let i = 0; i < count; i++) {
-            addClientServer()
-            console.log("added client server pair")
+            addClient()
+            console.log("added client")
         }
     }
 
-    function addClientServer() {
-        nodes.push({id: "server" + count, type: "server", icon: "server.svg", isClicked: false, isServerDown: false})
-        links.push({source: "client", target: "gateway", color: "#8a8ac2", destination: "server" + count})
-        links.push({source: "server" + count, target: "gateway", color: "#8a8ac2"})
-        count++
+    function addServerWrapper(count) {
+        for (let i = 0; i < count; i++) {
+            addServer()
+            console.log("added server")
+        }
+    }
+
+    function addServer() {
+        nodes.push({
+            id: "server" + serverCountCreated,
+            type: "server",
+            icon: "server.svg",
+            isClicked: false,
+            isServerDown: false
+        })
+        links.push({source: "server" + serverCountCreated, target: "gateway", color: "#8a8ac2"})
+        serverCountCreated++
+    }
+
+    function addClient() {
+        nodes.push({
+            id: "client" + clientCountCreated,
+            type: "client",
+            icon: "workstation.svg",
+            isClicked: false,
+            isLineOccupied: false
+        })
+        links.push({source: "client" + clientCountCreated, target: "gateway", color: "#8a8ac2"})
+        clientCountCreated++
     }
 
     function init() {
@@ -210,20 +248,39 @@
             return
         }
 
-        let size = document.getElementById("count").value
-        size = parseInt(size)
+        let serverCount = document.getElementById("countServer").value
+        serverCount = parseInt(serverCount)
 
-        if (isNaN(size)) {
+        let attackingClient = null
+        let targetServer = null
+
+        if (isNaN(serverCount)) {
             document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
             return
         }
 
-        if (size < 1 || size > 50) {
-            document.getElementById("log-list").innerHTML += "<li>Please enter a number greater than 0 and less than 50</li>"
+        if (serverCount < 1 || serverCount > 50) {
+            document.getElementById("log-list").innerHTML += "<li>Please enter number of servers greater than 0 and less than 50</li>"
             return
         }
 
-        addClientServerWrapper(parseInt(size))
+        let clientCount = document.getElementById("countClient").value
+        clientCount = parseInt(clientCount)
+
+        if (isNaN(clientCount)) {
+            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            return
+        }
+
+        if (clientCount < 1 || clientCount > 50) {
+            document.getElementById("log-list").innerHTML += "<li>Please enter number of clients greater than 0 and less than 50</li>"
+            return
+        }
+
+        //TODO: Include client, click on client and then target server to attack
+
+        addClientWrapper(parseInt(clientCount))
+        addServerWrapper(parseInt(serverCount))
 
         isSimulationInitialized = true
         //append log that graph has been generated
@@ -253,14 +310,14 @@
         let simulation = d3.forceSimulation(nodes)
             .force("link", linkForce)
             .force("charge", d3.forceManyBody().strength(-1000))
-            .force("center", d3.forceCenter(500, 300))
+            .force("center", d3.forceCenter(500, 400))
             .force("y", d3.forceY().y(function (d) {
                 if (d.type === "server") {
                     return height / 7;
                 } else if (d.type === "client") {
                     return height * 0.75;
                 } else {
-                    return 0;
+                    return height / 2;
                 }
             }))
 
@@ -368,27 +425,58 @@
         node.on("click", function (d) {
             let data = d.srcElement.__data__
             if (data.type === "client") {
-                document.getElementById("log-list").innerHTML += '<li>Cannot attack a client <span style="color: #8a8ac2"> client.</span></li>';
-            } else {
-                if (data.isClicked === false && data.isServerDown === false) {
-                    data.isClicked = true;
-                    //add the server to the attacked server list
-                    document.getElementById("log-list").innerHTML += '<li>Attacking <span style="color: red"> server ' + data.id + '</span></li>';
+                document.getElementById("log-list").innerHTML += '<li>Attack client <span style="color: red"> client ' + data.id + '</span></li> has been chosen</li>';
+                attackingClient = data.id;
+                document.getElementById("client-id").innerHTML = attackingClient;
+            } else if (data.type === "server") {
+                document.getElementById("log-list").innerHTML += '<li>Target server <span style="color: red"> server ' + data.id + '</span></li> has been chosen</li>';
+                targetServer = data.id;
+                document.getElementById("server-id").innerHTML = targetServer;
+            }
+
+            if (attackingClient !== null && targetServer !== null) {
+
+                //set both client and server to be not clicked based on the id in attackingClient and targetServer
+                let clientNode
+                let serverNode
+                for (let i = 0; i < nodes.length; i++) {
+                    if (nodes[i].id === attackingClient) {
+                        clientNode = nodes[i]
+                    } else if (nodes[i].id === targetServer) {
+                        serverNode = nodes[i]
+                    }
+                }
+
+                console.log(clientNode, serverNode)
+
+                if (!clientNode.isClicked && !serverNode.isClicked && !serverNode.isServerDown && !clientNode.isLineOccupied) {
+                    clientNode.isClicked = true;
+                    serverNode.isClicked = true;
+
+
+                    attackingClient = null;
+                    targetServer = null;
+                    document.getElementById("client-id").innerHTML = "";
+                    document.getElementById("server-id").innerHTML = "";
+
+                    document.getElementById("log-list").innerHTML += '<li>Attacking <span style="color: red"> server ' + serverNode.id + '</span></li>';
 
                     for (let i = 0; i < 6; i++) {
                         if (i === 0) {
-                            twoOfThreeWayHandshake(data, i + 1);
+                            twoOfThreeWayHandshake(clientNode, serverNode, i + 1);
                         } else {
                             setTimeout(function () {
-                                twoOfThreeWayHandshake(data, i + 1);
+                                twoOfThreeWayHandshake(clientNode, serverNode, i + 1);
                             }, 800 * i / 2);
                         }
                     }
 
                     setTimeout(function () {
-                        document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + data.id + '</span> is down</li>';
-                        data.isServerDown = true;
-                        data.isClicked = false;
+                        document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is down</li>';
+                        serverNode.isServerDown = true;
+                        clientNode.isLineOccupied = true;
+                        serverNode.isClicked = false;
+                        clientNode.isClicked = false;
                         text.style("fill", function (d) {
                             if (d.isServerDown) {
                                 return "red";
@@ -399,6 +487,8 @@
                         link.style("stroke", function (d) {
                             if (d.source.isServerDown) {
                                 return "red";
+                            } else if (d.source.isLineOccupied) {
+                                return "#fff200";
                             } else {
                                 return d.color;
                             }
@@ -406,26 +496,27 @@
                     }, 800 * (15 / 2));
 
 
-                } else if (data.isServerDown === true) {
-                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + data.id + '</span> is already down, cannot send more packets as all ports are exhausted</li>';
+                } else if (serverNode.isServerDown === true) {
+                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already down, cannot send more packets as all ports are exhausted</li>';
+                } else if (clientNode.isLineOccupied === true) {
+                    document.getElementById("log-list").innerHTML += '<li>The ports used by <span style="color: red"> ' + clientNode.id + '</span> is already being used</li>';
                 } else {
-                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + data.id + '</span> is already being attacked</li>';
+                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already being attacked</li>';
                 }
-
             }
         })
 
-        function twoOfThreeWayHandshake(data, iteration) {
-            movePacket("client", "gateway", "client", true);
+        function twoOfThreeWayHandshake(clientData, serverData, iteration) {
+            movePacket("client", "gateway", clientData.id, true);
             document.getElementById("log-list").innerHTML += '<li>Packet ' + iteration + ' sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> gateway </span></li>';
             setTimeout(function () {
-                movePacket("server", "gateway", data.id, false);
+                movePacket("server", "gateway", serverData.id, false);
                 setTimeout(function () {
                     document.getElementById("log-list").innerHTML += '<li>Packet reached <span style="color: #8a8ac2"> server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
-                    movePacket("server", "gateway", data.id, true);
+                    movePacket("server", "gateway", serverData.id, true);
                     setTimeout(function () {
-                        movePacket("client", "gateway", "client", false);
-                        document.getElementById("log-list").innerHTML += '<li>Aborting three-way handshake number ' + iteration + '</li> to keep port open with <span style="color: red"> server ' + data.id + '</span></li>';
+                        movePacket("client", "gateway", clientData.id, false);
+                        document.getElementById("log-list").innerHTML += '<li>Aborting three-way handshake number ' + iteration + '</li> to keep port open with <span style="color: red"> server ' + serverData.id + '</span></li>';
                     }, 800)
                 }, 800);
 
