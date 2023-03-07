@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added multiple clients and servers and added permutations to attack any choice of clients from any servers">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-5/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-5/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-5/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-5/src/views/ExperimentPage.vue" afterDir="false" />
-    </list>
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Completed validation and options in experiment 5" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +85,7 @@
       <workItem from="1678017727334" duration="14347000" />
       <workItem from="1678099582642" duration="11924000" />
       <workItem from="1678128932236" duration="70000" />
-      <workItem from="1678183967446" duration="20235000" />
+      <workItem from="1678183967446" duration="20607000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -294,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678207275698</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Completed validation and options in experiment 5">
+      <created>1678211314615</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1678211314615</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,7 +320,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Hid scroll bar" />
     <MESSAGE value="Removed packet data" />
     <MESSAGE value="Added elements to allow user to decrypt content. Logic yet to be implemented" />
     <MESSAGE value="Added fix for timer going to negative values and timer continuing after experiment reset" />
@@ -342,6 +344,7 @@
     <MESSAGE value="Added three servers and logic to add lines between two computers by selecting source and target computers and option to add label to lines" />
     <MESSAGE value="Modified flex box for packet color in experiment 1 and added experiment-2 basic simulation with assets" />
     <MESSAGE value="Added multiple clients and servers and added permutations to attack any choice of clients from any servers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added multiple clients and servers and added permutations to attack any choice of clients from any servers" />
+    <MESSAGE value="Completed validation and options in experiment 5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed validation and options in experiment 5" />
   </component>
 </project>
