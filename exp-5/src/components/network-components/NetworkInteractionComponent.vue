@@ -105,12 +105,13 @@ export default {
 
       svg.appendChild(line);
       if (text) {
+
         let textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
         textNode.setAttribute("x", (x1 + x2) / 2);
-        textNode.setAttribute("y", (y1 + y2) / 2 - 6);
+        textNode.setAttribute("y", (y1 + y2) / 2 - 7);
         textNode.setAttribute("text-anchor", "middle");
         textNode.setAttribute("alignment-baseline", "middle");
-        textNode.setAttribute("font-size", "12px");
+        textNode.setAttribute("font-size", "8px");
         textNode.setAttribute("font-weight", "500");
         textNode.setAttribute("fill", "black");
         textNode.setAttribute("transform", "rotate(" + Math.atan((y2 - y1) / (x2 - x1)) * 180 / Math.PI + " " + (x1 + x2) / 2 + " " + (y1 + y2) / 2 + ")");
@@ -234,7 +235,6 @@ export default {
       //arrange the packages in the target box
       //reset the packages to their original position and then add + 50 * index to the top and left
 
-      console.log(packageID)
       for (let i = 0; i < packageID.length; i++) {
         console.log(packageID[i], "error")
         let packageDOM = document.getElementById(packageID[i])
@@ -344,14 +344,10 @@ export default {
         let lineX2 = x2 + perpendicularDx * (yOffset - i * space);
         let lineY2 = y2 + perpendicularDy * (yOffset - i * space);
 
-        //based on line.towards, draw the swap lnex1 lineX2 lineY1 lineY2
-        //line.towards is compared to the IDs
         if (line.towards === id1) {
           this.drawSVGLine(lineX1, lineY1, lineX2, lineY2, line.color, line.text);
-          console.log("towards 1")
         } else {
           this.drawSVGLine(lineX2, lineY2, lineX1, lineY1, line.color, line.text);
-          console.log("towards 2")
         }
       }
     },

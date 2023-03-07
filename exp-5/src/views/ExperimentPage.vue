@@ -22,22 +22,20 @@
               </p>
               <!--              select -->
               <select v-model="selectedOption">
-                <option value="Line 1">Line 1</option>
-                <option value="Line 2">Line 2</option>
-                <option value="Line 3">Line 3</option>
+                <option v-for="(data,index) in rightOptions" :value="data.text" :key="index">{{ data.text }}</option>
               </select>
               <button @click="generateLine">Create Line</button>
               <br>
             </div>
           </div>
           <div class="button-row">
-            <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
+            <StyledButton text="Verify" :click-function="verify" :disable="disableButton"></StyledButton>
             <StyledButton text="Reset" :click-function="reset" :disable="disableButton"></StyledButton>
           </div>
         </div>
         <div class="network-row">
           <NetworkInteractionComponent ref="childComponentRef">
-            <EndSystemComponent class="box" id="client" top="65%" left="10%" ref="computer1">
+            <EndSystemComponent class="box" id="client" top="73%" left="10%" ref="computer1">
               <div class="computer-wrapper" @click="handleElementClick('client')"
                    style="border-radius: 5px"
                    :style="{border: source === 'client' ? '3px solid red' : destination === 'client' ? '3px solid blue' : 'none'}">
@@ -49,7 +47,7 @@
               <div class="computer-wrapper" @click="handleElementClick('server1')"
                    style="border-radius: 5px"
                    :style="{border: source === 'server1' ? '3px solid red' : destination === 'server1' ? '3px solid blue' : 'none'}">
-                <span>Server 1</span>
+                <span>Key Distribution Center (KDC)</span>
                 <img src="./../assets/server.svg" width="180" alt="computer">
               </div>
             </EndSystemComponent>
@@ -58,7 +56,7 @@
               <div class="computer-wrapper" @click="handleElementClick('server2')"
                    style="border-radius: 5px"
                    :style="{border: source === 'server2' ? '3px solid red' : destination === 'server2' ? '3px solid blue' : 'none'}">
-                <span>Server 1</span>
+                <span>Ticket Granting Server (TGT)</span>
                 <img src="./../assets/server.svg" width="180" alt="computer">
               </div>
             </EndSystemComponent>
@@ -67,7 +65,7 @@
               <div class="computer-wrapper" @click="handleElementClick('server3')"
                    style="border-radius: 5px"
                    :style="{border: source === 'server3' ? '3px solid red' : destination === 'server3' ? '3px solid blue' : 'none'}">
-                <span>Server 1</span>
+                <span>Server</span>
                 <img src="./../assets/server.svg" width="180" alt="computer">
               </div>
             </EndSystemComponent>
@@ -90,14 +88,60 @@ export default {
   name: 'App',
   mounted() {
 
+    //TODO: Add detailed information about kerboros for the user to read
+    //Add correct and wrong messages
+
+    this.rightOptions = this.rightOptions
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value)
+    this.selectedOption = this.rightOptions[0].text
   },
   data() {
     return {
       source: "",
-      selectedOption: "Line 1",
+      selectedOption: '',
       destination: "",
       clickCount: 0,
       lines: {},
+      rightOptions: [
+        {
+          text: "Client request TGT from KDC",
+          source: "client",
+          destination: "server1",
+          index: 1
+        },
+        {
+          text: "Authentication service sends encrypted TGT and session key",
+          source: "server1",
+          destination: "client",
+          index: 2
+        },
+        {
+          text: "Client requests ticket from TGS with TGT and session key",
+          source: "client",
+          destination: "server2",
+          index: 3
+        },
+        {
+          text: "TGS sends Encrypted session key & ticket to client",
+          source: "server2",
+          destination: "client",
+          index: 4
+        },
+        {
+          text: "Client sends service ticket to server",
+          source: "client",
+          destination: "server3",
+          index: 5
+        },
+        {
+          text: "Server verifies service ticket & gives service access to client",
+          source: "server3",
+          destination: "client",
+          index: 6
+        },
+      ],
       currentLineSize: 1,
     }
   },
@@ -112,11 +156,9 @@ export default {
       }
 
       if (this.clickCount === 0) {
-        console.log(elementId, 'source')
         this.source = elementId;
         this.clickCount++;
       } else if (this.clickCount === 1) {
-        console.log(elementId, 'destination')
         this.destination = elementId;
         this.clickCount++;
       }
@@ -127,13 +169,52 @@ export default {
       this.destination = ""
       this.clickCount = 0
       this.currentLineSize = 1
+      this.lines = {}
+    },
+    verify() {
+
+      //verify the lines by comparing the lines with the rightOptions array and check if the index is correct, text is correct and source and destination are correct
+      let flattenedLines = this.flattenLinesObject()
+      let rightOptions = true
+      for (let i = 0; i < flattenedLines.length; i++) {
+        let line = flattenedLines[i]
+        let rightOption = this.rightOptions.find(option => option.text === line.option)
+        if (rightOption.text !== line.option || rightOption.source !== line.source || rightOption.destination !== line.destination || rightOption.index !== line.index) {
+          line.color = "red"
+
+          //now clear and redraw the lines
+          this.$refs.childComponentRef.clearLines()
+          for (let key in this.lines) {
+            this.$refs.childComponentRef.drawMultipleLinesOffset(this.lines[key][0].source, this.lines[key][0].destination, this.lines[key], 30)
+          }
+
+          rightOptions = false
+        } else {
+          line.color = "green"
+          this.$refs.childComponentRef.clearLines()
+          for (let key in this.lines) {
+            this.$refs.childComponentRef.drawMultipleLinesOffset(this.lines[key][0].source, this.lines[key][0].destination, this.lines[key], 30)
+          }
+        }
+      }
+
+      //check if there are extra lines that shouldn't be there
+      if (flattenedLines.length !== this.rightOptions.length) {
+        rightOptions = false
+      }
+
+      if (rightOptions) {
+        alert("You got it right!")
+      } else {
+        alert("You got it wrong!")
+      }
+
     },
     flattenLinesObject() {
       let lines = []
       for (let key in this.lines) {
         lines = lines.concat(this.lines[key])
       }
-      console.log(lines, "lines")
       return lines
     },
     generateLine() {
@@ -150,8 +231,6 @@ export default {
           key = this.source + "-" + this.destination
         }
 
-        console.log(this.currentLineSize, "currentLineSize")
-
         if (this.lines[key]) {
           //check size of array and if is less than 3
           if (this.lines[key].length < 3) {
@@ -164,8 +243,7 @@ export default {
               towards: this.destination,
               index: this.currentLineSize
             })
-          }
-          else{
+          } else {
             alert("You can't add more than 3 lines between 2 nodes")
           }
         } else {
@@ -181,13 +259,8 @@ export default {
         }
 
         for (let key in this.lines) {
-          console.log(key)
           this.$refs.childComponentRef.drawMultipleLinesOffset(this.lines[key][0].source, this.lines[key][0].destination, this.lines[key], 30)
         }
-
-        console.log(this.flattenLinesObject())
-        console.log(this.lines, "lines")
-
 
         this.source = "";
         this.destination = "";
@@ -353,7 +426,7 @@ span {
   align-items: start;
 }
 
-.computer-wrapper{
+.computer-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
