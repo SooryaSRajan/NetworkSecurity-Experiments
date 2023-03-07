@@ -4,216 +4,76 @@
     <div class="rem-space">
       <div class="col-1">
         <div class="row-3">
-          <button class="btn" @click="step=1">Step 1</button>
-          <button class="btn" @click="step=2">Step 2</button>
-          <button class="btn" @click="step=3">Step 3</button>
-          <button class="btn" @click="step=4">Step 4</button>
-          <button class="btn" @click="step=5">Step 5</button>
           <div class="row-3-content-space">
-            <div class="content" v-if="step===1">
-              <h3>Step 1</h3>
+            <div class="content">
+              <h3>Steps: </h3>
               <p>
                 To begin the authentication process, the client asks for a Ticket
                 Granting Ticket from the Authentication Server housed inside the
                 Key Distribution Center.
               </p>
               <br>
-
-              <p>
-                Choose a Client ID and click on 'Start' to begin the process.
-              </p>
-              <br>
-
-              <input v-model="clientID" placeholder="Client ID">
-
             </div>
-            <div class="content" v-if="step===2">
-              <h3>Step 2</h3>
+            <div class="content">
+              <h3>Draw Line</h3>
               <p>
-                The Key Distribution Center (KDC) receives the request and verifies the client's credentials by cross
-                referencing the client data with the database. It then checks for the availability of the Ticket
-                Granting Service (TGS).
-
+                After choosing the source and target computers, choose the label of the line and click on Create Line to
+                draw the line. Also, choose the options and computers in the right order to complete the experiment.
               </p>
-              <br>
-              <p>
-                If the Authentication Server finds that the client is valid and that the TGS is available, it generates
-                a client/user secret key, which is a hash of the user's password.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===3">
-              <h3>Step 3</h3>
-              <p>
-                The Authentication Server then computes the TGS secret key and creates a Session Key (SK1) encrypted by
-                the client secret key.
-              </p>
-              <br>
-              <p>
-                The Authentication Server then generates a Ticket Granting Ticket (TGT) containing the client ID, client
-                network address, timestamp,
-                lifetime and the generated SK1.
-              </p>
-              <br>
-              <p>
-                The TGT is then encrypted by the TGS secret key and sent to the client.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===4">
-              <h3>Step 4</h3>
-              <p>
-                The client decrypts the message using the client secret key and extacts SK1 and the TGT.
-                This TGT will be used in communication to tell other servers that the client is authenticated.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===5">
-              <h3>Step 5</h3>
-              <p>
-                The client requests a ticket from the server offering the service by sending the extracted TGT and the
-                created authenticator to the TGS.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===6">
-              <h3>Step 6</h3>
-              <p>
-                The KDC creates a ticket for the file server. The TGS then uses the TGS secret key to decrypt the TGT
-                received from the client and extracts SK1.
-              </p>
-              <br>
-              <p>
-                The TGS decrypts the authenticator and checks to see if the clientID and lcient network address match
-                the TGT.
-              </p>
-              <br>
-              <p>
-                The TGS also uses the extracted timestamp and lifetime to check if the authenticator is still valid.
-              </p>
-              <br>
-              <p>
-                On success, the TGS creates a session key (SK2) and encrypts it using SK1. This will be shared with the
-                client.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===7">
-              <h3>Step 7</h3>
-              <p>
-                The KDC creates a service ticket with the client ID, client network address, time stamp and SK2, which
-                is then encrypted with the server's secret key.
-              </p>
-              <br>
-              <p>
-                To continue, enter a secret key for the server and click on 'Next'.
-              </p>
-              <br>
-              <input v-model="serverSecretKey" placeholder="Server Secret Key">
-            </div>
-            <div class="content" v-if="step===8">
-              <h3>Step 7 (Cont)</h3>
-              <p>
-                A message containing teh service ticket and SK2, encrypted with SK1, is sent to the client.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===9">
-              <h3>Step 8</h3>
-              <p>
-                The client decrypts the message using SK1 and extracts SK2.
-              </p>
-              <br>
-              <p>
-                This process generates a new authenticator containing the client network address, client ID and
-                timestamp, encrypted with SK2.
-              </p>
-              <br>
-              <p>
-                This authenticator is then sent to the server along with the service ticket.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===10">
-              <h3>Step 9</h3>
-              <p>
-                The server receives the communication from the server and uses the server's secret key to decrypt the
-                service ticket and extract SK2.
-              </p>
-              <br>
-              <p>
-                The server then uses SK2 to decrypt the authenticator, checking that the clientID and client network
-                address from the authenticator and service ticket match.
-              </p>
-              <br>
-              <p>
-                The server checks the timestamp and lifetime of the authenticator to see if it is still valid.
-              </p>
-              <br>
-            </div>
-            <div class="content" v-if="step===11">
-              <h3>Step 10</h3>
-              <p>
-                Once the checks are met, the server sends the client a message verifying the authentication.
-              </p>
-              <br>
-              <p>
-                The user can now engage in a secure session.
-              </p>
+              <!--              select -->
+              <select v-model="selectedOption">
+                <option value="Line 1">Line 1</option>
+                <option value="Line 2">Line 2</option>
+                <option value="Line 3">Line 3</option>
+              </select>
+              <button @click="generateLine">Create Line</button>
               <br>
             </div>
           </div>
           <div class="button-row">
-            <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 4" :click-function="buttonClick"
-                          :disable="disableButton && step !== 4"></StyledButton>
             <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
             <StyledButton text="Reset" :click-function="reset" :disable="disableButton"></StyledButton>
           </div>
         </div>
         <div class="network-row">
           <NetworkInteractionComponent ref="childComponentRef">
-            <div>
-              <EndSystemComponent class="box" id="computer1" package-id="package1" top="65%" left="10%" ref="computer1">
+            <EndSystemComponent class="box" id="client" top="65%" left="10%" ref="computer1">
+              <div class="computer-wrapper" @click="handleElementClick('client')"
+                   style="border-radius: 5px"
+                   :style="{border: source === 'client' ? '3px solid red' : destination === 'client' ? '3px solid blue' : 'none'}">
                 <img src="./../assets/workstation.svg" width="150" height="150" alt="computer">
-              </EndSystemComponent>
-            </div>
+              </div>
+            </EndSystemComponent>
 
-            <div>
-              <EndSystemComponent class="box" id="computer2" top="5%" left="10%">
-                <img src="./../assets/server.svg" width="180" height="180" alt="computer">
-              </EndSystemComponent>
-            </div>
+            <EndSystemComponent class="box" id="server1" top="5%" left="10%">
+              <div class="computer-wrapper" @click="handleElementClick('server1')"
+                   style="border-radius: 5px"
+                   :style="{border: source === 'server1' ? '3px solid red' : destination === 'server1' ? '3px solid blue' : 'none'}">
+                <span>Server 1</span>
+                <img src="./../assets/server.svg" width="180" alt="computer">
+              </div>
+            </EndSystemComponent>
 
-            <div>
-              <EndSystemComponent class="box" id="computer2" top="5%" left="40%">
-                <img src="./../assets/server.svg" width="180" height="180" alt="computer">
-              </EndSystemComponent>
-            </div>
+            <EndSystemComponent class="box" id="server2" top="5%" left="40%">
+              <div class="computer-wrapper" @click="handleElementClick('server2')"
+                   style="border-radius: 5px"
+                   :style="{border: source === 'server2' ? '3px solid red' : destination === 'server2' ? '3px solid blue' : 'none'}">
+                <span>Server 1</span>
+                <img src="./../assets/server.svg" width="180" alt="computer">
+              </div>
+            </EndSystemComponent>
 
-            <div>
-              <EndSystemComponent class="box" id="computer2" top="5%" left="70%">
-                <img src="./../assets/server.svg" width="180" height="180" alt="computer">
-              </EndSystemComponent>
-            </div>
+            <EndSystemComponent class="box" id="server3" top="5%" left="70%">
+              <div class="computer-wrapper" @click="handleElementClick('server3')"
+                   style="border-radius: 5px"
+                   :style="{border: source === 'server3' ? '3px solid red' : destination === 'server3' ? '3px solid blue' : 'none'}">
+                <span>Server 1</span>
+                <img src="./../assets/server.svg" width="180" alt="computer">
+              </div>
+            </EndSystemComponent>
           </NetworkInteractionComponent>
         </div>
       </div>
-      <div class="col-2">
-
-        <div class="row-4">
-          <div class="terminal" v-if="channelIndex === 0">
-            <span v-for="(data, index) in channelOneData" :key="index">{{ data }}</span>
-          </div>
-          <div class="terminal-choices">
-            <button class="terminal-button" :class="{'active-button' : channelIndex === 0}" @click="channelIndex = 0">
-              Channel 1
-            </button>
-
-          </div>
-        </div>
-
-      </div>
-
     </div>
   </div>
 </template>
@@ -233,19 +93,109 @@ export default {
   },
   data() {
     return {
-      step: 1,
-      disableButton: false,
-      clientID: "",
-      serverSecretKey: "",
-      channelIndex: 0,
-      channelOneData: ['this is some test data'],
-      channelTwoData: [],
-      channelThreeData: [],
-      channelHackerData: [],
-
+      source: "",
+      selectedOption: "Line 1",
+      destination: "",
+      clickCount: 0,
+      lines: {},
+      currentLineSize: 1,
     }
   },
-  methods: {},
+  methods: {
+    handleElementClick(elementId) {
+
+      if (this.source === elementId || this.destination === elementId) {
+        this.source = ""
+        this.destination = ""
+        this.clickCount = 0
+        return
+      }
+
+      if (this.clickCount === 0) {
+        console.log(elementId, 'source')
+        this.source = elementId;
+        this.clickCount++;
+      } else if (this.clickCount === 1) {
+        console.log(elementId, 'destination')
+        this.destination = elementId;
+        this.clickCount++;
+      }
+    },
+    reset() {
+      this.$refs.childComponentRef.clearLines()
+      this.source = ""
+      this.destination = ""
+      this.clickCount = 0
+      this.currentLineSize = 1
+    },
+    flattenLinesObject() {
+      let lines = []
+      for (let key in this.lines) {
+        lines = lines.concat(this.lines[key])
+      }
+      console.log(lines, "lines")
+      return lines
+    },
+    generateLine() {
+      if (this.source && this.destination && this.selectedOption) {
+
+        this.$refs.childComponentRef.clearLines()
+
+        let key = ''
+        if (this.lines[this.source + "-" + this.destination]) {
+          key = this.source + "-" + this.destination
+        } else if (this.lines[this.destination + "-" + this.source]) {
+          key = this.destination + "-" + this.source
+        } else {
+          key = this.source + "-" + this.destination
+        }
+
+        console.log(this.currentLineSize, "currentLineSize")
+
+        if (this.lines[key]) {
+          //check size of array and if is less than 3
+          if (this.lines[key].length < 3) {
+            this.lines[key].push({
+              color: "black",
+              text: this.currentLineSize + " ." + this.selectedOption,
+              option: this.selectedOption,
+              source: this.source,
+              destination: this.destination,
+              towards: this.destination,
+              index: this.currentLineSize
+            })
+          }
+          else{
+            alert("You can't add more than 3 lines between 2 nodes")
+          }
+        } else {
+          this.lines[key] = [{
+            color: "black",
+            text: this.currentLineSize + " ." + this.selectedOption,
+            option: this.selectedOption,
+            source: this.source,
+            destination: this.destination,
+            towards: this.destination,
+            index: this.currentLineSize
+          }]
+        }
+
+        for (let key in this.lines) {
+          console.log(key)
+          this.$refs.childComponentRef.drawMultipleLinesOffset(this.lines[key][0].source, this.lines[key][0].destination, this.lines[key], 30)
+        }
+
+        console.log(this.flattenLinesObject())
+        console.log(this.lines, "lines")
+
+
+        this.source = "";
+        this.destination = "";
+        this.clickCount = 0;
+        this.currentLineSize++;
+      }
+    }
+  },
   components: {EndSystemComponent, NetworkInteractionComponent, TopBar, StyledButton},
 }
 </script>
@@ -256,10 +206,6 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-}
-
-.click-wrapper {
-
 }
 
 pre {
@@ -283,19 +229,10 @@ pre {
 }
 
 .col-1 {
-  height: 70%;
-  max-height: 70%;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: row;
-  background-color: aquamarine;
-}
-
-.col-2 {
-  height: 30%;
-  display: flex;
-  flex-direction: row;
-  background-color: bisque
 }
 
 .network-row {
@@ -316,7 +253,6 @@ pre {
   justify-content: center;
   align-items: center;
   overflow-y: scroll;
-  background-color: coral;
 }
 
 * {
@@ -329,56 +265,7 @@ pre {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-
-.row-4 {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  text-overflow: fade;
-  background-color: crimson;
-}
-
-.terminal {
-  width: 90%;
-  font-size: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  font-family: monospace;
-  padding: 10px 15px;
-  background-color: #252526;
-  color: #33FF00;
-  overflow-y: scroll;
-}
-
-.terminal-choices {
-  width: 10%;
-  flex: 1;
-  min-width: 100px;
-  background-color: #3c3f41;
-}
-
-.terminal-button {
-  width: 100%;
-  background-color: transparent;
-  border: none;
-  padding: 10px;
-  color: white;
-  font-family: monospace;
-  font-size: 13px;
-  text-align: start;
-}
-
-.terminal-button:hover {
-  background-color: #343333;
-  cursor: pointer;
-}
-
-.active-button {
-  border-left: 2px solid #33FF00;
+  justify-content: space-around;
 }
 
 input {
@@ -392,7 +279,12 @@ input {
   width: 99%;
 }
 
+div {
+  box-sizing: border-box;
+}
+
 select {
+  margin-top: 15px;
   border: none;
   box-shadow: 2px 3px 10px 2px #D7DFFF;
   border-radius: 5px;
@@ -422,6 +314,24 @@ main {
   width: 100vw;
 }
 
+button {
+  border: none;
+  background-color: white;
+  box-shadow: 2px 3px 10px 2px #D7DFFF;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  padding: 15px;
+  box-sizing: border-box;
+  width: 99%;
+  transition: 0.2s;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #D7DFFF;
+}
+
 p {
   margin: 0;
   padding: 0;
@@ -434,6 +344,22 @@ span {
   margin: 0;
   text-align: start;
   overflow-wrap: break-word;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.computer-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  transition: ease-in-out 0.2s;
 }
 
 /*media screen*/

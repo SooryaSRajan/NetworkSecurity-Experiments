@@ -66,6 +66,43 @@ export default {
       line.setAttribute("y1", y1);
       line.setAttribute("x2", x2);
       line.setAttribute("y2", y2);
+
+      //add two arrow heads from x1,y1 to x2,y2
+      let arrowHead1 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      let arrowHead2 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+      let angle = Math.atan2(y2 - y1, x2 - x1);
+      let arrowHeadLength = 10;
+      let arrowHead1Points = [
+        [x1, y1],
+        [x1 + arrowHeadLength * Math.cos(angle + Math.PI / 6), y1 + arrowHeadLength * Math.sin(angle + Math.PI / 6)],
+        [x1 + arrowHeadLength * Math.cos(angle - Math.PI / 6), y1 + arrowHeadLength * Math.sin(angle - Math.PI / 6)],
+      ];
+
+      let arrowHead2Points = [
+        [x2, y2],
+        [x2 + arrowHeadLength * Math.cos(angle + Math.PI / 6), y2 + arrowHeadLength * Math.sin(angle + Math.PI / 6)],
+        [x2 + arrowHeadLength * Math.cos(angle - Math.PI / 6), y2 + arrowHeadLength * Math.sin(angle - Math.PI / 6)],
+      ];
+
+      arrowHead1.setAttribute("transform", "rotate(" + angle + " " + x1 + " " + y1 + ")");
+      arrowHead2.setAttribute("transform", "rotate(" + angle + " " + x2 + " " + y2 + ")");
+
+
+      arrowHead1.setAttribute("points", arrowHead1Points.map(point => point.join(",")).join(" "));
+      arrowHead2.setAttribute("points", arrowHead2Points.map(point => point.join(",")).join(" "));
+      arrowHead1.setAttribute("style", "fill:rgb(0,0,0);stroke:rgb(0,0,0);stroke-width:1");
+      arrowHead2.setAttribute("style", "fill:rgb(0,0,0);stroke:rgb(0,0,0);stroke-width:1");
+
+      //move the arrow heads 30% towards the line
+      let arrowHead1Translate = [0.3 * (x2 - x1), 0.3 * (y2 - y1)];
+      let arrowHead2Translate = [0.3 * (x1 - x2), 0.3 * (y1 - y2)];
+      arrowHead1.setAttribute("transform", "translate(" + arrowHead1Translate.join(",") + ")");
+      arrowHead2.setAttribute("transform", "translate(" + arrowHead2Translate.join(",") + ")");
+
+
+      svg.appendChild(arrowHead1);
+      svg.appendChild(arrowHead2);
+
       svg.appendChild(line);
       if (text) {
         let textNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -238,7 +275,7 @@ export default {
         this.drawSVGLine(x1, y1, x2, y2, lineColor)
       }
     },
-    drawLineOffset(id1, id2, space, isXTransformation, lineColor, text, isNegativeOffset){
+    drawLineOffset(id1, id2, space, isXTransformation, lineColor, text, isNegativeOffset) {
       let elementA = document.getElementById(id1);
       let elementB = document.getElementById(id2);
 
@@ -253,12 +290,11 @@ export default {
 
       if (isXTransformation) {
 
-        if(isNegativeOffset){
+        if (isNegativeOffset) {
           let x1T = x1 - space / 2;
           let x2T = x2 - space / 2;
           this.drawSVGLine(x1T, y1, x2T, y2, lineColor, text);
-        }
-        else{
+        } else {
           let x1T = x1 + space / 2;
           let x2T = x2 + space / 2;
           this.drawSVGLine(x1T, y1, x2T, y2, lineColor, text);
@@ -273,6 +309,49 @@ export default {
           let y1T = y1 + space / 2;
           let y2T = y2 + space / 2;
           this.drawSVGLine(x1, y1T, x2, y2T, lineColor, text);
+        }
+      }
+    },
+    drawMultipleLinesOffset(id1, id2, lineArray, space) {
+      let elementA = document.getElementById(id1);
+      let elementB = document.getElementById(id2);
+
+      if (!elementA || !elementB) {
+        return
+      }
+
+      let x1 = elementA.offsetLeft + (elementA.offsetWidth / 2);
+      let y1 = elementA.offsetTop + (elementA.offsetHeight / 2);
+      let x2 = elementB.offsetLeft + (elementB.offsetWidth / 2);
+      let y2 = elementB.offsetTop + (elementB.offsetHeight / 2);
+
+      let dx = x2 - x1;
+      let dy = y2 - y1;
+      let length = Math.sqrt(dx * dx + dy * dy);
+      dx /= length;
+      dy /= length;
+
+      let perpendicularDx = dy;
+      let perpendicularDy = -dx;
+
+      let totalHeight = lineArray.length * space;
+      let yOffset = (totalHeight - space) / 2;
+
+      for (let i = 0; i < lineArray.length; i++) {
+        let line = lineArray[i];
+        let lineX1 = x1 + perpendicularDx * (yOffset - i * space);
+        let lineY1 = y1 + perpendicularDy * (yOffset - i * space);
+        let lineX2 = x2 + perpendicularDx * (yOffset - i * space);
+        let lineY2 = y2 + perpendicularDy * (yOffset - i * space);
+
+        //based on line.towards, draw the swap lnex1 lineX2 lineY1 lineY2
+        //line.towards is compared to the IDs
+        if (line.towards === id1) {
+          this.drawSVGLine(lineX1, lineY1, lineX2, lineY2, line.color, line.text);
+          console.log("towards 1")
+        } else {
+          this.drawSVGLine(lineX2, lineY2, lineX1, lineY1, line.color, line.text);
+          console.log("towards 2")
         }
       }
     },
