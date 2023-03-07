@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Completed experiment 8 and added vectors for experiment 5&#10;Replaced Port with Ip Address in exp-8 replacing minimal content from experiment - 7">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_23,_9_16_PM_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_02_23__9_16_PM__Changes_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_23,_12_03_AM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_28_02_23__12_03_AM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added three servers and logic to add lines between two computers by selecting source and target computers and option to add label to lines">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-5/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-5/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-5/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-5/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/graph.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,18 +42,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-8" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-2/public" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/exp-2/public" />
       <recent name="$PROJECT_DIR$/exp-8" />
       <recent name="$PROJECT_DIR$/exp-8/src" />
       <recent name="$PROJECT_DIR$/exp-5/src/assets" />
       <recent name="$PROJECT_DIR$/exp-1/src/assets" />
-      <recent name="$PROJECT_DIR$/exp-1/public" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -93,7 +88,7 @@
       <workItem from="1678017727334" duration="14347000" />
       <workItem from="1678099582642" duration="11924000" />
       <workItem from="1678128932236" duration="70000" />
-      <workItem from="1678183967446" duration="7967000" />
+      <workItem from="1678183967446" duration="13865000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -277,7 +272,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678112465785</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added three servers and logic to add lines between two computers by selecting source and target computers and option to add label to lines">
+      <created>1678194883695</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1678194883695</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,7 +302,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Made packet text content dynamic with appropriate text messages like SYN and ACK&#10;Color coded server packets&#10;Added restart and verify functions &#10;Reordered value manipulation to make port color change dynamic&#10;Added extra column to client PC to maintain response buttons to complete three way handshake manually, completed using Emitters ." />
     <MESSAGE value="Added code to set background color to corresponding packet color to help user identify respective servers" />
     <MESSAGE value="Changed title" />
     <MESSAGE value="Hid scroll bar" />
@@ -325,6 +326,7 @@
     <MESSAGE value="Removed validation and added filter to get decrypted values within the experiment page for experiment 3" />
     <MESSAGE value="Removed validation and added filter to get decrypted values within the experiment page for experiment 3&#10;Removed unused libraries for encryption" />
     <MESSAGE value="Completed experiment 8 and added vectors for experiment 5&#10;Replaced Port with Ip Address in exp-8 replacing minimal content from experiment - 7" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed experiment 8 and added vectors for experiment 5&#10;Replaced Port with Ip Address in exp-8 replacing minimal content from experiment - 7" />
+    <MESSAGE value="Added three servers and logic to add lines between two computers by selecting source and target computers and option to add label to lines" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added three servers and logic to add lines between two computers by selecting source and target computers and option to add label to lines" />
   </component>
 </project>

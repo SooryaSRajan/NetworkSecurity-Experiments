@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Network Graph</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        .links line {
+            stroke-width: 3px;
+        }
+
+        .nodes circle {
+            stroke: #fff;
+            stroke-width: 3px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #F9FAFE;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .nodes text {
+            font-size: 12px;
+        }
+
+        #chart {
+            flex: 6;
+            background-color: white;
+            height: 800px;
+            overflow: scroll;
+        }
+
+        .flex-box {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 800px;
+            background-color: #f5f5f5;
+        }
+
+        .control-panel {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: start;
+            width: 100%;
+            height: 80vh;
+            background-color: #f5f5f5;
+        }
+
+        input[type=number] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #BDBDBD;
+            color: #424242;
+            cursor: not-allowed;
+            transform: scale(1, 1);
+        }
+
+        .flex {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            height: fit-content;
+        }
+
+        h4 {
+            padding: 0;
+            margin: 0 0 10px;
+            color: #919191;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        .circle {
+            margin-left: 10px;
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            display: inline-block;
+            background-color: #ff0008;
+        }
+
+        #logs {
+            height: 100%;
+            flex: 1;
+            align-self: start;
+            font-family: "Lucida Console", Monaco, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: start;
+            padding: 20px;
+        }
+
+        h3 {
+            padding: 0;
+            margin: 0 0 10px;
+            color: #919191;
+            font-weight: 400;
+            border-bottom: 1px solid #919191;
+        }
+
+        #log-list {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            max-height: 80vh;
+            overflow-y: scroll;
+        }
+
+        li {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body onload="addClientServer()">
+<div class="flex-box">
+    <div class="control-panel">
+        <h2>
+            Network Graph simulating a client/server connection TCP SYN Attacks
+        </h2>
+        <div>
+            <h4>
+                Choose the number of server pairs to generate and click on "Generate Graph" to generate the graph. Click
+                on the server node to initiate the attack.
+            </h4>
+            <input type="number" id="count" name="count" min="1" max="50" value="1">
+            <button onclick="init()" id="button">Generate Graph</button>
+
+            <div class="flex">
+                <span>Attack packet: </span> <span class="circle blue"></span>
+            </div>
+        </div>
+    </div>
+    <div id="chart"></div>
+    <div id="logs">
+        <h3>
+            Logs
+        </h3>
+        <ul id="log-list">
+
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    let nodes = [];
+
+    let links = [];
+
+    let count = 0
+
+    let isSimulationInitialized = false
+
+    function addClientServerWrapper(count) {
+        nodes = [{id: "client", type: "client", icon: "workstation.svg"}]
+        links = []
+        for (let i = 0; i < count; i++) {
+            addClientServer()
+            console.log("added client server pair")
+        }
+    }
+
+    function addClientServer() {
+        nodes.push({id: "server" + count, type: "server", icon: "server.svg", isClicked: false, isServerDown: false})
+        links.push({source: "client", target: "gateway", color: "#8a8ac2", destination: "server" + count})
+        links.push({source: "server" + count, target: "gateway", color: "#8a8ac2"})
+        count++
+    }
+
+    function init() {
+
+        if (isSimulationInitialized) {
+            return
+        }
+
+        let size = document.getElementById("count").value
+        size = parseInt(size)
+
+        if (isNaN(size)) {
+            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            return
+        }
+
+        if (size < 1 || size > 50) {
+            document.getElementById("log-list").innerHTML += "<li>Please enter a number greater than 0 and less than 50</li>"
+            return
+        }
+
+        addClientServerWrapper(parseInt(size))
+
+        isSimulationInitialized = true
+        //append log that graph has been generated
+        document.getElementById("log-list").innerHTML += "<li>Graph has been generated</li>"
+
+        document.getElementById("button").disabled = true;
+
+
+        //match width and height to the size of the container
+        let width = 1000
+        let height = 800
+
+        nodes.push({id: "gateway", type: "gateway", icon: "router.svg"})
+
+        let svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        let linkDistance = 200; // set the desired link distance
+        let linkForce = d3.forceLink(links)
+            .id(function (d) {
+                return d.id;
+            })
+            .distance(linkDistance); // set the link distance value
+
+        let simulation = d3.forceSimulation(nodes)
+            .force("link", linkForce)
+            .force("charge", d3.forceManyBody().strength(-1000))
+            .force("center", d3.forceCenter(500, 300))
+            .force("y", d3.forceY().y(function (d) {
+                if (d.type === "server") {
+                    return height / 7;
+                } else if (d.type === "client") {
+                    return height * 0.75;
+                } else {
+                    return 0;
+                }
+            }))
+
+
+        let link = svg.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .style("stroke", function (d) {
+                return d.color;
+            })
+            .style("stroke-width", "2px");
+
+        let node = svg.append("g")
+            .attr("class", "nodes")
+            .selectAll("g")
+            .data(nodes)
+            .enter()
+            .append("g")
+            .call(drag(simulation));
+
+        node.append("image")
+            .attr("xlink:href", function (d) {
+                if (d.type !== "gateway")
+                    return d.icon;
+            })
+            .attr("x", -20)
+            .attr("y", -20)
+            .attr("width", 40)
+            .attr("height", 40);
+
+        //append circle to node of raduis 20 only for gateway
+        node.append("circle")
+            .attr("r", function (d) {
+                if (d.type === "gateway") {
+                    return 10
+                } else {
+                    return 0
+                }
+            })
+            .attr("fill", function (d) {
+                if (d.type === "gateway") {
+                    return "#80c7b1";
+                } else {
+                    return "none";
+                }
+            })
+            .attr("stroke", function (d) {
+                if (d.type === "gateway") {
+                    return "#8a8ac2";
+                } else {
+                    return "none";
+                }
+            })
+
+
+        let text = svg.append("g")
+            .attr("class", "texts")
+            .selectAll("text")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                //if not gateway
+                if (d.type !== "gateway") {
+                    return d.id;
+                }
+            })
+            .style("font-size", "12px")
+            .attr("dx", 15)
+            .attr("dy", 4);
+
+        simulation.on("tick", function () {
+            link
+                .attr("x1", function (d) {
+                    return d.source.x;
+                })
+                .attr("y1", function (d) {
+                    return d.source.y;
+                })
+                .attr("x2", function (d) {
+                    return d.target.x;
+                })
+                .attr("y2", function (d) {
+                    return d.target.y;
+                });
+
+            node
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            text
+                .attr("x", function (d) {
+                    return d.x;
+                })
+                .attr("y", function (d) {
+                    return d.y;
+                });
+
+        });
+
+        node.on("click", function (d) {
+            let data = d.srcElement.__data__
+            if (data.type === "client") {
+                document.getElementById("log-list").innerHTML += '<li>Cannot attack a client <span style="color: #8a8ac2"> client.</span></li>';
+            } else {
+                if (data.isClicked === false && data.isServerDown === false) {
+                    data.isClicked = true;
+                    //add the server to the attacked server list
+                    document.getElementById("log-list").innerHTML += '<li>Attacking <span style="color: red"> server ' + data.id + '</span></li>';
+
+                    for (let i = 0; i < 6; i++) {
+                        if (i === 0) {
+                            twoOfThreeWayHandshake(data, i + 1);
+                        } else {
+                            setTimeout(function () {
+                                twoOfThreeWayHandshake(data, i + 1);
+                            }, 800 * i / 2);
+                        }
+                    }
+
+                    setTimeout(function () {
+                        document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + data.id + '</span> is down</li>';
+                        data.isServerDown = true;
+                        data.isClicked = false;
+                        text.style("fill", function (d) {
+                            if (d.isServerDown) {
+                                return "red";
+                            } else {
+                                return "black";
+                            }
+                        })
+                        link.style("stroke", function (d) {
+                            if (d.source.isServerDown) {
+                                return "red";
+                            } else {
+                                return d.color;
+                            }
+                        })
+                    }, 800 * (15 / 2));
+
+
+                } else if (data.isServerDown === true) {
+                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + data.id + '</span> is already down, cannot send more packets as all ports are exhausted</li>';
+                } else {
+                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + data.id + '</span> is already being attacked</li>';
+                }
+
+            }
+        })
+
+        function twoOfThreeWayHandshake(data, iteration) {
+            movePacket("client", "gateway", "client", true);
+            document.getElementById("log-list").innerHTML += '<li>Packet ' + iteration + ' sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> gateway </span></li>';
+            setTimeout(function () {
+                movePacket("server", "gateway", data.id, false);
+                setTimeout(function () {
+                    document.getElementById("log-list").innerHTML += '<li>Packet reached <span style="color: #8a8ac2"> server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
+                    movePacket("server", "gateway", data.id, true);
+                    setTimeout(function () {
+                        movePacket("client", "gateway", "client", false);
+                        document.getElementById("log-list").innerHTML += '<li>Aborting three-way handshake number ' + iteration + '</li> to keep port open with <span style="color: red"> server ' + data.id + '</span></li>';
+                    }, 800)
+                }, 800);
+
+            }, 800);
+        }
+
+        function movePacket(sourceType, targetType, id, isSourceToTarget) {
+            let destination;
+            console.log("Moving packet from " + sourceType + " to " + targetType + " with id " + id + "")
+            let packet = svg.append("g")
+                .attr("class", "packet")
+                .selectAll("circle")
+                .data(links.filter(function (d) {
+                    return d.source.type === sourceType && d.target.type === targetType && d.source.id === id;
+                }))
+                .enter()
+                .append("circle")
+                .attr("r", 5)
+                .style("fill", "#ff0000")
+                .attr("cx", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.source.type === sourceType) {
+                            destination = d.destination;
+                            return d.source.x;
+                        }
+                    } else {
+                        if (d.target.type === targetType) {
+                            destination = d.destination;
+                            return d.target.x;
+                        }
+                    }
+
+                })
+                .attr("cy", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.source.type === sourceType) {
+                            return d.source.y;
+                        }
+                    } else {
+                        if (d.target.type === targetType) {
+                            return d.target.y;
+                        }
+                    }
+
+                })
+
+            packet
+                .transition()
+                .duration(800)
+                .attr("cx", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.target.type === targetType) {
+                            return d.target.x;
+                        }
+                    } else {
+                        if (d.source.type === sourceType) {
+                            return d.source.x;
+                        }
+                    }
+
+                })
+                .attr("cy", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.target.type === targetType) {
+                            return d.target.y;
+                        }
+                    } else {
+                        if (d.source.type === sourceType) {
+                            return d.source.y;
+                        }
+                    }
+                })
+
+            setTimeout(function () {
+                packet
+                    .filter(function (d) {
+                        return d.source.id === id;
+                    })
+                    .remove();
+            }, 800)
+
+            return destination
+        }
+
+        //animate the packet from client to gateway
+
+        function drag(simulation) {
+            function dragStarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                if (d.type === "gateway") return
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                if (d.type === "gateway") return
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragEnded(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                if (d.type === "gateway") return
+                d.fx = null;
+                d.fy = null;
+            }
+
+            return d3.drag()
+                .on("start", dragStarted)
+                .on("drag", dragged)
+                .on("end", dragEnded);
+        }
+    }
+
+
+</script>
+</body>
+</html>
+
