@@ -456,6 +456,7 @@
   
   .row-network {
     flex: 1;
+    width: 75%;
     height: 100%;
     display: flex;
     flex-direction: column;

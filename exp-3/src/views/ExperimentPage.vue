@@ -560,6 +560,8 @@ pre {
 }
 
 .row-1 {
+  width: 70%;
+  height: 100%;
   flex: 3;
   display: flex;
 }
