@@ -83,7 +83,7 @@
                                  :port4="portsClientC[3]"/>
               </EndSystemComponent>
   
-              <EndSystemComponent top="10%" left="70%" class="box" id="box4">
+              <EndSystemComponent top="10%" left="75%" class="box" id="box4">
                 <ServerComponent @respond="respond"
                                  :display-extra-options="true"
                                  :responseData="receivedPackages" :ip-address="ipAddress[3]" :port1="portsHacker[0]"
@@ -92,7 +92,7 @@
                                  :port4="portsHacker[3]"/>
               </EndSystemComponent>
   
-              <EndSystemComponent top="70%" left="70%" class="box" id="box5" :package-info="serverPackages">
+              <EndSystemComponent top="70%" left="75%" class="box" id="box5" :package-info="serverPackages">
                 <ServerComponent :ip-address="ipAddress[4]" :port1="portsServer[0]" :port2="portsServer[1]"
                                  :port3="portsServer[2]"
                                  :port4="portsServer[3]"/>

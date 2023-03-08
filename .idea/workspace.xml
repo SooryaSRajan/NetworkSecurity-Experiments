@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added vectors and content for experiment three and completed exp-3 simulation page">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-3/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-3/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/views/ExperimentPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-4/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/public/index.html" afterDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Fixed css issues in safari by removing CDN for hack css from exp 3 and 4">
       <change beforePath="$PROJECT_DIR$/exp-4/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/src/views/ExperimentPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +87,7 @@
       <workItem from="1678017727334" duration="14347000" />
       <workItem from="1678099582642" duration="11924000" />
       <workItem from="1678128932236" duration="70000" />
-      <workItem from="1678183967446" duration="27480000" />
+      <workItem from="1678183967446" duration="27786000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -317,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678263281406</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Fixed css issues in safari by removing CDN for hack css from exp 3 and 4">
+      <created>1678269124674</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1678269124674</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,7 +380,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Added fix for timer going to negative values and timer continuing after experiment reset" />
     <MESSAGE value="Added port hover CSS to ServerComponent.vue to display port number when hovered on and also added option to add manual label to ports" />
     <MESSAGE value="Built terminal layout for experiment 6" />
     <MESSAGE value="Fixed scroll issue in terminal exp-6" />
@@ -402,6 +404,7 @@
     <MESSAGE value="Completed validation and options in experiment 5" />
     <MESSAGE value="Added graph.html iframe to exp-2" />
     <MESSAGE value="Added vectors and content for experiment three and completed exp-3 simulation page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added vectors and content for experiment three and completed exp-3 simulation page" />
+    <MESSAGE value="Fixed css issues in safari by removing CDN for hack css from exp 3 and 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed css issues in safari by removing CDN for hack css from exp 3 and 4" />
   </component>
 </project>
