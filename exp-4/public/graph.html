@@ -40,7 +40,7 @@
         .flex-box {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
             width: 100%;
             height: 800px;
@@ -89,12 +89,10 @@
         }
 
         .flex {
-            margin-top: 40px;
             display: flex;
             flex-direction: row;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            height: fit-content;
         }
 
         h4 {
@@ -106,17 +104,26 @@
         }
 
         .circle {
-            margin-left: 10px;
             height: 25px;
             width: 25px;
             border-radius: 50%;
-            display: inline-block;
-            background-color: #ff0008;
+        }
+
+        .orange {
+            background-color: #FF9800;
+        }
+
+        .blue {
+            background-color: #2196F3;
+        }
+
+        div {
+            box-sizing: border-box;
         }
 
         #logs {
             height: 100%;
-            flex: 1;
+            width: 16%;
             align-self: start;
             font-family: "Lucida Console", Monaco, monospace;
             display: flex;
@@ -140,6 +147,7 @@
             width: 100%;
             height: 100%;
             max-height: 80vh;
+            max-width: 100%;
             overflow-y: scroll;
         }
 
@@ -158,11 +166,13 @@
 <div class="flex-box">
     <div class="control-panel">
         <h2>
-            Network Graph simulating a client/server connection TCP SYN Attacks
+            Network Graph simulating active TCP SYN Attacks
         </h2>
         <div>
             <h4>
-                Choose the number of clients and servers required and click on "Generate Graph" to generate the graph. Click on a client and a server to establish an attack from the client to the server.
+                Choose the number of clients and servers required and click on "Generate Graph" to generate the graph.
+                Click on a client and a server to send packets between client and server and observe the logs to witness
+                an example of active TCP SYN attack.
             </h4>
             <label>Number of Servers</label>
             <input type="number" id="countServer" name="count" min="1" max="50" value="1">
@@ -177,8 +187,11 @@
             <span class="attack-info">Target server: </span>
             <span id="server-id"></span>
 
-            <div class="flex">
-                <span>Attack packet: </span> <span class="circle blue"></span>
+            <div class="flex" style="margin-top: 30px">
+                <span>HTTP packet: </span> <span class="circle blue"></span>
+            </div>
+            <div class="flex" style="margin-top: 10px">
+                <span>HTTPS packet: </span> <span class="circle orange"></span>
             </div>
         </div>
     </div>
@@ -225,9 +238,8 @@
             type: "server",
             icon: "server.svg",
             isClicked: false,
-            isServerDown: false
         })
-        links.push({source: "server" + serverCountCreated, target: "gateway", color: "#8a8ac2"})
+        links.push({source: "server" + serverCountCreated, target: "hacker", color: "#8a8ac2"})
         serverCountCreated++
     }
 
@@ -237,9 +249,8 @@
             type: "client",
             icon: "workstation.svg",
             isClicked: false,
-            isLineOccupied: false
         })
-        links.push({source: "client" + clientCountCreated, target: "gateway", color: "#8a8ac2"})
+        links.push({source: "client" + clientCountCreated, target: "hacker", color: "#8a8ac2"})
         clientCountCreated++
     }
 
@@ -252,7 +263,7 @@
         let serverCount = document.getElementById("countServer").value
         serverCount = parseInt(serverCount)
 
-        let attackingClient = null
+        let dataSendingClient = null
         let targetServer = null
 
         if (isNaN(serverCount)) {
@@ -300,7 +311,7 @@
         let width = 1000
         let height = 800
 
-        nodes.push({id: "gateway", type: "gateway", icon: "router.svg"})
+        nodes.push({id: "hacker", type: "hacker", icon: "laptop.svg"})
 
         let svg = d3.select("#chart")
             .append("svg")
@@ -350,38 +361,12 @@
 
         node.append("image")
             .attr("xlink:href", function (d) {
-                if (d.type !== "gateway")
-                    return d.icon;
+                return d.icon;
             })
             .attr("x", -20)
             .attr("y", -20)
             .attr("width", 40)
             .attr("height", 40);
-
-        //append circle to node of raduis 20 only for gateway
-        node.append("circle")
-            .attr("r", function (d) {
-                if (d.type === "gateway") {
-                    return 10
-                } else {
-                    return 0
-                }
-            })
-            .attr("fill", function (d) {
-                if (d.type === "gateway") {
-                    return "#80c7b1";
-                } else {
-                    return "none";
-                }
-            })
-            .attr("stroke", function (d) {
-                if (d.type === "gateway") {
-                    return "#8a8ac2";
-                } else {
-                    return "none";
-                }
-            })
-
 
         let text = svg.append("g")
             .attr("class", "texts")
@@ -390,8 +375,9 @@
             .enter()
             .append("text")
             .text(function (d) {
-                //if not gateway
-                if (d.type !== "gateway") {
+                if (d.type === "hacker") {
+                    return "Hacker (MITM)"
+                } else {
                     return d.id;
                 }
             })
@@ -432,22 +418,21 @@
         node.on("click", function (d) {
             let data = d.srcElement.__data__
             if (data.type === "client") {
-                document.getElementById("log-list").innerHTML += '<li>Attack client <span style="color: red"> client ' + data.id + '</span></li> has been chosen</li>';
-                attackingClient = data.id;
-                document.getElementById("client-id").innerHTML = attackingClient;
+                document.getElementById("log-list").innerHTML += '<li>Packet sending <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
+                dataSendingClient = data.id;
+                document.getElementById("client-id").innerHTML = dataSendingClient;
             } else if (data.type === "server") {
-                document.getElementById("log-list").innerHTML += '<li>Target server <span style="color: red"> server ' + data.id + '</span></li> has been chosen</li>';
+                document.getElementById("log-list").innerHTML += '<li>Target server <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
                 targetServer = data.id;
                 document.getElementById("server-id").innerHTML = targetServer;
             }
 
-            if (attackingClient !== null && targetServer !== null) {
+            if (dataSendingClient !== null && targetServer !== null) {
 
-                //set both client and server to be not clicked based on the id in attackingClient and targetServer
                 let clientNode
                 let serverNode
                 for (let i = 0; i < nodes.length; i++) {
-                    if (nodes[i].id === attackingClient) {
+                    if (nodes[i].id === dataSendingClient) {
                         clientNode = nodes[i]
                     } else if (nodes[i].id === targetServer) {
                         serverNode = nodes[i]
@@ -456,81 +441,119 @@
 
                 console.log(clientNode, serverNode)
 
-                if (!clientNode.isClicked && !serverNode.isClicked && !serverNode.isServerDown && !clientNode.isLineOccupied) {
+                if (!clientNode.isClicked && !serverNode.isClicked) {
                     clientNode.isClicked = true;
                     serverNode.isClicked = true;
 
 
-                    attackingClient = null;
+                    dataSendingClient = null;
                     targetServer = null;
                     document.getElementById("client-id").innerHTML = "";
                     document.getElementById("server-id").innerHTML = "";
 
-                    document.getElementById("log-list").innerHTML += '<li>Attacking <span style="color: red"> server ' + serverNode.id + '</span></li>';
-
-                    for (let i = 0; i < 6; i++) {
-                        if (i === 0) {
-                            twoOfThreeWayHandshake(clientNode, serverNode, i + 1);
-                        } else {
-                            setTimeout(function () {
-                                twoOfThreeWayHandshake(clientNode, serverNode, i + 1);
-                            }, 800 * i / 2);
-                        }
-                    }
+                    sendAndReceivePackets(clientNode, serverNode);
 
                     setTimeout(function () {
-                        document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is down</li>';
-                        serverNode.isServerDown = true;
-                        clientNode.isLineOccupied = true;
-                        serverNode.isClicked = false;
                         clientNode.isClicked = false;
-                        text.style("fill", function (d) {
-                            if (d.isServerDown) {
-                                return "red";
-                            } else {
-                                return "black";
-                            }
-                        })
-                        link.style("stroke", function (d) {
-                            if (d.source.isServerDown) {
-                                return "red";
-                            } else if (d.source.isLineOccupied) {
-                                return "#fff200";
-                            } else {
-                                return d.color;
-                            }
-                        })
-                    }, 800 * (15 / 2));
+                        serverNode.isClicked = false;
+                    }, 3200)
 
-
-                } else if (serverNode.isServerDown === true) {
-                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already down, cannot send more packets as all ports are exhausted</li>';
-                } else if (clientNode.isLineOccupied === true) {
-                    document.getElementById("log-list").innerHTML += '<li>The ports used by <span style="color: red"> ' + clientNode.id + '</span> is already being used</li>';
                 } else {
-                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already being attacked</li>';
+                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: #8a8ac2"> ' + serverNode.id + '</span> is already communicating</li>';
                 }
             }
         })
 
-        function twoOfThreeWayHandshake(clientData, serverData, iteration) {
-            movePacket("client", "gateway", clientData.id, true);
-            document.getElementById("log-list").innerHTML += '<li>Packet ' + iteration + ' sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> gateway </span></li>';
+        //TODO: Print intersepted messages, change packet color if HTTP or HTTPS
+
+        function sendAndReceivePackets(clientData, serverData) {
+
+            //generate random number
+            let random = Math.floor(Math.random() * 100) + 1;
+            let protocol = random > 50 ? "HTTP" : "HTTPS";
+
+            let interceptedPacket = protocol === "HTTP";
+
+            movePacket("client", "hacker", clientData.id, true, protocol, false);
+            document.getElementById("log-list").innerHTML += '<li>Packet sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2">' + serverData.id + '</span></li>';
             setTimeout(function () {
-                movePacket("server", "gateway", serverData.id, false);
+                //REACHES HACKER HERE
+                if (protocol === "HTTPS") {
+                    document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                } else {
+                    //TODO: Print some packet content
+                    logRandomRequestResponsePacket(false)
+                    document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> has been intercepted</li>';
+                }
+                movePacket("server", "hacker", serverData.id, false, protocol, interceptedPacket);
+                if(interceptedPacket){
+                    document.getElementById("log-list").innerHTML += '<li>Modifying packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2"> to ' + serverData.id + '</span>, new packet content: </li>';
+                    logRandomRequestResponsePacket(false)
+                }
                 setTimeout(function () {
-                    document.getElementById("log-list").innerHTML += '<li>Packet reached <span style="color: #8a8ac2"> server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
-                    movePacket("server", "gateway", serverData.id, true);
+                    document.getElementById("log-list").innerHTML += '<li>Packet reached <span style="color: #8a8ac2">' + serverData.id + ' server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
+                    //HACKER TO SERVER
+                    movePacket("server", "hacker", serverData.id, true, protocol, false);
                     setTimeout(function () {
-                        movePacket("client", "gateway", clientData.id, false);
-                        document.getElementById("log-list").innerHTML += '<li>Aborting three-way handshake number ' + iteration + '</li> to keep port open with <span style="color: red"> server ' + serverData.id + '</span></li>';
+                        //SERVER TO HACKER
+                        if (protocol === "HTTPS") {
+                            document.getElementById("log-list").innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                        } else {
+                            //TODO: Print some packet content
+                            logRandomRequestResponsePacket(false)
+                            document.getElementById("log-list").innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
+                        }
+                        movePacket("client", "hacker", clientData.id, false, protocol, interceptedPacket);
+                        if(interceptedPacket){
+                            document.getElementById("log-list").innerHTML += '<li>Modifying packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> to ' + clientData.id + '</span>, new packet content: </li>';
+                            logRandomRequestResponsePacket(true)
+                        }
+                        setTimeout(function () {
+                            //HACKER TO CLIENT
+                            document.getElementById("log-list").innerHTML += '<li>Response packet reached <span style="color: #8a8ac2"> client </span></li>';
+                        }, 800)
                     }, 800)
                 }, 800);
 
             }, 800);
         }
 
-        function movePacket(sourceType, targetType, id, isSourceToTarget) {
+        function logRandomRequestResponsePacket(isResponse) {
+            let randomContent = Math.floor(Math.random() * 100) + 1;
+            let randomContent2 = Math.floor(Math.random() * 100) + 1;
+            let randomContent3 = Math.floor(Math.random() * 100) + 1;
+            let randomContent4 = Math.floor(Math.random() * 100) + 1;
+            let randomContent5 = Math.floor(Math.random() * 100) + 1;
+
+            let randomIPAddress = Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255);
+
+
+            let reqData = '<li>Packet content: <span style="color: #8a8ac2"> GET / HTTP/1.1 </span> ' +
+                '<span style="color: #8a8ac2"> Host: ' + randomIPAddress + ' </span> ' +
+                '<span style="color: #8a8ac2"> User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0 </span> ' +
+                '<span style="color: #8a8ac2"> Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 </span> ' +
+                '<span style="color: #8a8ac2"> Accept-Language: en-US,en;q=0.5 </span> ' +
+                '<span style="color: #8a8ac2"> Accept-Encoding: gzip, deflate </span> ' +
+                '<span style="color: #8a8ac2"> Connection: keep-alive </span> ' +
+                '<span style="color: #8a8ac2"> Upgrade-Insecure-Requests: 1 </span> ' +
+                '<span style="color: #8a8ac2"> Cache-Control: max-age=0 </span>'
+
+            isResponse ? reqData = reqData + '<span style="color: #8a8ac2"> HTTP/1.1 200 OK </span>' :
+                reqData = reqData +
+                    '<span style="color: #8a8ac2">' + randomContent + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent2 + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent3 + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent4 + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent5 + ' </span>' +
+                    '</li>';
+
+            document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> server </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
+            document.getElementById("log-list").innerHTML += reqData
+
+
+        }
+
+        function movePacket(sourceType, targetType, id, isSourceToTarget, protocol, interceptedPacket) {
             let destination;
             console.log("Moving packet from " + sourceType + " to " + targetType + " with id " + id + "")
             let packet = svg.append("g")
@@ -542,7 +565,16 @@
                 .enter()
                 .append("circle")
                 .attr("r", 5)
-                .style("fill", "#ff0000")
+                .style("fill", function (d) {
+                    if (interceptedPacket) {
+                        return "#ff0000";
+                    }
+                    if (protocol === "HTTP") {
+                        return "#2196F3";
+                    } else {
+                        return "#FF9800";
+                    }
+                })
                 .attr("cx", function (d) {
                     if (isSourceToTarget) {
                         if (d.source.type === sourceType) {
@@ -608,25 +640,25 @@
             return destination
         }
 
-        //animate the packet from client to gateway
+        //animate the packet from client to hacker
 
         function drag(simulation) {
             function dragStarted(event, d) {
                 if (!event.active) simulation.alphaTarget(0.3).restart();
-                if (d.type === "gateway") return
+                if (d.type === "hacker") return
                 d.fx = d.x;
                 d.fy = d.y;
             }
 
             function dragged(event, d) {
-                if (d.type === "gateway") return
+                if (d.type === "hacker") return
                 d.fx = event.x;
                 d.fy = event.y;
             }
 
             function dragEnded(event, d) {
                 if (!event.active) simulation.alphaTarget(0);
-                if (d.type === "gateway") return
+                if (d.type === "hacker") return
                 d.fx = null;
                 d.fy = null;
             }
