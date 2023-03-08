@@ -255,13 +255,17 @@
         let attackingClient = null
         let targetServer = null
 
+        let logList = document.getElementById("log-list")
+
         if (isNaN(serverCount)) {
-            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            logList.innerHTML += "<li>Invalid input</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
         if (serverCount < 1 || serverCount > 50) {
-            document.getElementById("log-list").innerHTML += "<li>Please enter number of servers greater than 0 and less than 50</li>"
+            logList.innerHTML += "<li>Please enter number of servers greater than 0 and less than 50</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
@@ -269,12 +273,14 @@
         clientCount = parseInt(clientCount)
 
         if (isNaN(clientCount)) {
-            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            logList.innerHTML += "<li>Invalid input</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
         if (clientCount < 1 || clientCount > 50) {
-            document.getElementById("log-list").innerHTML += "<li>Please enter number of clients greater than 0 and less than 50</li>"
+            logList.innerHTML += "<li>Please enter number of clients greater than 0 and less than 50</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
@@ -285,16 +291,11 @@
 
         isSimulationInitialized = true
         //append log that graph has been generated
-        document.getElementById("log-list").innerHTML += "<li>Graph has been generated</li>"
+        logList.innerHTML += "<li>Graph has been generated</li>"
+        logList.scrollTo(0, logList.scrollHeight * 100)
 
         document.getElementById("button").disabled = true;
-        let logList = document.getElementById("log-list")
-
-        setInterval(function () {
-            //keep scrolling logs bar to bottom
-            logList.scrollTo(0, logList.scrollHeight * 100)
-        }, 100)
-
+        
 
         //match width and height to the size of the container
         let width = 1000
@@ -432,11 +433,13 @@
         node.on("click", function (d) {
             let data = d.srcElement.__data__
             if (data.type === "client") {
-                document.getElementById("log-list").innerHTML += '<li>Attack client <span style="color: red"> client ' + data.id + '</span></li> has been chosen</li>';
+                logList.innerHTML += '<li>Attack client <span style="color: red"> client ' + data.id + '</span></li> has been chosen</li>';
+                logList.scrollTo(0, logList.scrollHeight * 100)
                 attackingClient = data.id;
                 document.getElementById("client-id").innerHTML = attackingClient;
             } else if (data.type === "server") {
-                document.getElementById("log-list").innerHTML += '<li>Target server <span style="color: red"> server ' + data.id + '</span></li> has been chosen</li>';
+                logList.innerHTML += '<li>Target server <span style="color: red"> server ' + data.id + '</span></li> has been chosen</li>';
+                logList.scrollTo(0, logList.scrollHeight * 100)
                 targetServer = data.id;
                 document.getElementById("server-id").innerHTML = targetServer;
             }
@@ -466,7 +469,8 @@
                     document.getElementById("client-id").innerHTML = "";
                     document.getElementById("server-id").innerHTML = "";
 
-                    document.getElementById("log-list").innerHTML += '<li>Attacking <span style="color: red"> server ' + serverNode.id + '</span></li>';
+                    logList.innerHTML += '<li>Attacking <span style="color: red"> server ' + serverNode.id + '</span></li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
 
                     for (let i = 0; i < 6; i++) {
                         if (i === 0) {
@@ -479,7 +483,8 @@
                     }
 
                     setTimeout(function () {
-                        document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is down</li>';
+                        logList.innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is down</li>';
+                        logList.scrollTo(0, logList.scrollHeight * 100)
                         serverNode.isServerDown = true;
                         clientNode.isLineOccupied = true;
                         serverNode.isClicked = false;
@@ -504,26 +509,32 @@
 
 
                 } else if (serverNode.isServerDown === true) {
-                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already down, cannot send more packets as all ports are exhausted</li>';
+                    logList.innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already down, cannot send more packets as all ports are exhausted</li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                 } else if (clientNode.isLineOccupied === true) {
-                    document.getElementById("log-list").innerHTML += '<li>The ports used by <span style="color: red"> ' + clientNode.id + '</span> is already being used</li>';
+                    logList.innerHTML += '<li>The ports used by <span style="color: red"> ' + clientNode.id + '</span> is already being used</li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                 } else {
-                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already being attacked</li>';
+                    logList.innerHTML += '<li>Server <span style="color: red"> server ' + serverNode.id + '</span> is already being attacked</li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                 }
             }
         })
 
         function twoOfThreeWayHandshake(clientData, serverData, iteration) {
             movePacket("client", "gateway", clientData.id, true);
-            document.getElementById("log-list").innerHTML += '<li>Packet ' + iteration + ' sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> gateway </span></li>';
+            logList.innerHTML += '<li>Packet ' + iteration + ' sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> gateway </span></li>';
+            logList.scrollTo(0, logList.scrollHeight * 100)
             setTimeout(function () {
                 movePacket("server", "gateway", serverData.id, false);
                 setTimeout(function () {
-                    document.getElementById("log-list").innerHTML += '<li>Packet reached <span style="color: #8a8ac2"> server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
+                    logList.innerHTML += '<li>Packet reached <span style="color: #8a8ac2"> server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                     movePacket("server", "gateway", serverData.id, true);
                     setTimeout(function () {
                         movePacket("client", "gateway", clientData.id, false);
-                        document.getElementById("log-list").innerHTML += '<li>Aborting three-way handshake number ' + iteration + '</li> to keep port open with <span style="color: red"> server ' + serverData.id + '</span></li>';
+                        logList.innerHTML += '<li>Aborting three-way handshake number ' + iteration + '</li> to keep port open with <span style="color: red"> server ' + serverData.id + '</span></li>';
+                        logList.scrollTo(0, logList.scrollHeight * 100)
                     }, 800)
                 }, 800);
 

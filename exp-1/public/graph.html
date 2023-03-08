@@ -233,13 +233,17 @@
         let size = document.getElementById("count").value
         size = parseInt(size)
 
+        let logList = document.getElementById("log-list")
+
         if (isNaN(size)) {
-            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            logList.innerHTML += "<li>Invalid input</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
         if (size < 1 || size > 50) {
-            document.getElementById("log-list").innerHTML += "<li>Please enter a number greater than 0 and less than 50</li>"
+            logList.innerHTML += "<li>Please enter a number greater than 0 and less than 50</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
@@ -247,15 +251,11 @@
 
         isSimulationInitialized = true
         //append log that graph has been generated
-        document.getElementById("log-list").innerHTML += "<li>Graph has been generated</li>"
+        logList.innerHTML += "<li>Graph has been generated</li>"
+        logList.scrollTo(0, logList.scrollHeight * 100)
 
         document.getElementById("button").disabled = true;
-        let logList = document.getElementById("log-list")
 
-        setInterval(function () {
-            //keep scrolling logs bar to bottom
-            logList.scrollTo(0, logList.scrollHeight * 100)
-        }, 100)
 
         let width = 1000;
         let height = 800;
@@ -436,8 +436,9 @@
                             return d.target.y;
                         })
 
-                    document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has initiated three-way handshake</li> with <span style="color: #8a8ac2">' + destination + '</span>'
-                    document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has sent SYN to <span style="color: #8a8ac2">' + destination + '</span></li>'
+                    logList.innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has initiated three-way handshake</li> with <span style="color: #8a8ac2">' + destination + '</span>'
+                    logList.innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has sent SYN to <span style="color: #8a8ac2">' + destination + '</span></li>'
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                     //after packet is on gateway, remove packet
                     setTimeout(function () {
                         //remove packet if d.source.id is client1
@@ -478,7 +479,8 @@
                             })
 
                         setTimeout(function () {
-                            document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + destination + '</span> has sent SYN-ACK to <span style="color: #8a8ac2">' + id + '</span></li>'
+                            logList.innerHTML += '<li><span style="color: #8a8ac2">' + destination + '</span> has sent SYN-ACK to <span style="color: #8a8ac2">' + id + '</span></li>'
+                            logList.scrollTo(0, logList.scrollHeight * 100)
 
                             packet
                                 .transition()
@@ -594,7 +596,8 @@
                                                 }
                                             })
 
-                                        document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has sent ACK to <span style="color: #8a8ac2">' + destination + '</span></li>'
+                                        logList.innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> has sent ACK to <span style="color: #8a8ac2">' + destination + '</span></li>'
+                                        logList.scrollTo(0, logList.scrollHeight * 100)
 
                                         packet
                                             .transition()
@@ -613,7 +616,8 @@
                                                     return d.source.id === destination;
                                                 })
                                                 .remove();
-                                            document.getElementById("log-list").innerHTML += '<li>Handshake initiated by <span style="color: #8a8ac2">' + id + '</span> has been completed.</li>';
+                                            logList.innerHTML += '<li>Handshake initiated by <span style="color: #8a8ac2">' + id + '</span> has been completed.</li>';
+                                            logList.scrollTo(0, logList.scrollHeight * 100)
                                             clientData[0].handshake = true;
                                             clientData[0].isClicked = false;
 
@@ -630,7 +634,8 @@
 
                     }, 800);
                 } else if (clientData[0].handshake === true) {
-                    document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> sent a packet.</li>';
+                    logList.innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> sent a packet.</li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                     let packet = svg.append("g")
                         .attr("class", "packet")
                         .selectAll("circle")
@@ -749,8 +754,8 @@
                                         return d.source.y;
                                     })
 
-                                document.getElementById("log-list").innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> got a response.</li>';
-
+                                logList.innerHTML += '<li><span style="color: #8a8ac2">' + id + '</span> got a response.</li>';
+                                logList.scrollTo(0, logList.scrollHeight * 100)
 
                                 setTimeout(function () {
                                     packet
@@ -765,7 +770,8 @@
                     }, 800)
                 }
             } else {
-                document.getElementById("log-list").innerHTML += '<li>Cannot send a handshake request from a <span style="color: #8a8ac2">  server.</span></li>';
+                logList.innerHTML += '<li>Cannot send a handshake request from a <span style="color: #8a8ac2">  server.</span></li>';
+                logList.scrollTo(0, logList.scrollHeight * 100)
             }
         })
 

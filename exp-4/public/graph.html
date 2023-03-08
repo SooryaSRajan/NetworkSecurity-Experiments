@@ -266,13 +266,17 @@
         let dataSendingClient = null
         let targetServer = null
 
+        let logList = document.getElementById("log-list")
+
         if (isNaN(serverCount)) {
-            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            logList.innerHTML += "<li>Invalid input</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
         if (serverCount < 1 || serverCount > 50) {
-            document.getElementById("log-list").innerHTML += "<li>Please enter number of servers greater than 0 and less than 50</li>"
+            logList.innerHTML += "<li>Please enter number of servers greater than 0 and less than 50</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
@@ -280,12 +284,14 @@
         clientCount = parseInt(clientCount)
 
         if (isNaN(clientCount)) {
-            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            logList.innerHTML += "<li>Invalid input</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
         if (clientCount < 1 || clientCount > 50) {
-            document.getElementById("log-list").innerHTML += "<li>Please enter number of clients greater than 0 and less than 50</li>"
+            logList.innerHTML += "<li>Please enter number of clients greater than 0 and less than 50</li>"
+            logList.scrollTo(0, logList.scrollHeight * 100)
             return
         }
 
@@ -296,15 +302,10 @@
 
         isSimulationInitialized = true
         //append log that graph has been generated
-        document.getElementById("log-list").innerHTML += "<li>Graph has been generated</li>"
+        logList.innerHTML += "<li>Graph has been generated</li>"
+        logList.scrollTo(0, logList.scrollHeight * 100)
 
         document.getElementById("button").disabled = true;
-        let logList = document.getElementById("log-list")
-
-        setInterval(function () {
-            //keep scrolling logs bar to bottom
-            logList.scrollTo(0, logList.scrollHeight * 100)
-        }, 100)
 
 
         //match width and height to the size of the container
@@ -418,11 +419,13 @@
         node.on("click", function (d) {
             let data = d.srcElement.__data__
             if (data.type === "client") {
-                document.getElementById("log-list").innerHTML += '<li>Packet sending <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
+                logList.innerHTML += '<li>Packet sending <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
+                logList.scrollTo(0, logList.scrollHeight * 100)
                 dataSendingClient = data.id;
                 document.getElementById("client-id").innerHTML = dataSendingClient;
             } else if (data.type === "server") {
-                document.getElementById("log-list").innerHTML += '<li>Target server <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
+                logList.innerHTML += '<li>Target server <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
+                logList.scrollTo(0, logList.scrollHeight * 100)
                 targetServer = data.id;
                 document.getElementById("server-id").innerHTML = targetServer;
             }
@@ -459,7 +462,8 @@
                     }, 3200)
 
                 } else {
-                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: #8a8ac2"> ' + serverNode.id + '</span> is already communicating</li>';
+                    logList.innerHTML += '<li>Server <span style="color: #8a8ac2"> ' + serverNode.id + '</span> is already communicating</li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                 }
             }
         })
@@ -475,42 +479,51 @@
             let interceptedPacket = protocol === "HTTP";
 
             movePacket("client", "hacker", clientData.id, true, protocol, false);
-            document.getElementById("log-list").innerHTML += '<li>Packet sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2">' + serverData.id + '</span></li>';
+            logList.innerHTML += '<li>Packet sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2">' + serverData.id + '</span></li>';
+            logList.scrollTo(0, logList.scrollHeight * 100)
             setTimeout(function () {
                 //REACHES HACKER HERE
                 if (protocol === "HTTPS") {
-                    document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                    logList.innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                 } else {
                     //TODO: Print some packet content
                     logRandomRequestResponsePacket(false)
-                    document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> has been intercepted</li>';
+                    logList.innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> has been intercepted</li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                 }
                 movePacket("server", "hacker", serverData.id, false, protocol, interceptedPacket);
                 if(interceptedPacket){
-                    document.getElementById("log-list").innerHTML += '<li>Modifying packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2"> to ' + serverData.id + '</span>, new packet content: </li>';
+                    logList.innerHTML += '<li>Modifying packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2"> to ' + serverData.id + '</span>, new packet content: </li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                     logRandomRequestResponsePacket(false)
                 }
                 setTimeout(function () {
-                    document.getElementById("log-list").innerHTML += '<li>Packet reached <span style="color: #8a8ac2">' + serverData.id + ' server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
+                    logList.innerHTML += '<li>Packet reached <span style="color: #8a8ac2">' + serverData.id + ' server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
+                    logList.scrollTo(0, logList.scrollHeight * 100)
                     //HACKER TO SERVER
                     movePacket("server", "hacker", serverData.id, true, protocol, false);
                     setTimeout(function () {
                         //SERVER TO HACKER
                         if (protocol === "HTTPS") {
-                            document.getElementById("log-list").innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                            logList.innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                            logList.scrollTo(0, logList.scrollHeight * 100)
                         } else {
                             //TODO: Print some packet content
                             logRandomRequestResponsePacket(false)
-                            document.getElementById("log-list").innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
+                            logList.innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
+                            logList.scrollTo(0, logList.scrollHeight * 100)
                         }
                         movePacket("client", "hacker", clientData.id, false, protocol, interceptedPacket);
                         if(interceptedPacket){
-                            document.getElementById("log-list").innerHTML += '<li>Modifying packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> to ' + clientData.id + '</span>, new packet content: </li>';
+                            logList.innerHTML += '<li>Modifying packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> to ' + clientData.id + '</span>, new packet content: </li>';
+                            logList.scrollTo(0, logList.scrollHeight * 100)
                             logRandomRequestResponsePacket(true)
                         }
                         setTimeout(function () {
                             //HACKER TO CLIENT
-                            document.getElementById("log-list").innerHTML += '<li>Response packet reached <span style="color: #8a8ac2"> client </span></li>';
+                            logList.innerHTML += '<li>Response packet reached <span style="color: #8a8ac2"> client </span></li>';
+                            logList.scrollTo(0, logList.scrollHeight * 100)
                         }, 800)
                     }, 800)
                 }, 800);
@@ -547,8 +560,9 @@
                     '<span style="color: #8a8ac2">' + randomContent5 + ' </span>' +
                     '</li>';
 
-            document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> server </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
-            document.getElementById("log-list").innerHTML += reqData
+            logList.innerHTML += '<li>Packet from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> server </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
+            logList.innerHTML += reqData
+            logList.scrollTo(0, logList.scrollHeight * 100)
 
 
         }
