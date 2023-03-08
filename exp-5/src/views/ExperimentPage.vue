@@ -43,7 +43,7 @@
               </div>
             </EndSystemComponent>
 
-            <EndSystemComponent class="box" id="server1" top="5%" left="10%">
+            <EndSystemComponent class="box" id="server1" top="5%" left="40%">
               <div class="computer-wrapper" @click="handleElementClick('server1')"
                    style="border-radius: 5px"
                    :style="{border: source === 'server1' ? '3px solid red' : destination === 'server1' ? '3px solid blue' : 'none'}">
@@ -52,7 +52,7 @@
               </div>
             </EndSystemComponent>
 
-            <EndSystemComponent class="box" id="server2" top="5%" left="40%">
+            <EndSystemComponent class="box" id="server2" top="5%" left="77%">
               <div class="computer-wrapper" @click="handleElementClick('server2')"
                    style="border-radius: 5px"
                    :style="{border: source === 'server2' ? '3px solid red' : destination === 'server2' ? '3px solid blue' : 'none'}">
@@ -61,7 +61,7 @@
               </div>
             </EndSystemComponent>
 
-            <EndSystemComponent class="box" id="server3" top="5%" left="70%">
+            <EndSystemComponent class="box" id="server3" top="65%" left="78%">
               <div class="computer-wrapper" @click="handleElementClick('server3')"
                    style="border-radius: 5px"
                    :style="{border: source === 'server3' ? '3px solid red' : destination === 'server3' ? '3px solid blue' : 'none'}">
