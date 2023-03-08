@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Completed validation and options in experiment 5" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added graph.html iframe to exp-2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,18 +41,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-2/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-3/public" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/exp-3/public" />
       <recent name="$PROJECT_DIR$/exp-2/public" />
       <recent name="$PROJECT_DIR$/exp-8" />
       <recent name="$PROJECT_DIR$/exp-8/src" />
       <recent name="$PROJECT_DIR$/exp-5/src/assets" />
-      <recent name="$PROJECT_DIR$/exp-1/src/assets" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -85,7 +87,7 @@
       <workItem from="1678017727334" duration="14347000" />
       <workItem from="1678099582642" duration="11924000" />
       <workItem from="1678128932236" duration="70000" />
-      <workItem from="1678183967446" duration="20607000" />
+      <workItem from="1678183967446" duration="24641000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -297,7 +299,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678211314615</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Added graph.html iframe to exp-2">
+      <created>1678211539389</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1678211539389</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,7 +329,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Removed packet data" />
     <MESSAGE value="Added elements to allow user to decrypt content. Logic yet to be implemented" />
     <MESSAGE value="Added fix for timer going to negative values and timer continuing after experiment reset" />
     <MESSAGE value="Added port hover CSS to ServerComponent.vue to display port number when hovered on and also added option to add manual label to ports" />
@@ -345,6 +353,7 @@
     <MESSAGE value="Modified flex box for packet color in experiment 1 and added experiment-2 basic simulation with assets" />
     <MESSAGE value="Added multiple clients and servers and added permutations to attack any choice of clients from any servers" />
     <MESSAGE value="Completed validation and options in experiment 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed validation and options in experiment 5" />
+    <MESSAGE value="Added graph.html iframe to exp-2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added graph.html iframe to exp-2" />
   </component>
 </project>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Network Graph</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+        .links line {
+            stroke-width: 3px;
+        }
+
+        .nodes circle {
+            stroke: #fff;
+            stroke-width: 3px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Avenir, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #F9FAFE;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .nodes text {
+            font-size: 12px;
+        }
+
+        #chart {
+            flex: 6;
+            background-color: white;
+            height: 800px;
+            overflow: scroll;
+        }
+
+        .flex-box {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            height: 800px;
+            background-color: #f5f5f5;
+        }
+
+        .control-panel {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: start;
+            width: 100%;
+            height: 80vh;
+            background-color: #f5f5f5;
+        }
+
+        input[type=number] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #BDBDBD;
+            color: #424242;
+            cursor: not-allowed;
+            transform: scale(1, 1);
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h4 {
+            padding: 0;
+            margin: 0 0 10px;
+            color: #919191;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        .circle {
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+        }
+
+        .orange {
+            background-color: #FF9800;
+        }
+
+        .blue {
+            background-color: #2196F3;
+        }
+
+        div {
+            box-sizing: border-box;
+        }
+
+        #logs {
+            height: 100%;
+            width: 16%;
+            align-self: start;
+            font-family: "Lucida Console", Monaco, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: start;
+            padding: 20px;
+        }
+
+        h3 {
+            padding: 0;
+            margin: 0 0 10px;
+            color: #919191;
+            font-weight: 400;
+            border-bottom: 1px solid #919191;
+        }
+
+        #log-list {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            max-height: 80vh;
+            max-width: 100%;
+            overflow-y: scroll;
+        }
+
+        li {
+            margin-top: 10px;
+        }
+
+        .attack-info {
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+    </style>
+</head>
+<body>
+<div class="flex-box">
+    <div class="control-panel">
+        <h2>
+            Network Graph simulating a client/server connection TCP SYN Attacks
+        </h2>
+        <div>
+            <h4>
+                Choose the number of clients and servers required and click on "Generate Graph" to generate the graph.
+                Click on a client and a server to establish an attack from the client to the server.
+            </h4>
+            <label>Number of Servers</label>
+            <input type="number" id="countServer" name="count" min="1" max="50" value="1">
+            <label>Number of Clients</label>
+            <input type="number" id="countClient" name="count" min="1" max="50" value="1">
+
+            <button onclick="init()" id="button">Generate Graph</button>
+
+            <span class="attack-info">Attacking client: </span>
+            <span id="client-id"></span>
+            <br>
+            <span class="attack-info">Target server: </span>
+            <span id="server-id"></span>
+
+            <div class="flex" style="margin-top: 30px">
+                <span>HTTP packet: </span> <span class="circle blue"></span>
+            </div>
+            <div class="flex" style="margin-top: 10px">
+                <span>HTTPS packet: </span> <span class="circle orange"></span>
+            </div>
+        </div>
+    </div>
+    <div id="chart"></div>
+    <div id="logs">
+        <h3>
+            Logs
+        </h3>
+        <ul id="log-list">
+
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    let nodes = [];
+
+    let links = [];
+
+    let serverCountCreated = 0
+
+    let clientCountCreated = 0
+
+    let isSimulationInitialized = false
+
+    function addClientWrapper(count) {
+        for (let i = 0; i < count; i++) {
+            addClient()
+            console.log("added client")
+        }
+    }
+
+    function addServerWrapper(count) {
+        for (let i = 0; i < count; i++) {
+            addServer()
+            console.log("added server")
+        }
+    }
+
+    function addServer() {
+        nodes.push({
+            id: "server" + serverCountCreated,
+            type: "server",
+            icon: "server.svg",
+            isClicked: false,
+        })
+        links.push({source: "server" + serverCountCreated, target: "hacker", color: "#8a8ac2"})
+        serverCountCreated++
+    }
+
+    function addClient() {
+        nodes.push({
+            id: "client" + clientCountCreated,
+            type: "client",
+            icon: "workstation.svg",
+            isClicked: false,
+        })
+        links.push({source: "client" + clientCountCreated, target: "hacker", color: "#8a8ac2"})
+        clientCountCreated++
+    }
+
+    function init() {
+
+        if (isSimulationInitialized) {
+            return
+        }
+
+        let serverCount = document.getElementById("countServer").value
+        serverCount = parseInt(serverCount)
+
+        let dataSendingClient = null
+        let targetServer = null
+
+        if (isNaN(serverCount)) {
+            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            return
+        }
+
+        if (serverCount < 1 || serverCount > 50) {
+            document.getElementById("log-list").innerHTML += "<li>Please enter number of servers greater than 0 and less than 50</li>"
+            return
+        }
+
+        let clientCount = document.getElementById("countClient").value
+        clientCount = parseInt(clientCount)
+
+        if (isNaN(clientCount)) {
+            document.getElementById("log-list").innerHTML += "<li>Invalid input</li>"
+            return
+        }
+
+        if (clientCount < 1 || clientCount > 50) {
+            document.getElementById("log-list").innerHTML += "<li>Please enter number of clients greater than 0 and less than 50</li>"
+            return
+        }
+
+        //TODO: Include client, click on client and then target server to attack
+
+        addClientWrapper(parseInt(clientCount))
+        addServerWrapper(parseInt(serverCount))
+
+        isSimulationInitialized = true
+        //append log that graph has been generated
+        document.getElementById("log-list").innerHTML += "<li>Graph has been generated</li>"
+
+        document.getElementById("button").disabled = true;
+
+
+        //match width and height to the size of the container
+        let width = 1000
+        let height = 800
+
+        nodes.push({id: "hacker", type: "hacker", icon: "laptop.svg"})
+
+        let svg = d3.select("#chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        let linkDistance = 200; // set the desired link distance
+        let linkForce = d3.forceLink(links)
+            .id(function (d) {
+                return d.id;
+            })
+            .distance(linkDistance); // set the link distance value
+
+        let simulation = d3.forceSimulation(nodes)
+            .force("link", linkForce)
+            .force("charge", d3.forceManyBody().strength(-1000))
+            .force("center", d3.forceCenter(500, 400))
+            .force("y", d3.forceY().y(function (d) {
+                if (d.type === "server") {
+                    return height / 7;
+                } else if (d.type === "client") {
+                    return height * 0.75;
+                } else {
+                    return height / 2;
+                }
+            }))
+
+
+        let link = svg.append("g")
+            .attr("class", "links")
+            .selectAll("line")
+            .data(links)
+            .enter()
+            .append("line")
+            .style("stroke", function (d) {
+                return d.color;
+            })
+            .style("stroke-width", "2px");
+
+        let node = svg.append("g")
+            .attr("class", "nodes")
+            .selectAll("g")
+            .data(nodes)
+            .enter()
+            .append("g")
+            .call(drag(simulation));
+
+        node.append("image")
+            .attr("xlink:href", function (d) {
+                return d.icon;
+            })
+            .attr("x", -20)
+            .attr("y", -20)
+            .attr("width", 40)
+            .attr("height", 40);
+
+        let text = svg.append("g")
+            .attr("class", "texts")
+            .selectAll("text")
+            .data(nodes)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                if (d.type === "hacker") {
+                    return "Hacker (MITM)"
+                } else {
+                    return d.id;
+                }
+            })
+            .style("font-size", "12px")
+            .attr("dx", 15)
+            .attr("dy", 4);
+
+        simulation.on("tick", function () {
+            link
+                .attr("x1", function (d) {
+                    return d.source.x;
+                })
+                .attr("y1", function (d) {
+                    return d.source.y;
+                })
+                .attr("x2", function (d) {
+                    return d.target.x;
+                })
+                .attr("y2", function (d) {
+                    return d.target.y;
+                });
+
+            node
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+
+            text
+                .attr("x", function (d) {
+                    return d.x;
+                })
+                .attr("y", function (d) {
+                    return d.y;
+                });
+
+        });
+
+        node.on("click", function (d) {
+            let data = d.srcElement.__data__
+            if (data.type === "client") {
+                document.getElementById("log-list").innerHTML += '<li>Packet sending <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
+                dataSendingClient = data.id;
+                document.getElementById("client-id").innerHTML = dataSendingClient;
+            } else if (data.type === "server") {
+                document.getElementById("log-list").innerHTML += '<li>Target server <span style="color: #8a8ac2"> ' + data.id + '</span></li> has been chosen</li>';
+                targetServer = data.id;
+                document.getElementById("server-id").innerHTML = targetServer;
+            }
+
+            if (dataSendingClient !== null && targetServer !== null) {
+
+                let clientNode
+                let serverNode
+                for (let i = 0; i < nodes.length; i++) {
+                    if (nodes[i].id === dataSendingClient) {
+                        clientNode = nodes[i]
+                    } else if (nodes[i].id === targetServer) {
+                        serverNode = nodes[i]
+                    }
+                }
+
+                console.log(clientNode, serverNode)
+
+                if (!clientNode.isClicked && !serverNode.isClicked) {
+                    clientNode.isClicked = true;
+                    serverNode.isClicked = true;
+
+
+                    dataSendingClient = null;
+                    targetServer = null;
+                    document.getElementById("client-id").innerHTML = "";
+                    document.getElementById("server-id").innerHTML = "";
+
+                    sendAndReceivePackets(clientNode, serverNode);
+
+                    setTimeout(function () {
+                        clientNode.isClicked = false;
+                        serverNode.isClicked = false;
+                    }, 3200)
+
+                } else {
+                    document.getElementById("log-list").innerHTML += '<li>Server <span style="color: #8a8ac2"> ' + serverNode.id + '</span> is already communicating</li>';
+                }
+            }
+        })
+
+        //TODO: Print intersepted messages, change packet color if HTTP or HTTPS
+
+        function sendAndReceivePackets(clientData, serverData) {
+
+            //generate random number
+            let random = Math.floor(Math.random() * 100) + 1;
+            let protocol = random > 50 ? "HTTP" : "HTTPS";
+
+            movePacket("client", "hacker", clientData.id, true, protocol);
+            document.getElementById("log-list").innerHTML += '<li>Packet sent from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2">' + serverData.id + '</span></li>';
+            setTimeout(function () {
+                //REACHES HACKER HERE
+                if (protocol === "HTTPS") {
+                    document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                } else {
+                    //TODO: Print some packet content
+                    logRandomRequestResponsePacket(false)
+                    document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> has been intercepted</li>';
+                }
+                movePacket("server", "hacker", serverData.id, false, protocol);
+                setTimeout(function () {
+                    document.getElementById("log-list").innerHTML += '<li>Packet reached <span style="color: #8a8ac2">' + serverData.id + ' server, </span> sending packet back to <span style="color: #8a8ac2"> client </span></li>';
+                    //HACKER TO SERVER
+                    movePacket("server", "hacker", serverData.id, true, protocol);
+                    setTimeout(function () {
+                        //SERVER TO HACKER
+                        if (protocol === "HTTPS") {
+                            document.getElementById("log-list").innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                        } else {
+                            //TODO: Print some packet content
+                            logRandomRequestResponsePacket(false)
+                            document.getElementById("log-list").innerHTML += '<li>Response packet from <span style="color: #8a8ac2">' + serverData.id + ' </span> to <span style="color: #8a8ac2"> client </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
+                        }
+                        movePacket("client", "hacker", clientData.id, false, protocol);
+                        setTimeout(function () {
+                            //HACKER TO CLIENT
+                            document.getElementById("log-list").innerHTML += '<li>Response packet reached <span style="color: #8a8ac2"> client </span></li>';
+                        }, 800)
+                    }, 800)
+                }, 800);
+
+            }, 800);
+        }
+
+        function logRandomRequestResponsePacket(isResponse) {
+            let random = Math.floor(Math.random() * 100) + 1;
+            let randomContent = Math.floor(Math.random() * 100) + 1;
+            let randomContent2 = Math.floor(Math.random() * 100) + 1;
+            let randomContent3 = Math.floor(Math.random() * 100) + 1;
+            let randomContent4 = Math.floor(Math.random() * 100) + 1;
+            let randomContent5 = Math.floor(Math.random() * 100) + 1;
+
+            let randomIPAddress = Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255);
+
+
+            let reqData = '<li>Packet content: <span style="color: #8a8ac2"> GET / HTTP/1.1 </span> ' +
+                '<span style="color: #8a8ac2"> Host: ' + randomIPAddress + ' </span> ' +
+                '<span style="color: #8a8ac2"> User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0 </span> ' +
+                '<span style="color: #8a8ac2"> Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8 </span> ' +
+                '<span style="color: #8a8ac2"> Accept-Language: en-US,en;q=0.5 </span> ' +
+                '<span style="color: #8a8ac2"> Accept-Encoding: gzip, deflate </span> ' +
+                '<span style="color: #8a8ac2"> Connection: keep-alive </span> ' +
+                '<span style="color: #8a8ac2"> Upgrade-Insecure-Requests: 1 </span> ' +
+                '<span style="color: #8a8ac2"> Cache-Control: max-age=0 </span>'
+
+            isResponse ? reqData = reqData + '<span style="color: #8a8ac2"> HTTP/1.1 200 OK </span>' :
+                reqData = reqData +
+                    '<span style="color: #8a8ac2">' + randomContent + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent2 + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent3 + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent4 + ' </span>' +
+                    '<span style="color: #8a8ac2">' + randomContent5 + ' </span>' +
+                    '</li>';
+
+            document.getElementById("log-list").innerHTML += '<li>Packet from <span style="color: #8a8ac2"> client </span> to <span style="color: #8a8ac2"> server </span> intercepted by <span style="color: #ff0000"> hacker </span></li>';
+            document.getElementById("log-list").innerHTML += reqData
+
+
+        }
+
+        function movePacket(sourceType, targetType, id, isSourceToTarget, protocol) {
+            let destination;
+            console.log("Moving packet from " + sourceType + " to " + targetType + " with id " + id + "")
+            let packet = svg.append("g")
+                .attr("class", "packet")
+                .selectAll("circle")
+                .data(links.filter(function (d) {
+                    return d.source.type === sourceType && d.target.type === targetType && d.source.id === id;
+                }))
+                .enter()
+                .append("circle")
+                .attr("r", 5)
+                .style("fill", function (d) {
+                    if (protocol === "HTTP") {
+                        return "#2196F3";
+                    } else {
+                        return "#FF9800";
+                    }
+                })
+                .attr("cx", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.source.type === sourceType) {
+                            destination = d.destination;
+                            return d.source.x;
+                        }
+                    } else {
+                        if (d.target.type === targetType) {
+                            destination = d.destination;
+                            return d.target.x;
+                        }
+                    }
+
+                })
+                .attr("cy", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.source.type === sourceType) {
+                            return d.source.y;
+                        }
+                    } else {
+                        if (d.target.type === targetType) {
+                            return d.target.y;
+                        }
+                    }
+
+                })
+
+            packet
+                .transition()
+                .duration(800)
+                .attr("cx", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.target.type === targetType) {
+                            return d.target.x;
+                        }
+                    } else {
+                        if (d.source.type === sourceType) {
+                            return d.source.x;
+                        }
+                    }
+
+                })
+                .attr("cy", function (d) {
+                    if (isSourceToTarget) {
+                        if (d.target.type === targetType) {
+                            return d.target.y;
+                        }
+                    } else {
+                        if (d.source.type === sourceType) {
+                            return d.source.y;
+                        }
+                    }
+                })
+
+            setTimeout(function () {
+                packet
+                    .filter(function (d) {
+                        return d.source.id === id;
+                    })
+                    .remove();
+            }, 800)
+
+            return destination
+        }
+
+        //animate the packet from client to hacker
+
+        function drag(simulation) {
+            function dragStarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                if (d.type === "hacker") return
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+
+            function dragged(event, d) {
+                if (d.type === "hacker") return
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+
+            function dragEnded(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                if (d.type === "hacker") return
+                d.fx = null;
+                d.fy = null;
+            }
+
+            return d3.drag()
+                .on("start", dragStarted)
+                .on("drag", dragged)
+                .on("end", dragEnded);
+        }
+    }
+
+
+</script>
+</body>
+</html>
+
