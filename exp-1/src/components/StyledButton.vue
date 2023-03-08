@@ -42,7 +42,7 @@ button{
   border: none;
   border-radius: 5px;
   padding: 15px;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   transition: ease-in-out 0.3s;
 }

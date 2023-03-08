@@ -716,7 +716,7 @@
   .step-title {
     padding-bottom: 25px;
     font-weight: 500;
-    font-size: 25px;
+    font-size: 20px;
   }
   
   .instructions {

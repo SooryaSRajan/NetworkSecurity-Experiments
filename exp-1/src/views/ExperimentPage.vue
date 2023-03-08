@@ -4,9 +4,6 @@
     <TopBar title="Simulation of the TCP Protocol"></TopBar>
     <div class="rem-space">
       <div class="row-1">
-        <div class="step-title">
-          Step {{ currentStep }}
-        </div>
         <div class="instructions">
           <p v-if="executionStep === 1">
             The client initiates the connection with server by sending a TCP SYN packet.
@@ -31,21 +28,24 @@
           </p>
 
         </div>
+        <h4 v-if="executionStep === 1">Step 1</h4>
+          <h4 v-if="executionStep === 2">Step 2</h4>
+          <h4 v-if="executionStep === 3">Step 3</h4>
         <div class="input-field">
           <p v-if="executionStep === 1">
             To begin, enter a random four digit number here that will be used as the ISN to initiate communication.
           </p>
-          <input v-if="executionStep === 1" v-model="ackNumber">
+          <input v-if="executionStep === 1" style="margin-top: 20px;" v-model="ackNumber">
 
           <p v-if="executionStep === 2">
             Enter a random number that will be SYN for the server.
           </p>
-          <input v-if="executionStep === 2" v-model="synNumber">
+          <input v-if="executionStep === 2" style="margin-top: 20px;" v-model="synNumber">
 
           <p v-if="executionStep === 3">
             Enter a random string to send to the server
           </p>
-          <input v-if="executionStep === 3" v-model="clientData">
+          <input v-if="executionStep === 3" style="margin-top: 20px;" v-model="clientData">
 
         </div>
         <div class="button-row">
@@ -275,7 +275,7 @@ input {
 .step-title {
   padding-bottom: 25px;
   font-weight: 500;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .instructions {

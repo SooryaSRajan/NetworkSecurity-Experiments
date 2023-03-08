@@ -1,5 +1,7 @@
 <template>
   <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/simulation">Simulation</router-link>
   </nav>
   <router-view/>
 </template>
@@ -9,7 +11,16 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #F9FAFE;
+  background-color: #F9FAFE; 
+}
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+body{
+  -ms-overflow-style: none;
+  scrollbar-width:none;
 }
 
 nav {

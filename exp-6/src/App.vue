@@ -10,6 +10,16 @@
   background-color: #F9FAFE;
 }
 
+::-webkit-scrollbar{
+  display: none;
+}
+
+body{
+  -ms-overflow-style: none;
+  scrollbar-width:none;
+}
+
+
 nav {
   padding: 30px;
 }
