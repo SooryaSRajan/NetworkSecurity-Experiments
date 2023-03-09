@@ -9,14 +9,13 @@
             <NetworkInteractionComponent ref="childComponentRef">
               <EndSystemComponent top="10%" left="5%" class="box" id="box1" :package-info="serverZeroPackages">
                 <ServerComponent :ip-address="ipAddress[0]" :port1="ports[0]" :port2="ports[1]" :port3="ports[2]"
-                                 :port4="ports[3]"/>
+                                 :port4="ports[3]"
+                                 :port-labels="computerAPortLabels"/>
               </EndSystemComponent>
-              <!--            <EndSystemComponent top="-1%" left="82%" class="box" id="middle-man">-->
-              <!--              <img src="./assets/incognito.png" width="200" height="200" alt="middle-man">-->
-              <!--            </EndSystemComponent>-->
               <EndSystemComponent top="55%" left="72%" class="box" id="box2">
                 <ServerComponent :ip-address="ipAddress[1]" :port1="ports[0]" :port2="ports[1]" :port3="ports[2]"
-                                 :port4="ports[3]"/>
+                                 :port4="ports[3]"
+                                 :port-labels="computerBPortLabels"/>
               </EndSystemComponent>
             </NetworkInteractionComponent>
           </div>
@@ -142,8 +141,12 @@ export default {
     this.keyPayloadTwo = randomPasswordData.decryptionKey
     this.encryptionAlgorithmTwo = randomPasswordData.algorithm
 
-
-    console.log(randomIndex)
+    for (let i = 0; i < 4; i++) {
+      let randomPortNumber = Math.floor(Math.random() * 10000) + 1000;
+      this.computerAPortLabels.push(randomPortNumber);
+      randomPortNumber = Math.floor(Math.random() * 10000) + 1000;
+      this.computerBPortLabels.push(randomPortNumber);
+    }
 
   },
   data() {
@@ -153,6 +156,8 @@ export default {
       encryptionAlgorithm: "IDEA",
       inputForDecryption: "",
       inputForDecryptionKey: "",
+      computerAPortLabels: [],
+      computerBPortLabels: [],
       userNameObjectCollection: [
         {
           userName: "soorya_venkataraman@qrscomma",
@@ -709,7 +714,7 @@ pre {
   background-color: #161b24;
   border: none;
   padding: 10px;
-  font-family:Hack monospace;
+  font-family: Hack monospace;
   font-size: 13px;
   color: #666c7c;
   font-weight: bolder;

@@ -31,7 +31,9 @@
           <div v-if="step === 2" class="content">
             <h4>Step 2: Viewing server network information</h4>
             <p>
-              Get the interface information of the server which is in interface <span @click="copyToClipboard('GigabitEthernet0/0')" id="gigabit">"GigabitEthernet0/0"</span>. Try to find the IP
+              Get the interface information of the server which is in interface <span
+                @click="copyToClipboard('GigabitEthernet0/0')" id="gigabit">"GigabitEthernet0/0"</span>. Try to find the
+              IP
               address of the server using the following command:
             </p>
             <br>
@@ -107,13 +109,14 @@
                                    :port1="2"
                                    :port2="2"
                                    :port3="2"
-                                   :port4="2"/>
+                                   :port4="2"
+                                   :port-labels="serverPortLabels"/>
                 </EndSystemComponent>
                 <EndSystemComponent top="40%" left="45%" class="box" id="firewall">
                   <img src="../assets/firewall.jpg" alt="firewall" style="width:150px;height:auto;">
                 </EndSystemComponent>
                 <EndSystemComponent top="60%" left="5%" class="box" id="client" :package-info="packetAnimationList">
-                  <img src="../assets/desktop.png" alt="desktop" style="width:150px;height:auto;">
+                  <img src="../assets/workstation.svg" alt="desktop" style="width:150px;height:auto;">
                 </EndSystemComponent>
                 <EndSystemComponent top="39%" left="80%" class="box" id="trash">
                   <img src="../assets/trash.png" alt="trash" style="width:100px;height:auto;">
@@ -182,9 +185,6 @@ export default {
       textAreas[0].style.height = this.scrollHeight + 'px';
     }
 
-    this.$refs.childComponentRef.drawLine("firewall", "server", "", "allowed packet");
-    this.$refs.childComponentRef.drawLine("trash", "firewall", "", "discarded packet");
-    this.$refs.childComponentRef.drawLine("client", "firewall", "", "incoming packet");
     this.packets.forEach((packet) => {
       if (Math.random() > 0.5) {
         packet.packetStatus = "DISCARD";
@@ -192,12 +192,25 @@ export default {
     });
     //create a copy of the packets array to packetsCopy
     this.packetsCopy = JSON.parse(JSON.stringify(this.packets));
+
+    for (let i = 0; i < 4; i++) {
+      let randomPortNumber = Math.floor(Math.random() * 8000) + 1000;
+      this.serverPortLabels.push(randomPortNumber);
+    }
+
+    setTimeout(() => {
+      this.$refs.childComponentRef.drawLine("firewall", "server", "black", "allowed packet");
+      this.$refs.childComponentRef.drawLine("trash", "firewall", "black", "discarded packet");
+      this.$refs.childComponentRef.drawLine("client", "firewall", "black", "incoming packet");
+    }, 500)
+
   },
   data() {
     return {
       step: 1,
       disableButton: false,
       serverIpAddress: '',
+      serverPortLabels: [],
       packetConfig: {
         80: {packet: "HTTP", accessGroup: "allow-packet"},
         443: {packet: "HTTPS ", accessGroup: "allow-packet"},
@@ -465,8 +478,7 @@ export default {
           } else {
             this.terminal.push(this.terminalStarterText + "Invalid input detected.");
           }
-        }
-        else{
+        } else {
           this.terminal.push(this.terminalStarterText + "Invalid input detected.");
         }
       }
@@ -594,11 +606,12 @@ div {
   box-sizing: border-box;
 }
 
-#gigabit{
+#gigabit {
   padding: 0;
   margin: 0;
   display: inline-block;
 }
+
 #gigabit:hover {
   cursor: copy;
 }

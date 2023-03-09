@@ -64,7 +64,11 @@
             <p>
               Access lists are a set of rules that are used to filter traffic. Modify the access list to block and allow
               traffic from specific ports from a server to a client. Towards the right side of this experiment you will
-              see a list of packets. The packets are sent from a client to a server. The packets hold an IP address and it's packet content. Click on the packet to view the complete packet content and decide which packets to block and allow based on the packet content. Malicious packets usually hold SQL Injection code or XSS scripts or Bash Scripts. You can block these packets by blocking the IP Address from which the packets are sent. Use the below commands to do so.
+              see a list of packets. The packets are sent from a client to a server. The packets hold an IP address and
+              it's packet content. Click on the packet to view the complete packet content and decide which packets to
+              block and allow based on the packet content. Malicious packets usually hold SQL Injection code or XSS
+              scripts or Bash Scripts. You can block these packets by blocking the IP Address from which the packets are
+              sent. Use the below commands to do so.
             </p>
             <br>
             <p>
@@ -92,7 +96,8 @@
               to modify, these
               are existing access lists, creation of new access-list is restricted for this experiment. The
               SERVER_IP_ADDRESS is the IP address of the server and the CLIENT_IP_ADDRESS is
-              the client IP address from which you want to block traffic, refer to the packet list to find the IP address numbers
+              the client IP address from which you want to block traffic, refer to the packet list to find the IP
+              address numbers
               and the output of the second step to find the IP address of the server.
             </p>
             <StyledButton text="Verify Rules" :disable="disableButton" @click="verify"></StyledButton>
@@ -107,13 +112,14 @@
                                    :port1="2"
                                    :port2="2"
                                    :port3="2"
-                                   :port4="2"/>
+                                   :port4="2"
+                                   :port-labels="serverPortLabels"/>
                 </EndSystemComponent>
                 <EndSystemComponent top="40%" left="45%" class="box" id="firewall">
                   <img src="../assets/firewall.jpg" alt="firewall" style="width:150px;height:auto;">
                 </EndSystemComponent>
                 <EndSystemComponent top="60%" left="5%" class="box" id="client" :package-info="packetAnimationList">
-                  <img src="../assets/desktop.png" alt="desktop" style="width:150px;height:auto;">
+                  <img src="../assets/workstation.svg" alt="desktop" style="width:150px;height:auto;">
                 </EndSystemComponent>
                 <EndSystemComponent top="39%" left="80%" class="box" id="trash">
                   <img src="../assets/trash.png" alt="trash" style="width:100px;height:auto;">
@@ -183,9 +189,6 @@ export default {
       textAreas[0].style.height = this.scrollHeight + 'px';
     }
 
-    this.$refs.childComponentRef.drawLine("firewall", "server", "", "allowed packet");
-    this.$refs.childComponentRef.drawLine("trash", "firewall", "", "discarded packet");
-    this.$refs.childComponentRef.drawLine("client", "firewall", "", "incoming packet");
     this.generateRandomPackets()
 
     for (const [key, value] of Object.entries(this.packetConfig)) {
@@ -199,11 +202,24 @@ export default {
         malicious: value.malicious,
       })
     }
+
+    for (let i = 0; i < 4; i++) {
+      let randomPortNumber = Math.floor(Math.random() * 8000) + 1000;
+      this.serverPortLabels.push(randomPortNumber);
+    }
+
+    setTimeout(() => {
+      this.$refs.childComponentRef.drawLine("firewall", "server", "black", "allowed packet");
+      this.$refs.childComponentRef.drawLine("trash", "firewall", "black", "discarded packet");
+      this.$refs.childComponentRef.drawLine("client", "firewall", "black", "incoming packet");
+    }, 500)
+
   },
   data() {
     return {
       step: 1,
       disableButton: false,
+      serverPortLabels: [],
       serverIpAddress: '',
       packetConfig: {},
       terminalStarterText: "ciscoasa> ",
@@ -498,10 +514,9 @@ export default {
 
             if (source === 'any') {
               //iterate through all clients and set access group to block-packet or allow-packet based on type
-              if(type === 'allow'){
+              if (type === 'allow') {
                 this.terminal.push("Setting allow rule to all clients for allow-packet group.");
-              }
-              else{
+              } else {
                 this.terminal.push("Setting deny rule to all clients for block-packet group.");
               }
               Object.entries(this.packetConfig).forEach(([key]) => {
@@ -513,8 +528,7 @@ export default {
                   this.terminal.push("Access group " + accessListName + " not found for " + type + " does not exist.");
                 }
               })
-            }
-            else{
+            } else {
               if (this.packetConfig[source]) {
                 if (accessListName === 'allow-packet' && type === 'allow') {
                   this.packetConfig[source].accessGroup = 'allow-packet';
@@ -525,8 +539,7 @@ export default {
                 } else {
                   this.terminal.push("Access group " + accessListName + " not found for " + type + " does not exist.");
                 }
-              }
-              else{
+              } else {
                 this.terminal.push("Source IP address not found.");
               }
             }

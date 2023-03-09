@@ -228,6 +228,8 @@ export default {
       let x2 = elementB.offsetLeft + (elementB.offsetWidth / 2);
       let y2 = elementB.offsetTop + (elementB.offsetHeight / 2);
 
+      console.log(x1, y1, x2, y2, "coords")
+
       if (!lineColor) {
         lineColor = 'black'
       }
@@ -235,7 +237,7 @@ export default {
       if (text) {
         this.drawSVGLine(x1, y1, x2, y2, lineColor, text)
       } else {
-        this.drawSVGLine(x1, y1, x2, y2, lineColor)
+        this.drawSVGLine(x1, y1, x2, y2, lineColor, '')
       }
     },
     drawLineOffset(id1, id2, space, isXTransformation, lineColor, text, isNegativeOffset){

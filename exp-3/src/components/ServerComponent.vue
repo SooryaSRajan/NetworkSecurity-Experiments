@@ -5,16 +5,16 @@
         <span class="id-address">{{ ipAddress }}</span>
       </div>
       <div class="col">
-        <div class="circle-div" :style="{backgroundColor: port0Color}"></div>
-        <div class="circle-div" :style="{backgroundColor: port1Color}"></div>
-        <div class="circle-div" :style="{backgroundColor: port2Color}"></div>
-        <div class="circle-div" :style="{backgroundColor: port3Color}"></div>
+        <div class="circle-div" :style="{backgroundColor: port0Color}"><span class="circle-div-text">{{portLabel(0)}}</span></div>
+        <div class="circle-div" :style="{backgroundColor: port1Color}"><span class="circle-div-text">{{portLabel(1)}}</span></div>
+        <div class="circle-div" :style="{backgroundColor: port2Color}"><span class="circle-div-text">{{portLabel(2)}}</span></div>
+        <div class="circle-div" :style="{backgroundColor: port3Color}"><span class="circle-div-text">{{portLabel(3)}}</span></div>
       </div>
     </div>
     <div class="extra-options" v-if="displayExtraOptions"
          :style="{visibility: responseData.length !== 0 ? 'visible' : 'hidden'}">
       <div class="title">
-        Respond to Server
+        Respond
       </div>
       <div class="respond-buttons">
         <button v-for="(data, index) in responseData" :key="index" :style="{backgroundColor: data.backgroundColour}" @click="this.$emit('respond', data)">
@@ -34,6 +34,7 @@ export default {
     port2: Number,
     port3: Number,
     port4: Number,
+    portLabels: [],
     ipAddress: String,
     displayExtraOptions: Boolean,
     responseData: [],
@@ -84,7 +85,16 @@ export default {
         return "#FF0000";
       }
     },
-
+  },
+  methods: {
+    portLabel(index){
+      if(this.portLabels){
+        if(this.portLabels.length > index){
+          return this.portLabels[index]
+        }
+      }
+      return index + 1
+    },
   }
 }
 </script>
@@ -176,6 +186,29 @@ button:hover {
   height: 20px;
   border-radius: 50%;
   margin: 5px;
+  transition: ease-in-out 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-div:hover {
+  transform: scale(2);
+  box-shadow: 2px 3px 10px 2px #a1a1a1;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.circle-div:hover .circle-div-text {
+  display: block;
+}
+
+.circle-div-text {
+  color: #000000;
+  font-size: 7px;
+  font-weight: 500;
+  text-align: center;
+  display: none;
 }
 
 </style>

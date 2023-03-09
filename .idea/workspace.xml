@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up">
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added iframe logic to experiment 4">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/components/ServerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/components/ServerComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-2/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-3/src/components/ServerComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/components/ServerComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-3/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-4/src/components/HelloWorld.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-4/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-5/src/components/HelloWorld.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-5/src/components/ServerComponent.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-7/src/assets/desktop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/src/views/ExperimentPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-8/src/assets/desktop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-8/src/assets/server.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-8/src/components/network-components/NetworkInteractionComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-8/src/components/network-components/NetworkInteractionComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-8/src/views/ExperimentPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-8/src/views/ExperimentPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,18 +55,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-4/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/exp-7/src/assets" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.DirectoryMappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/exp-4/public" />
-      <recent name="$PROJECT_DIR$/exp-3/public" />
-      <recent name="$PROJECT_DIR$/exp-2/public" />
-      <recent name="$PROJECT_DIR$/exp-8" />
-      <recent name="$PROJECT_DIR$/exp-8/src" />
+      <recent name="$PROJECT_DIR$/exp-7/src/assets" />
+      <recent name="$PROJECT_DIR$/exp-8/src/assets" />
+      <recent name="$PROJECT_DIR$/exp-8/src/components" />
+      <recent name="$PROJECT_DIR$/exp-7/src/components" />
+      <recent name="$PROJECT_DIR$/exp-3/src/components" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -88,6 +102,7 @@
       <workItem from="1678099582642" duration="11924000" />
       <workItem from="1678128932236" duration="70000" />
       <workItem from="1678183967446" duration="32804000" />
+      <workItem from="1678347941889" duration="2680000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -348,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678274451049</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Added iframe logic to experiment 4">
+      <created>1678348105247</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1678348105247</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,7 +430,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Completed quit command in experiment 6" />
     <MESSAGE value="Added success/failure messages after quit command" />
     <MESSAGE value="Completed basic flex layout for ExperimentPage.vue and added necessary components." />
     <MESSAGE value="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors" />
@@ -433,6 +454,7 @@
     <MESSAGE value="Changed computer position in kerboros experiment" />
     <MESSAGE value="Added and completed experiment 4 simulation and added logic to scroll logs to the bottom to all four simulations" />
     <MESSAGE value="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up" />
-    <option name="LAST_COMMIT_MESSAGE" value="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up" />
+    <MESSAGE value="Added iframe logic to experiment 4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added iframe logic to experiment 4" />
   </component>
 </project>
