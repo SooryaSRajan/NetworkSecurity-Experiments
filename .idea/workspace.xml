@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added and completed experiment 4 simulation and added logic to scroll logs to the bottom to all four simulations">
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/graph.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/public/graph.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-3/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/public/graph.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-4/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/public/graph.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +87,7 @@
       <workItem from="1678017727334" duration="14347000" />
       <workItem from="1678099582642" duration="11924000" />
       <workItem from="1678128932236" duration="70000" />
-      <workItem from="1678183967446" duration="32142000" />
+      <workItem from="1678183967446" duration="32804000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -345,7 +341,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678273564497</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up">
+      <created>1678274451049</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1678274451049</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -405,7 +408,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Added network graphs&#10;&#10;Completed experiment 6 App.vue, it includes multiple command support more linux like commands and freedom to let users choose their own file names" />
     <MESSAGE value="Completed quit command in experiment 6" />
     <MESSAGE value="Added success/failure messages after quit command" />
     <MESSAGE value="Completed basic flex layout for ExperimentPage.vue and added necessary components." />
@@ -430,6 +432,7 @@
     <MESSAGE value="Changed computer positon in exp-4" />
     <MESSAGE value="Changed computer position in kerboros experiment" />
     <MESSAGE value="Added and completed experiment 4 simulation and added logic to scroll logs to the bottom to all four simulations" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added and completed experiment 4 simulation and added logic to scroll logs to the bottom to all four simulations" />
+    <MESSAGE value="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up" />
+    <option name="LAST_COMMIT_MESSAGE" value="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up" />
   </component>
 </project>
