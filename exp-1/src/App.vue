@@ -4,7 +4,7 @@
     SooryaSRajan (@SooryaSRajan)
     Ritwik M (@ritwik-m) &
     Nalinadevi K 
- for the Ministry of Education (MOE) virtual-labs project, Govt. Of India -->
+ for the Ministry of Education (MOE) virtual-labs project, Govt.Of India -->
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
