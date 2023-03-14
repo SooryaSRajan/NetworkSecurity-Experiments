@@ -374,6 +374,10 @@ body {
   box-sizing: border-box;
 }
 
+p{
+  text-align: start;
+}
+
 main {
   height: 100vh;
   width: 100vw;
