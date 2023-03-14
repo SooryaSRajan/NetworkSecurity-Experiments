@@ -6,22 +6,36 @@
     Nalinadevi K 
  for the Ministry of Education (MOE) virtual-labs project, Govt. Of India -->
 <script>
-//write a function to go to the simulation page 
-//and then call the function in the button click event
 export default {
   name: 'SimulationPage',
+  methods: {
+    goToSimulationPage() {
+      this.$router.push({ name: 'experiment-view' });
+      console.log("Go to Experiment Page")
+    }
+  }
 }
 </script>
 
 <template>
-  <iframe src="/exp-tcp-au/simulation/graph.html"
-          id="frame"
-          ref="myiframe">
-</iframe>
+  <div id="root-box">
+    <iframe src="/exp-tcp-au/simulation/graph.html"
+            id="frame"
+            ref="myiframe">
+    </iframe>
+    <button @click="goToSimulationPage">Go to Experiment Page</button>
+  </div>
 </template>
 
 
 <style scoped>
+
+#root-box{
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
 
 #frame {
   height: 90vh;
@@ -29,7 +43,7 @@ export default {
   border: none;
 }
 
-template{
+template {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -37,22 +51,24 @@ template{
 }
 
 button {
-            width: 30ch;
-            background-color: #4CAF50;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+  justify-self: end;
+  align-self: end;
+  margin: 10px;
+  width: 30ch;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-        button:disabled {
-            background-color: #BDBDBD;
-            color: #424242;
-            cursor: not-allowed;
-            transform: scale(1, 1);
-        }
+button:disabled {
+  background-color: #BDBDBD;
+  color: #424242;
+  cursor: not-allowed;
+  transform: scale(1, 1);
+}
 
 
 </style>  
