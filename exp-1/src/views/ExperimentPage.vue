@@ -8,7 +8,6 @@
 <template>
   <div class="flex-box">
     <div id="snackbar">Some text some message..</div>
-    <TopBar title="Simulation of the TCP Protocol"></TopBar>
     <div class="rem-space">
       <div class="row-1">
         <div class="instructions">

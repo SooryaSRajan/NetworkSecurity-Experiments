@@ -8,7 +8,6 @@
 <template>
   <main>
     <div class="flex-box">
-      <TopBar title="Understanding SSL"></TopBar>
       <div id="snackbar"/>
       <div class="rem-space">
         <div class="row-1">

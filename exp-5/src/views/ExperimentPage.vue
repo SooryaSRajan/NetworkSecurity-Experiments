@@ -7,7 +7,6 @@
  for the Ministry of Education (MOE) virtual-labs project, Govt. Of India -->
 <template>
   <div class="flex-box">
-    <TopBar title="Understanding Kerberos"></TopBar>
     <div class="rem-space">
       <div class="col-1">
         <div class="row-3">

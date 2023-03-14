@@ -8,7 +8,6 @@
 <template>
   <main>
     <div class="flex-box">
-      <TopBar title="Combining active and passive attacks"></TopBar>
       <div id="snackbar">Some text some message..</div>
       <div class="rem-space">
         <div class="col-1">

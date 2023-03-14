@@ -8,7 +8,6 @@
 <template>
   <main>
     <div class="flex-box">
-      <TopBar title="Passive attacks - Eavesdropping"></TopBar>
       <div id="snackbar">Some text some message..</div>
       <div class="rem-space">
         <div class="col-1">

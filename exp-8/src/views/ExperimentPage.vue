@@ -8,7 +8,6 @@
 <template>
   <main>
     <div class="flex-box">
-      <TopBar title="Firewalls"></TopBar>
       <div id="snackbar"></div>
       <div class="rem-space">
         <div class="row-1">

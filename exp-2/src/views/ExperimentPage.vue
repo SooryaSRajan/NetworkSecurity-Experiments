@@ -7,7 +7,6 @@
  for the Ministry of Education (MOE) virtual-labs project, Govt. Of India -->
 <template>
   <div class="flex-box">
-    <TopBar title="TCP SYN Attacks"></TopBar>
     <div id="snackbar">Some text some message..</div>
     <div class="rem-space">
       <div class="row-1">
