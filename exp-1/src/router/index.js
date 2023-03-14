@@ -8,12 +8,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'experiment-view',
-      component: () => ExperimentView
+      component: () => SimulationView
     },
     {
       path: '/simulation',
       name: 'simulation-view',
-      component: () => SimulationView    
+      component: () => ExperimentView    
     },
   ]
 })

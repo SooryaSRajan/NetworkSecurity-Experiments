@@ -415,7 +415,7 @@ button:hover {
 p {
   margin: 0;
   padding: 0;
-  text-align: justify;
+  
 }
 
 span {

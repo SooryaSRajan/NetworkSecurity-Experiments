@@ -522,7 +522,7 @@ body {
 }
 
 p {
-  text-align: justify;
+  
 }
 
 main {

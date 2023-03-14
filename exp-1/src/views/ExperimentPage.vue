@@ -383,7 +383,7 @@ main {
 p {
   margin: 0;
   padding: 0;
-  text-align: justify;
+  
 }
 
 .bold {

@@ -794,13 +794,13 @@ main {
 p {
   margin: 0;
   padding: 0;
-  text-align: justify;
+  
 }
 
 h4 {
   padding: 0;
   margin: 20px 0 0;
-  text-align: justify;
+  
 }
 
 .bold {
