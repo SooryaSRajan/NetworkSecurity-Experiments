@@ -8,7 +8,7 @@
 <template>
   <div class="card-box">
     <div class="content" @click="toggle">
-      {{ "- " + title }}
+      {{ "- " + title + " >" }}
     </div>
     <div class="text-content" :style="contentHeight">
       <slot></slot>

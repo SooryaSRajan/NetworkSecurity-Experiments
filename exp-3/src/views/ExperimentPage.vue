@@ -29,16 +29,16 @@
             <DropDownCard title="INSTRUCTIONS">
               <p>
                 In this experiment, you will learn how to eavesdrop on a network. You will be able to see the data being
-                sent between two servers.
+                sent between a server and a client.
               </p>
               <br>
               <p>
-                To start, click on the "Start" button. This will start the network. You will see the data being sent
-                between the two servers.
+                To start, click on the "Start" button. This will result in the server sending a message to the client, visible in the terminal.
+                Continue to click on the "Next" button to see the next message, until you have the encrypted username and password.
               </p>
               <br>
-              <p>
-                To stop the network, click on the "Reset" button. This will stop the network and clear the screen.
+              <p> 
+                Use the "Verification Methods" tab to decrypt the username and password, and type them in the relevant textboxes in the bottom left.
               </p>
               <br>
               <p>
@@ -729,10 +729,9 @@ pre {
 }
 
 select {
-  appearance: none;
   background-color: transparent;
   border: none;
-  padding: 10px;
+  padding: 15px;
   margin: 0;
   width: 100%;
   font-family: inherit;

@@ -20,7 +20,7 @@
           <br>
           <br>
           <p>
-            To begin, choose a free port and send SYN message. Do not accept the acknowledgement, which will close the
+            To begin, choose a free port and send a SYN message. Do not accept the acknowledgement, which will close the
             connection.
           </p>
           <br>
@@ -28,6 +28,8 @@
             To complete the experiment, overwhelm atleast one server by occupying all its available ports, hence making
             it unavailable for other users.
           </p>
+          <br>
+          <p>Hover over the port to be able to see the port number. To accept the acknowledgement, click on the appropriate color and port number from the 'Respond' section in the server.</p>
         </div>
         <div class="input-field">
           <h4>
@@ -643,6 +645,10 @@ div::-webkit-scrollbar {
   flex-direction: column;
   height: 100vh;
   width: 100%;
+}
+
+p{
+  text-align: left;
 }
 
 * {

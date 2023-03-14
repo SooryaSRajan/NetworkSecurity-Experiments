@@ -37,9 +37,9 @@
                 <p>Now that you have intercepted a packet, you can use this to communicate with the server on behalf of
                   the user. The packet you intercepted is shown in the terminal.</p>
                 <br>
-                <p>To send the packet to the server on behalf of the user, click on 'Next'</p>
+                <p>To send the packet to the server on behalf of the user, click on 'Next' Remember to respond as soon as the packet is sent to avoid resetting the experiment.</p>
                 <br>
-                <p>The packet has to be sent in the next {{ countDown }} seconds or the experiment will fail as the
+                <p>The packet has to be sent in the next <span style="font-size: x-large; color: red;"> {{ countDown }} </span> seconds or the experiment will fail as the
                   server
                   will close the connection after timing out waiting for a response. To send the packet, click on the
                   corresponding Port no. under the 'Respond' section on your computer.</p>
@@ -242,7 +242,7 @@ export default {
       x.className = "show";
       setTimeout(function () {
         x.className = x.className.replace("show", "");
-      }, 3000)
+      }, 7000)
     },
     respond(data) {
       if (data.step === 3) {
@@ -306,7 +306,7 @@ export default {
           let timeoutFunc = () => {
             this.countDown--
             if (this.step === 3 && this.countDown === 0) {
-              this.incorrect("Experiment failed, please try again")
+              this.incorrect("Server response wasn't forwarded on time, please try again")
               this.reset()
             } else if (this.step === 3 && this.countDown > 0) {
               setTimeout(timeoutFunc, 1000)
@@ -457,6 +457,9 @@ pre {
   }
 }
 
+p{
+  text-align: start;
+}
 
 .rem-space {
   flex: 1;
