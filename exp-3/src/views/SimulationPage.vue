@@ -6,7 +6,7 @@
     Nalinadevi K 
  for the Ministry of Education (MOE) virtual-labs project, Govt. Of India -->
 <template>
-  <iframe src="/graph.html"
+  <iframe src="/exp-passive-attacks-au/simulation//graph.html"
           id="frame"
           ref="myiframe">
   </iframe>
