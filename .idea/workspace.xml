@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added workstation svg to experiment 7 and 8&#10;Modified ServerComponent to support hover port label in experiment 2 and 3. Fixed ExperimentPage line creation bug which rendered SVG lines between components above images instead of their centers by delaying line generation by 500ms. Added port input instead of dropdown in experiment 2 and added a port map to map ports to port number in exp-2, randomizing port numbers instead using 1, 2, 3 and 4">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_03_23,_10_20_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_03_23__10_20_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added public outputDir to vue config file">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-2/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-3/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-4/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-5/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-5/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-6/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-6/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-7/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-7/vue.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-8/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-8/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/graph.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +91,7 @@
       <workItem from="1678128932236" duration="70000" />
       <workItem from="1678183967446" duration="32804000" />
       <workItem from="1678347941889" duration="2844000" />
-      <workItem from="1678807619539" duration="2878000" />
+      <workItem from="1678807619539" duration="3548000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -377,7 +366,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678350781249</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Added public outputDir to vue config file">
+      <created>1678810645904</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1678810645904</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,7 +463,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Completed basic flex layout for ExperimentPage.vue and added necessary components." />
     <MESSAGE value="Added basic terminal logic, packet color indexing for disable allowed and restricted packets and added basic template in network component without any vectors" />
     <MESSAGE value="Completed adding commands and features to experiment-7&#10;Added vectors and NetworkComponent animations for verification&#10;Added disable option to disable button while verification&#10;Fixed copy bug in experiment 6&#10;Added commands to enable terminal and exit terminal, view groups and modify them" />
     <MESSAGE value="Added SVGs for nodes&#10;Graph generation with animation in experiment one graph simulation&#10;Added iframe load and public code to load the webpage" />
@@ -492,6 +487,7 @@
     <MESSAGE value="Replaced timer based bottom scroller with bottom scroller only after log updation to avoid forceful scrolling to bottom when user is scrolling up" />
     <MESSAGE value="Added iframe logic to experiment 4" />
     <MESSAGE value="Added workstation svg to experiment 7 and 8&#10;Modified ServerComponent to support hover port label in experiment 2 and 3. Fixed ExperimentPage line creation bug which rendered SVG lines between components above images instead of their centers by delaying line generation by 500ms. Added port input instead of dropdown in experiment 2 and added a port map to map ports to port number in exp-2, randomizing port numbers instead using 1, 2, 3 and 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added workstation svg to experiment 7 and 8&#10;Modified ServerComponent to support hover port label in experiment 2 and 3. Fixed ExperimentPage line creation bug which rendered SVG lines between components above images instead of their centers by delaying line generation by 500ms. Added port input instead of dropdown in experiment 2 and added a port map to map ports to port number in exp-2, randomizing port numbers instead using 1, 2, 3 and 4" />
+    <MESSAGE value="Added public outputDir to vue config file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added public outputDir to vue config file" />
   </component>
 </project>
