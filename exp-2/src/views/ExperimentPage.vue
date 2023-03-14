@@ -45,6 +45,7 @@
           <StyledButton text="Send" :click-function="send" :disabled="disableAllButtons"/>
           <StyledButton text="Verify" :click-function="verify" :disabled="disableAllButtons"/>
           <StyledButton text="Restart" :click-function="restart" :disabled="disableAllButtons"/>
+          <StyledButton text="Next" :invisible="!complete" :click-function="nextPage"></StyledButton>
         </div>
       </div>
       <div class="row-2">
@@ -186,6 +187,7 @@ export default {
   },
   data() {
     return {
+      complete : false,
       disableAllButtons: false,
       ipAddress: [],
       serverOnePorts: [1, 1, 1, 1],
@@ -384,7 +386,9 @@ export default {
         x.className = x.className.replace("show", "");
       }, 7000)
     },
-
+    nextPage(){
+      this.$router.push({ name: 'simulation-view' });
+    },
     send() {
       //inputIpAddress check if address is not null and exists
       let targetBox = "";
@@ -623,6 +627,7 @@ export default {
     experimentCompleted() {
       //TODO: show experiment completed message
       this.correct1("Experiment completed successfully")
+      this.complete = true;
     },
   }
 }

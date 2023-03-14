@@ -63,7 +63,9 @@
               </div>
             </div>
             <div class="button-row">
-              <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 3 || step === 5"
+              <StyledButton text="Next" :invisible="step !== 6"
+                            :click-function="nextPage"></StyledButton>
+              <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 3 || step === 5 || step === 6"
                             :click-function="buttonClick"
                             :disable="disableButton && step !== 3 && step !== 5"></StyledButton>
               <StyledButton text="Verify" :click-function="verifyCredentials" :invisible="step !== 5"
@@ -263,6 +265,9 @@ export default {
         });
       }
     },
+    nextPage(){
+      this.$router.push({ name: 'simulation-view' });
+    },
     buttonClick() {
       if (this.step === 1) {
         this.disableButton = true;
@@ -337,6 +342,7 @@ export default {
     verifyCredentials() {
       if (this.userName === this.generatedUserName && this.password === this.generatedPassword && this.isPacketSentBack) {
         this.correct1("Experiment successful!")
+        this.step = 6;
       } else {
         this.incorrect("Experiment failed, please try again.")
       }

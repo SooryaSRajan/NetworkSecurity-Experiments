@@ -6,10 +6,6 @@
     Nalinadevi K 
  for the Ministry of Education (MOE) virtual-labs project, Govt. Of India -->
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/simulation">Simulation</router-link>
-  </nav>
   <router-view/>
 </template>
 

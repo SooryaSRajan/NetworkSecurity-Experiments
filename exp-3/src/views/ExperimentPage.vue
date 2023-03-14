@@ -71,6 +71,8 @@
               <input v-model="password" placeholder="password">
             </div>
             <div class="button-row">
+              <StyledButton text="Next" :invisible="step !== 5"
+                            :click-function="nextPage"></StyledButton>
               <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 4" :click-function="buttonClick"
                             :disable="disableButton && step !== 4"></StyledButton>
               <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>
@@ -430,10 +432,13 @@ export default {
         x.className = x.className.replace("show", "");
       }, 3000)
     },
-
+    nextPage(){
+      this.$router.push({ name: 'simulation-view' });
+    },
     validate() {
       //check if decrypted username and password and username and password match
       if (this.userNameDecrypted === this.userName && this.passwordDecrypted === this.password) {
+        this.step = 5;
         this.correct1("Experiment complete!")
       }
     },
@@ -700,7 +705,7 @@ pre {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  font-family: Hack monospace;
+  font-family: monospace;
   padding: 10px 15px;
   background-color: #0b0e14;
   color: #95e6cb;
