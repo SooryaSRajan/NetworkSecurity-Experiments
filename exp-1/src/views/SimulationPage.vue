@@ -10,16 +10,11 @@
 //and then call the function in the button click event
 export default {
   name: 'SimulationPage',
-  methods: {
-    nextClick(){
-      router.push('/simulation');
-    }
-  }
 }
 </script>
 
 <template>
-  <iframe src="/graph.html"
+  <iframe src="/exp-tcp-au/simulation/graph.html"
           id="frame"
           ref="myiframe">
 </iframe>

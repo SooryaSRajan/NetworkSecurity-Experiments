@@ -6,14 +6,14 @@ const router = createRouter({
   history: createMemoryHistory('/'),
   routes: [
     {
-      path: '/',
+      path: '/experiment',
       name: 'experiment-view',
-      component: () => SimulationView
+      component: () => ExperimentView
     },
     {
-      path: '/simulation',
+      path: '/',
       name: 'simulation-view',
-      component: () => ExperimentView    
+      component: () => SimulationView
     },
   ]
 })
