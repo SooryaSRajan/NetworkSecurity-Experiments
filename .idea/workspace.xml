@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Added button to exp 1 to move to experiment">
-      <change beforePath="$PROJECT_DIR$/exp-2/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-2/src/views/SimulationPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-3/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-3/src/views/SimulationPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-4/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-4/src/views/SimulationPage.vue" afterDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Removed   outputDir: 'public', from all experiments">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/file/graph.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +93,7 @@
       <workItem from="1678128932236" duration="70000" />
       <workItem from="1678183967446" duration="32804000" />
       <workItem from="1678347941889" duration="2844000" />
-      <workItem from="1678807619539" duration="4486000" />
+      <workItem from="1678807619539" duration="6451000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -388,7 +389,21 @@
       <option name="project" value="LOCAL" />
       <updated>1678812002453</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Added public paths to graph iframes">
+      <created>1678812130072</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1678812130072</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Removed   outputDir: 'public', from all experiments">
+      <created>1678812338133</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1678812338133</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -478,8 +493,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Added SVGs for nodes&#10;Graph generation with animation in experiment one graph simulation&#10;Added iframe load and public code to load the webpage" />
-    <MESSAGE value="Added height to experiment 4" />
     <MESSAGE value="Changed experiment name for exp 6" />
     <MESSAGE value="Added copy to clipboard for GigabiEthernet0/0 &#10;Added CSS for copy&#10;Added else condition for terminal input" />
     <MESSAGE value="Replaced vectors in experiment 1" />
@@ -503,6 +516,8 @@
     <MESSAGE value="Added public outputDir to vue config file" />
     <MESSAGE value="Removed vue iframe" />
     <MESSAGE value="Added button to exp 1 to move to experiment" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added button to exp 1 to move to experiment" />
+    <MESSAGE value="Added public paths to graph iframes" />
+    <MESSAGE value="Removed   outputDir: 'public', from all experiments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed   outputDir: 'public', from all experiments" />
   </component>
 </project>
