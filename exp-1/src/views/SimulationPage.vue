@@ -19,7 +19,7 @@ export default {
 
 <template>
   <div id="root-box">
-    <iframe src="/exp-tcp-au/simulation/file/graph.html"
+    <iframe src="/exp-tcp-au/simulation/graph.html"
             id="frame"
             ref="myiframe">
     </iframe>

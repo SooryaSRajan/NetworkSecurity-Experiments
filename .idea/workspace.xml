@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Moved graph static file to file folder">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/public/file/graph.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/vue.config.js" afterDir="false" />
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Identified fix for router issue, which was caused by not using lazy loading for importing components into router function.  &#10;Changed memoryHistory configurations and paths&#10;Configured publicPath and dependencies">
+      <change beforePath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +56,8 @@
       <recent name="$PROJECT_DIR$/exp-3/src/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/exp-1/public" />
+      <recent name="$PROJECT_DIR$/exp-1/dist" />
       <recent name="$PROJECT_DIR$/exp-1/public/file" />
     </key>
   </component>
@@ -101,7 +96,7 @@
       <workItem from="1678183967446" duration="32804000" />
       <workItem from="1678347941889" duration="2844000" />
       <workItem from="1678807619539" duration="9645000" />
-      <workItem from="1678902651378" duration="2796000" />
+      <workItem from="1678902651378" duration="3129000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -418,7 +413,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678814268728</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="Identified fix for router issue, which was caused by not using lazy loading for importing components into router function.  &#10;Changed memoryHistory configurations and paths&#10;Configured publicPath and dependencies">
+      <created>1678906610848</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1678906610848</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -508,7 +510,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Added copy to clipboard for GigabiEthernet0/0 &#10;Added CSS for copy&#10;Added else condition for terminal input" />
     <MESSAGE value="Replaced vectors in experiment 1" />
     <MESSAGE value="Removed validation and added filter to get decrypted values within the experiment page" />
     <MESSAGE value="Removed validation and added filter to get decrypted values within the experiment page for experiment 3" />
@@ -533,6 +534,7 @@
     <MESSAGE value="Added public paths to graph iframes" />
     <MESSAGE value="Removed   outputDir: 'public', from all experiments" />
     <MESSAGE value="Moved graph static file to file folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved graph static file to file folder" />
+    <MESSAGE value="Identified fix for router issue, which was caused by not using lazy loading for importing components into router function.  &#10;Changed memoryHistory configurations and paths&#10;Configured publicPath and dependencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="Identified fix for router issue, which was caused by not using lazy loading for importing components into router function.  &#10;Changed memoryHistory configurations and paths&#10;Configured publicPath and dependencies" />
   </component>
 </project>
