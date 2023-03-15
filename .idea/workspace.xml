@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Removed   outputDir: 'public', from all experiments">
+    <list default="true" id="09a8e94f-e1ec-4d91-a2af-68bb4005d635" name="Changes" comment="Moved graph static file to file folder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/exp-1/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/public/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/file/graph.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/public/file/graph.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/src/views/SimulationPage.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp-1/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/exp-1/vue.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +62,9 @@
       <recent name="$PROJECT_DIR$/exp-7/src/components" />
       <recent name="$PROJECT_DIR$/exp-3/src/components" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/exp-1/public/file" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -93,7 +100,8 @@
       <workItem from="1678128932236" duration="70000" />
       <workItem from="1678183967446" duration="32804000" />
       <workItem from="1678347941889" duration="2844000" />
-      <workItem from="1678807619539" duration="6451000" />
+      <workItem from="1678807619539" duration="9645000" />
+      <workItem from="1678902651378" duration="2796000" />
     </task>
     <task id="LOCAL-00001" summary="Added newer version of network components to experiment 2">
       <created>1676051332039</created>
@@ -403,7 +411,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678812338133</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="Moved graph static file to file folder">
+      <created>1678814268728</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1678814268728</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,7 +508,6 @@
       <path value="$PROJECT_DIR$/exp-1" />
       <path value="$PROJECT_DIR$/exp-2" />
     </ignored-roots>
-    <MESSAGE value="Changed experiment name for exp 6" />
     <MESSAGE value="Added copy to clipboard for GigabiEthernet0/0 &#10;Added CSS for copy&#10;Added else condition for terminal input" />
     <MESSAGE value="Replaced vectors in experiment 1" />
     <MESSAGE value="Removed validation and added filter to get decrypted values within the experiment page" />
@@ -518,6 +532,7 @@
     <MESSAGE value="Added button to exp 1 to move to experiment" />
     <MESSAGE value="Added public paths to graph iframes" />
     <MESSAGE value="Removed   outputDir: 'public', from all experiments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed   outputDir: 'public', from all experiments" />
+    <MESSAGE value="Moved graph static file to file folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved graph static file to file folder" />
   </component>
 </project>
