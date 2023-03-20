@@ -888,9 +888,12 @@ div {
 
 
 .terminal-choices {
-  width: 10%;
+  border-left: 1px solid #666c7c;
+  width: 15%;
+  flex: 1;
   min-width: 100px;
-  background-color: #0f131b;
+  background-color: #0b0e14;
+  overflow: hidden;
 }
 
 .terminal-col {

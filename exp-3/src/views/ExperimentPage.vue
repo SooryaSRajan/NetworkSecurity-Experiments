@@ -48,10 +48,13 @@
             </DropDownCard>
             <DropDownCard title="ENCRYPTION METHODS">
               <select v-model="encryptionAlgorithm">
-                <option value="IDEA">IDEA</option>
+                
                 <option value="AES">AES</option>
-                <option value="DES">DES</option>
                 <option value="BLOWFISH">BLOWFISH</option>
+                <option value="DES">DES</option>
+                <option value="IDEA">IDEA</option>
+                
+                
               </select>
               <input v-model="inputForDecryption" style="margin-top: 20px" placeholder="username / password">
               <input v-model="inputForDecryptionKey" placeholder="decryption key">
@@ -67,8 +70,8 @@
         <div class="col-2">
           <div class="row-3">
             <div class="row-3-content-space">
-              <input v-model="userName" placeholder="username">
-              <input v-model="password" placeholder="password">
+              <input v-model="userName" placeholder="Username">
+              <input v-model="password" placeholder="Password">
             </div>
             <div class="button-row">
               <StyledButton text="Next" :invisible="step !== 5"
@@ -713,6 +716,7 @@ pre {
 }
 
 .terminal-choices {
+  border-left: 1px solid #666c7c;
   width: 15%;
   flex: 1;
   min-width: 100px;
@@ -752,6 +756,8 @@ select {
 }
 
 .active-button {
+  font-family: monospace;
+  font-weight: normal;
   border-left: 2px solid #e5b350;
 }
 
