@@ -169,6 +169,24 @@ export default {
         this.clickCount++;
       }
     },
+    correct1(message) {
+      var x = document.getElementById("snackbar");
+      x.innerHTML = message;
+      x.style.backgroundColor = "green";
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 3000)
+    },
+    incorrect(msg) {
+      var x = document.getElementById("snackbar");
+      x.innerHTML = msg;
+      x.style.backgroundColor = "red";
+      x.className = "show";
+      setTimeout(function () {
+        x.className = x.className.replace("show", "");
+      }, 7000)
+    },
     reset() {
       this.$refs.childComponentRef.clearLines()
       this.source = ""
@@ -210,9 +228,9 @@ export default {
       }
 
       if (rightOptions) {
-        alert("You got it right!")
+        this.correct1("You got it right!")
       } else {
-        alert("You got it wrong!")
+        this.incorrect("You got it wrong!")
       }
 
     },
