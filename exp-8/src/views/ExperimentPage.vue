@@ -690,7 +690,6 @@ div {
 }
 
 .row-1 {
-  background-color: orange;
   width: 25%;
   display: flex;
   flex-direction: column;
