@@ -32,11 +32,11 @@
           <p>Hover over the port to be able to see the port number. To accept the acknowledgement, click on the appropriate color and port number from the 'Respond' section in the server.</p>
         </div>
         <div class="input-field">
-          <h4>
+          <h4 style="text-align: left;">
             Enter server hostname:
           </h4>
           <input v-model="inputIpAddress">
-          <h4>
+          <h4 style="text-align: left;">
             Choose Port:
           </h4>
           <input v-model="inputPort">
