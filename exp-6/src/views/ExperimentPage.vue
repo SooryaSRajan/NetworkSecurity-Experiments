@@ -156,7 +156,7 @@
             <br>
           </div>
 
-          //command to quit the session
+          
           <div v-if="step === 10" class="content">
             <h4>Step 10: Quit the session</h4>
             <p>
@@ -739,6 +739,14 @@ pre {
   font-weight: bold;
 }
 
+p{ 
+  text-align: start;
+}
+
+h4{ 
+  text-align: start;
+}
+
 #snackbar {
   visibility: hidden;
   min-width: 250px;
@@ -889,7 +897,7 @@ div {
 
 .terminal-choices {
   border-left: 1px solid #666c7c;
-  width: 15%;
+  width: 0%;
   flex: 1;
   min-width: 100px;
   background-color: #0b0e14;
