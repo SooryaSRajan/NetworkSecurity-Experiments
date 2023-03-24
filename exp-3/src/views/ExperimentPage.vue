@@ -444,6 +444,9 @@ export default {
         this.step = 5;
         this.correct1("Experiment complete!")
       }
+      else{
+        this.incorrect("Incorrect, please try again.")
+      }
     },
     reset() {
       this.disableButton = false;
