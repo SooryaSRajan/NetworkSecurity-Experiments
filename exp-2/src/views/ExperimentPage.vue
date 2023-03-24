@@ -29,6 +29,10 @@
             it unavailable for other users.
           </p>
           <br>
+          <p>
+            Click on "Verify" once you've overwhelmed a server to complete the experiment.
+          </p>
+          <br>
           <p>Hover over the port to be able to see the port number. To accept the acknowledgement, click on the appropriate color and port number from the 'Respond' section in the server.</p>
         </div>
         <div class="input-field">
@@ -46,6 +50,16 @@
           <StyledButton text="Verify" :click-function="verify" :disabled="disableAllButtons"/>
           <StyledButton text="Restart" :click-function="restart" :disabled="disableAllButtons"/>
           <StyledButton text="Next" :invisible="!complete" :click-function="nextPage"></StyledButton>
+        </div>
+        <h4>LEGEND:</h4>
+        <div style="margin-top: 10px; align-items: start; justify-content: start;">
+          
+          <span style="display: flex; flex-direction: row; margin: 10px;">
+            <div class="circle orange"></div> <p>Available port</p>
+          </span>
+          <span style="display: flex; flex-direction: row; margin: 10px;">
+            <div class="circle blue"></div> <p>Blocked port</p>
+          </span>
         </div>
       </div>
       <div class="row-2">
@@ -650,6 +664,22 @@ div::-webkit-scrollbar {
   flex-direction: column;
   height: 100vh;
   width: 100%;
+}
+
+.circle {
+    margin-left: 10px;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.orange {
+    background-color: #33ff00;
+}
+
+.blue {
+    background-color: #ff0000;
 }
 
 p{
