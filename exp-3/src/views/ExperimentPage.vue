@@ -75,7 +75,7 @@
             </div>
             <div class="button-row">
               <StyledButton text="Next" :invisible="step !== 5"
-                            :click-function="nextPage"></StyledButton>
+                            :click-function="buttonClick"></StyledButton>
               <StyledButton :text="step === 1 ? 'Start' : 'Next'" :invisible="step === 4" :click-function="buttonClick"
                             :disable="disableButton && step !== 4"></StyledButton>
               <StyledButton text="Verify" :click-function="validate" :disable="disableButton"></StyledButton>

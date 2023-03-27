@@ -12,7 +12,7 @@
       <div class="row-1">
         <div class="instructions">
           <p v-if="executionStep === 1">
-            The client initiates the connection with server by sending a TCP SYN packet.
+            The client initiates a connection with server by sending a TCP SYN packet.
             <br>
             <br>
             The first SYN message contains a random number (Initial Synchronise Number), unique to each new connection.

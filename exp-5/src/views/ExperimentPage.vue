@@ -27,12 +27,23 @@
                 draw the line. Also, choose the options and computers in the right order to complete the experiment.
               </p>
               <!--              select -->
-              <select v-model="selectedOption">
+              <select style="text-overflow: ellipsis; align-items: start; justify-content: start;" v-model="selectedOption">
                 <option v-for="(data,index) in rightOptions" :value="data.text" :key="index">{{ data.text }}</option>
               </select>
               <button @click="generateLine">Create Line</button>
               <br>
             </div>
+
+        <div style="align-items: start; justify-content: start;">
+          
+          <span style="display: flex; flex-direction: row; margin: 10px; align-items: center;">
+            <div style = "margin-right: 10px;" class="circle blue"></div> <p>Source computer</p>
+          </span>
+          <span style="display: flex; flex-direction: row; margin: 10px; align-items: center;">
+            <div style = "margin-right: 10px;" class="circle orange"></div> <p>Target computer</p>
+          </span>
+        </div>
+
           </div>
           <div class="button-row">
             <StyledButton text="Verify" :click-function="verify" :disable="disableButton"></StyledButton>
@@ -351,6 +362,23 @@ pre {
   align-items: center;
   overflow-y: scroll;
 }
+
+.circle {
+    margin-left: 10px;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.orange {
+    background-color: #0000ff;
+}
+
+.blue {
+    background-color: #ff0000;
+}
+
 
 * {
   box-sizing: border-box;

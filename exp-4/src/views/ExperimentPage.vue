@@ -29,7 +29,7 @@
               <div class="step-2" v-if="step===2">
                 <h4>Start packet transmission</h4>
                 <p>Now that you have established a man in the middle attack, you can use this to communicate with the
-                  server on behalf of the user and the server. Click on next to send a packet to the server on behalf of
+                  server on behalf of the user. Click on 'Next' to send a packet to the server on behalf of
                   the user.</p>
               </div>
               <div class="step-2" v-if="step===3">

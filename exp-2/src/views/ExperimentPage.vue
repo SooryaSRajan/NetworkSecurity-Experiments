@@ -389,7 +389,7 @@ export default {
       x.className = "show";
       setTimeout(function () {
         x.className = x.className.replace("show", "");
-      }, 3000)
+      }, 5000)
     },
     incorrect(msg) {
       var x = document.getElementById("snackbar");

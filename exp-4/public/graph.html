@@ -485,7 +485,7 @@
             setTimeout(function () {
                 //REACHES HACKER HERE
                 if (protocol === "HTTPS") {
-                    logList.innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span></li>';
+                    logList.innerHTML += '<li>Packet from <span style="color: #8a8ac2">' + clientData.id + ' </span> to <span style="color: #8a8ac2">' + serverData.id + '</span> cannot be intercepted as it is <span style="color: #ff0000"> encrypted </span>. Try again</li>';
                     logList.scrollTo(0, logList.scrollHeight * 100)
                 } else {
                     //TODO: Print some packet content

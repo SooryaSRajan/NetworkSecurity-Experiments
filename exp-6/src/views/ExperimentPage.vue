@@ -897,7 +897,8 @@ div {
 
 .terminal-choices {
   border-left: 1px solid #666c7c;
-  width: 0%;
+  width: 200px;
+  max-width: 200px;
   flex: 1;
   min-width: 100px;
   background-color: #0b0e14;
