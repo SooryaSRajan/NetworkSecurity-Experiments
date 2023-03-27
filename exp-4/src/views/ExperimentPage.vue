@@ -307,7 +307,7 @@ export default {
           })
           this.step = 3;
           this.disableButton = false;
-          this.countDown = 10;
+          this.countDown = 20;
           let timeoutFunc = () => {
             this.countDown--
             if (this.step === 3 && this.countDown === 0) {
