@@ -112,10 +112,10 @@
               <NetworkInteractionComponent ref="childComponentRef">
                 <EndSystemComponent top="10%" left="5%" class="box" id="server">
                   <ServerComponent ip-address="Server"
-                                   :port1="2"
+                                   :port1="1"
                                    :port2="2"
-                                   :port3="2"
-                                   :port4="2"
+                                   :port3="0"
+                                   :port4="1"
                                    :port-labels="serverPortLabels"/>
                 </EndSystemComponent>
                 <EndSystemComponent top="40%" left="45%" class="box" id="firewall">
