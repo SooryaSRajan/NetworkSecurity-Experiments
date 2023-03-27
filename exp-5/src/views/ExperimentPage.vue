@@ -14,9 +14,9 @@
             <div class="content">
               <h3>Steps: </h3>
               <p>
-                To begin the authentication process, the client asks for a Ticket
-                Granting Ticket from the Authentication Server housed inside the
-                Key Distribution Center.
+                Identify the right sequence of actions that take place for successful channel encryption using the Kerberos
+                protocol. To verify the sequence at any point, click on the 'Verify' button. Click on 'Reset' to reset the experiment and start over.
+                When done with all steps, click on Verify to complete the experiment.
               </p>
               <br>
             </div>
@@ -56,6 +56,7 @@
               <div class="computer-wrapper" @click="handleElementClick('client')"
                    style="border-radius: 5px"
                    :style="{border: source === 'client' ? '3px solid red' : destination === 'client' ? '3px solid blue' : 'none'}">
+                   <span>Client</span>
                 <img src="./../assets/workstation.svg" width="150" height="150" alt="computer">
               </div>
             </EndSystemComponent>
